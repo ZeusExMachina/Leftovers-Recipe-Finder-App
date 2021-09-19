@@ -3,15 +3,11 @@ import { StyleSheet } from 'react-native';
 import { Chip } from 'react-native-paper';
 import { List } from 'react-native-paper';
 
+import IngredientButtonGrid from "../components/IngredientButtonGrid"
+
 interface Props {
   categoryName : String
 }
-
-const styles = StyleSheet.create({
-  ingredientButton: {
-    width: "25%",
-  }
-});
 
 const IngredientCategory = (props : Props) => (
   // <div>
@@ -23,8 +19,7 @@ const IngredientCategory = (props : Props) => (
   <List.Accordion
     title={props.categoryName}
     left={props => <List.Icon {...props} icon="folder" />}>
-    <Chip icon="information" mode="outlined" style={styles.ingredientButton} onPress={() => console.log('Pressed')}>Example Chip</Chip>
-    <Chip icon="information" onPress={() => console.log('Pressed')}>Example Chip</Chip>
+    <IngredientButtonGrid />
   </List.Accordion>
 );
 
