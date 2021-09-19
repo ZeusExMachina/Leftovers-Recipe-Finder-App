@@ -10,6 +10,8 @@ interface Props {
 const styles = StyleSheet.create({
     ingredientButton: {
       width: "25%",
+      marginLeft: "5px",
+      marginRight: "5px",
     }
 });
 
@@ -27,16 +29,14 @@ const IngredientButtonGrid = (props : Props) => {
 
     const data = makeChipGridData(props.ingredientNames);
 
-    const renderItem = (
-        <Chip icon="information" onPress={() => console.log('Pressed')}>Example Chip</Chip>
-    );
-
     return (
         <View>
             <FlatList 
                 data={data}
                 renderItem={({item}) => (
-                    <Chip icon="information" onPress={() => console.log('Pressed')}>{item.name}</Chip>
+                    <Chip icon="information" style={styles.ingredientButton} onPress={() => console.log('Pressed')}>
+                        {item.name}
+                    </Chip>
                 )}
                 numColumns={2}>
             </FlatList>

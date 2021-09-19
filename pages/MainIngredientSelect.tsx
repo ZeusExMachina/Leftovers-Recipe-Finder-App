@@ -1,10 +1,12 @@
 import React from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import { Appbar, Avatar, Button, Card, Title, Paragraph, Badge, Text, Provider as PaperProvider } from 'react-native-paper';
+import { StyleSheet, View, ScrollView } from 'react-native';
+import { Appbar, Avatar, Button, Card, Title, Paragraph, Badge, Text, Searchbar, Provider as PaperProvider } from 'react-native-paper';
 
 import IngredientCategory from '../components/IngredientCategory';
 import IngredientButtonGrid from "../components/IngredientButtonGrid"
+
+import "../styles/styles.css"
 
 const styles = StyleSheet.create({
   top: {
@@ -19,6 +21,25 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    height: "50px",
+  },
+
+  searchBar: {
+    marginTop: 10,
+    height: "35px",
+    width: "200px",
+  },
+
+  ingredientsContents: {
+    flex: 1,
+    marginTop: "50px",
+    marginBottom: "50px",
+    paddingTop: "10px",
+  },
+
+  ingredientSection_heading: {
+    margin: 10,
+    fontSize: 20,
   },
 });
 
@@ -32,64 +53,86 @@ const IngredientSelection = () => {
 
   const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 
+
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const onChangeSearch = query => setSearchQuery(query);
+
   return (
     // <View style={styles.container}>
     //   <Text>This is the Main Ingredient Selection page!</Text>
     //   <StatusBar style="auto" />
     // </View>
-    
-    <PaperProvider>
-      <Appbar.Header>
-        <Appbar.BackAction onPress={_goBack} />
-        <Appbar.Content title="Title" subtitle="Subtitle" />
-        <Appbar.Action icon="magnify" onPress={_handleSearch} />
-        <Appbar.Action icon="dots-vertical" onPress={_handleMore} />
-      </Appbar.Header>
+    //<View style={{flex: 1}}>
+      <PaperProvider>
+        
+          {/* <Badge>3</Badge>
 
-      {/* <Badge>3</Badge>
+          <Card>
+            <Card.Title title="Card Title" subtitle="Card Subtitle" left={LeftContent} />
+            <Card.Content>
+              <Title>Card title</Title>
+              <Paragraph>Card content</Paragraph>
+            </Card.Content>
+            <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+            <Card.Actions>
+              <Button>Cancel</Button>
+              <Button>Ok</Button>
+            </Card.Actions>
+          </Card> */}
+        <View style={styles.ingredientsContents}>
+          <ScrollView>
+            <Text style={styles.ingredientSection_heading}>Favourite Ingredients</Text>
 
-      <Card>
-        <Card.Title title="Card Title" subtitle="Card Subtitle" left={LeftContent} />
-        <Card.Content>
-          <Title>Card title</Title>
-          <Paragraph>Card content</Paragraph>
-        </Card.Content>
-        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-        <Card.Actions>
-          <Button>Cancel</Button>
-          <Button>Ok</Button>
-        </Card.Actions>
-      </Card> */}
+            <IngredientButtonGrid ingredientNames={["Chili Oil"]}/>
 
-      <Text>Favourite Ingredients</Text>
+            <Text style={styles.ingredientSection_heading}>Recently Used Ingredients</Text>
 
-      <IngredientButtonGrid ingredientNames={["Chili Oil"]}/>
+            <IngredientButtonGrid ingredientNames={["Tortilla", "Cheese"]}/>
 
-      <Text>Recently Used Ingredients</Text>
+            <Text style={styles.ingredientSection_heading}>Food Categories</Text>
 
-      <IngredientButtonGrid ingredientNames={["Tortilla", "Cheese"]}/>
+            <IngredientCategory categoryName="Meat"/>
+            <IngredientCategory categoryName="Vegetables"/>
+            <IngredientCategory categoryName="Fruits"/>
+            <IngredientCategory categoryName="Dairy"/>
+            <IngredientCategory categoryName="Baking"/>
+            <IngredientCategory categoryName="Alcohol"/>
+          </ScrollView>
+        </View>
 
-      <Text>Food Categories</Text>
-      <IngredientCategory categoryName="Meat"/>
-      <IngredientCategory categoryName="Vegetables"/>
-      <IngredientCategory categoryName="Fruits"/>
-      <IngredientCategory categoryName="Dairy"/>
-      <IngredientCategory categoryName="Vegetables"/>
+        <div className={"header"}>
+          <Appbar.Header>
+            <div>
+              <Appbar.Content title="Title" subtitle="Subtitle" />
+            </div>
+            <div>
+              <Searchbar style={styles.searchBar}
+                placeholder="Search"
+                onChangeText={onChangeSearch}
+                value={searchQuery}
+              />
+            </div>
+          </Appbar.Header>
+        </div>  
 
-      <Appbar style={styles.bottom}>
-        <Appbar.Action icon="format-list-bulleted-square" onPress={() => console.log('Pressed ingredient list')} />
-        <Appbar.Action
-          icon="archive"
-          onPress={() => console.log('Pressed archive')}
-        />
-        <Appbar.Action icon="mail" onPress={() => console.log('Pressed mail')} />
-        <Appbar.Action icon="label" onPress={() => console.log('Pressed label')} />
-        <Appbar.Action
-          icon="delete"
-          onPress={() => console.log('Pressed delete')}
-        />
-      </Appbar>
-    </PaperProvider>
+        <div className={"footer"}>
+          <Appbar style={styles.bottom}>
+            <Appbar.Action icon="format-list-bulleted-square" onPress={() => console.log('Pressed ingredient list')} />
+            <Appbar.Action
+              icon="archive"
+              onPress={() => console.log('Pressed archive')}
+            />
+            <Appbar.Action icon="mail" onPress={() => console.log('Pressed mail')} />
+            <Appbar.Action icon="label" onPress={() => console.log('Pressed label')} />
+            <Appbar.Action
+              icon="delete"
+              onPress={() => console.log('Pressed delete')}
+            />
+          </Appbar>
+        </div>
+      </PaperProvider>
+    //</View>
   );
 }
 
