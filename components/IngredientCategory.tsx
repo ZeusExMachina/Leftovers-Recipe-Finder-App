@@ -19,7 +19,7 @@ const IngredientCategory = (props : Props) => (
   <List.Accordion
     title={props.categoryName}
     left={props => <List.Icon {...props} icon="folder" />}>
-    <IngredientButtonGrid />
+    <IngredientButtonGrid ingredientNames={["Apple", "Banana", "Carrot"]}/>
   </List.Accordion>
 );
 
