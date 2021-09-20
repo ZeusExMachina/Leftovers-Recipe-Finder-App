@@ -1,47 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { Appbar, Avatar, Button, Card, Title, Paragraph, Badge, Text, Searchbar, Provider as PaperProvider } from 'react-native-paper';
+import { Appbar, Avatar, Text, Searchbar, IconButton, Provider as PaperProvider } from 'react-native-paper';
 
 import IngredientCategory from '../components/IngredientCategory';
 import IngredientButtonGrid from "../components/IngredientButtonGrid"
 
 import "../styles/styles.css"
-
-const styles = StyleSheet.create({
-  top: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-  },
-
-  bottom: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: "50px",
-  },
-
-  searchBar: {
-    marginTop: 10,
-    height: "35px",
-    width: "200px",
-  },
-
-  ingredientsContents: {
-    flex: 1,
-    marginTop: "50px",
-    marginBottom: "50px",
-    paddingTop: "10px",
-  },
-
-  ingredientSection_heading: {
-    margin: 10,
-    fontSize: 20,
-  },
-});
 
 const IngredientSelection = () => {
 
@@ -54,16 +19,22 @@ const IngredientSelection = () => {
   const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 
 
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const onChangeSearch = query => setSearchQuery(query);
 
+  const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
+
+  function addIngredient(ingredient : string) {
+    if (!selectedIngredients.includes(ingredient)) {
+      let newSelectedIngredients : string[] = selectedIngredients;
+      newSelectedIngredients.push(ingredient);
+      setSelectedIngredients(newSelectedIngredients);
+    }
+    console.log(selectedIngredients);
+  }
+
   return (
-    // <View style={styles.container}>
-    //   <Text>This is the Main Ingredient Selection page!</Text>
-    //   <StatusBar style="auto" />
-    // </View>
-    //<View style={{flex: 1}}>
       <PaperProvider>
         
           {/* <Badge>3</Badge>
@@ -84,34 +55,37 @@ const IngredientSelection = () => {
           <ScrollView>
             <Text style={styles.ingredientSection_heading}>Favourite Ingredients</Text>
 
-            <IngredientButtonGrid ingredientNames={["Chili Oil"]}/>
+            <IngredientButtonGrid ingredientNames={["Chili Oil"]} functionForWhenPressed={addIngredient}/>
 
             <Text style={styles.ingredientSection_heading}>Recently Used Ingredients</Text>
 
-            <IngredientButtonGrid ingredientNames={["Tortilla", "Cheese"]}/>
+            <IngredientButtonGrid ingredientNames={["Tortilla", "Cheese"]} functionForWhenPressed={addIngredient}/>
 
             <Text style={styles.ingredientSection_heading}>Food Categories</Text>
 
-            <IngredientCategory categoryName="Meat"/>
-            <IngredientCategory categoryName="Vegetables"/>
-            <IngredientCategory categoryName="Fruits"/>
-            <IngredientCategory categoryName="Dairy"/>
-            <IngredientCategory categoryName="Baking"/>
-            <IngredientCategory categoryName="Alcohol"/>
+            <IngredientCategory categoryName="Meat" functionForWhenPressed={addIngredient}/>
+            <IngredientCategory categoryName="Vegetables" functionForWhenPressed={addIngredient}/>
+            <IngredientCategory categoryName="Fruits" functionForWhenPressed={addIngredient}/>
+            <IngredientCategory categoryName="Dairy" functionForWhenPressed={addIngredient}/>
+            <IngredientCategory categoryName="Baking" functionForWhenPressed={addIngredient}/>
+            <IngredientCategory categoryName="Alcohol" functionForWhenPressed={addIngredient}/>
           </ScrollView>
         </View>
 
         <div className={"header"}>
-          <Appbar.Header>
+          <Appbar.Header style={styles.top}>
             <div>
-              <Appbar.Content title="Title" subtitle="Subtitle" />
-            </div>
-            <div>
-              <Searchbar style={styles.searchBar}
-                placeholder="Search"
-                onChangeText={onChangeSearch}
-                value={searchQuery}
-              />
+              <div>
+                <Appbar.Content title="Select ingredients you have" />
+              </div>
+              <div>
+                <Searchbar style={styles.searchBar}
+                  placeholder="Search"
+                  onChangeText={onChangeSearch}
+                  value={searchQuery}
+                />
+                {/* <IconButton icon="microphone" /> */}
+              </div>
             </div>
           </Appbar.Header>
         </div>  
@@ -135,5 +109,45 @@ const IngredientSelection = () => {
     //</View>
   );
 }
+
+const styles = StyleSheet.create({
+  top: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: "85px",
+    display: "flex",
+    justifyContent: "center",
+  },
+
+  bottom: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: "50px",
+  },
+
+  searchBar: {
+    marginTop: 7,
+    height: "35px",
+    width: "90%",
+  },
+
+  ingredientSection_heading: {
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 8,
+    fontSize: 20,
+  },
+
+  ingredientsContents: {
+    flex: 1,
+    marginTop: "85px",
+    marginBottom: "50px",
+    paddingTop: "10px",
+  },
+});
 
 export default IngredientSelection

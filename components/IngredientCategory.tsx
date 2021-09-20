@@ -7,6 +7,8 @@ import IngredientButtonGrid from "../components/IngredientButtonGrid"
 
 interface Props {
   categoryName : String
+
+  functionForWhenPressed(ingredient:string) : void
 }
 
 const IngredientCategory = (props : Props) => (
@@ -14,13 +16,20 @@ const IngredientCategory = (props : Props) => (
   //   <Chip icon="information" onPress={() => console.log('Pressed')}>Example Chip</Chip>
   //   <Chip icon="information" onPress={() => console.log('Pressed')}>Example Chip</Chip>
   // </div>
-
   
   <List.Accordion
     title={props.categoryName}
     left={props => <List.Icon {...props} icon="folder" />}>
-    <IngredientButtonGrid ingredientNames={["Apple", "Banana", "Carrot"]}/>
+
+    <IngredientButtonGrid ingredientNames={["Apple", "Banana", "Carrot"]} functionForWhenPressed={props.functionForWhenPressed}/>
+
   </List.Accordion>
 );
+
+const styles = StyleSheet.create({
+  ingredientCategory_dropDown: {
+    height: "20px",
+  },
+});
 
 export default IngredientCategory;

@@ -5,17 +5,9 @@ import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 
 interface Props {
     ingredientNames : string[]
+
+    functionForWhenPressed(ingredient:string) : void
 }
-
-const styles = StyleSheet.create({
-    ingredientButton: {
-      width: "25%",
-      marginLeft: "5px",
-      marginRight: "5px",
-    }
-});
-
-// Make a function to render a new Chip for each ingredient to show
 
 function makeChipGridData(ingredientNames : string[]) {
     let data : {name:string, key:number}[] = [];
@@ -30,18 +22,37 @@ const IngredientButtonGrid = (props : Props) => {
     const data = makeChipGridData(props.ingredientNames);
 
     return (
-        <View>
-            <FlatList 
+        <div style={{margin: 5}}>
+            <FlatList
                 data={data}
                 renderItem={({item}) => (
-                    <Chip icon="information" style={styles.ingredientButton} onPress={() => console.log('Pressed')}>
-                        {item.name}
+                    <Chip 
+                        icon="information" 
+                        mode="outlined"
+                        style={styles.ingredientButton} 
+                        onPress={() => { props.functionForWhenPressed(item.name); }}>
+                    {item.name}
                     </Chip>
                 )}
                 numColumns={2}>
             </FlatList>
-        </View>
+        </div>
     );
 }
+
+const styles = StyleSheet.create({
+    // ingredientButton_container: {
+    //     display: "flex",
+    //     justifyContent: "space-evenly",
+    // },
+
+    ingredientButton: {
+      width: "47.5%",
+      marginLeft: "1.25%",
+      marginRight: "1.25%",
+      marginTop: 4,
+      marginBottom: 4,
+    }
+});
 
 export default IngredientButtonGrid;
