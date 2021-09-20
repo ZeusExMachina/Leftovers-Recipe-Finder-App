@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { Appbar, Avatar, Text, Searchbar, IconButton, Provider as PaperProvider } from 'react-native-paper';
+import { Appbar, Text, Searchbar, IconButton, Button, Provider as PaperProvider } from 'react-native-paper';
 
 import IngredientCategory from '../components/IngredientCategory';
 import IngredientButtonGrid from "../components/IngredientButtonGrid"
@@ -10,15 +10,6 @@ import "../styles/styles.css"
 
 const IngredientSelection = () => {
 
-  const _goBack = () => console.log('Went back');
-
-  const _handleSearch = () => console.log('Searching');
-
-  const _handleMore = () => console.log('Shown more');
-
-  const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
-
-
   const [searchQuery, setSearchQuery] = useState('');
 
   const onChangeSearch = query => setSearchQuery(query);
@@ -26,13 +17,26 @@ const IngredientSelection = () => {
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
 
   function addIngredient(ingredient : string) {
-    if (!selectedIngredients.includes(ingredient)) {
-      let newSelectedIngredients : string[] = selectedIngredients;
+    let newSelectedIngredients : string[] = [];
+    newSelectedIngredients = newSelectedIngredients.concat(selectedIngredients);
+    if (selectedIngredients.includes(ingredient)) {
+      // If item is selected, deselect it by removing it from the list
+      let indexOfIngredient : number = newSelectedIngredients.indexOf(ingredient);
+      if (indexOfIngredient != -1) {
+        newSelectedIngredients.splice(indexOfIngredient, 1);
+      }
+      setSelectedIngredients(newSelectedIngredients);
+    } else {
+      console.log("is not in - will add");
+      // If item is not selected, then add it to the list
       newSelectedIngredients.push(ingredient);
       setSelectedIngredients(newSelectedIngredients);
     }
-    console.log(selectedIngredients);
   }
+
+  useEffect(() => {
+    console.log("useEffect", selectedIngredients);
+  }, [selectedIngredients])
 
   return (
       <PaperProvider>
@@ -51,6 +55,7 @@ const IngredientSelection = () => {
               <Button>Ok</Button>
             </Card.Actions>
           </Card> */}
+
         <View style={styles.ingredientsContents}>
           <ScrollView>
             <Text style={styles.ingredientSection_heading}>Favourite Ingredients</Text>
@@ -74,39 +79,32 @@ const IngredientSelection = () => {
 
         <div className={"header"}>
           <Appbar.Header style={styles.top}>
-            <div>
-              <div>
+
+              {/* <div>
                 <Appbar.Content title="Select ingredients you have" />
-              </div>
-              <div>
+              </div> */}
+
                 <Searchbar style={styles.searchBar}
                   placeholder="Search"
                   onChangeText={onChangeSearch}
                   value={searchQuery}
                 />
                 {/* <IconButton icon="microphone" /> */}
-              </div>
-            </div>
+
           </Appbar.Header>
         </div>  
 
         <div className={"footer"}>
           <Appbar style={styles.bottom}>
-            <Appbar.Action icon="format-list-bulleted-square" onPress={() => console.log('Pressed ingredient list')} />
-            <Appbar.Action
-              icon="archive"
-              onPress={() => console.log('Pressed archive')}
-            />
-            <Appbar.Action icon="mail" onPress={() => console.log('Pressed mail')} />
-            <Appbar.Action icon="label" onPress={() => console.log('Pressed label')} />
-            <Appbar.Action
-              icon="delete"
-              onPress={() => console.log('Pressed delete')}
-            />
+            <Button icon="format-list-bulleted-square" mode="contained" onPress={() => console.log('Pressed')}>
+              Press me
+            </Button>
+            <Button icon="format-list-bulleted-square" mode="contained" onPress={() => console.log('Pressed')}>
+              Press me
+            </Button>
           </Appbar>
         </div>
       </PaperProvider>
-    //</View>
   );
 }
 
@@ -126,7 +124,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    height: "50px",
+    height: "60px",
+    display: "flex",
+    justifyContent: "space-evenly",
   },
 
   searchBar: {
