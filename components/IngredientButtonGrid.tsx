@@ -48,6 +48,8 @@ const styles = StyleSheet.create({
 
     ingredientButton: {
       width: "47.5%",
+    //   paddingLeft: "25px",
+    //   paddingRight: "20%",
       marginLeft: "1.25%",
       marginRight: "1.25%",
       marginTop: 4,

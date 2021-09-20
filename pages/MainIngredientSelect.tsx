@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { Appbar, Text, Searchbar, IconButton, Button, Provider as PaperProvider } from 'react-native-paper';
+import { Appbar, Avatar, Text, Searchbar, IconButton, Button, Provider as PaperProvider } from 'react-native-paper';
 
 import IngredientCategory from '../components/IngredientCategory';
 import IngredientButtonGrid from "../components/IngredientButtonGrid"
@@ -19,12 +19,11 @@ const IngredientSelection = () => {
   function addIngredient(ingredient : string) {
     let newSelectedIngredients : string[] = [];
     newSelectedIngredients = newSelectedIngredients.concat(selectedIngredients);
+    
     if (selectedIngredients.includes(ingredient)) {
       // If item is selected, deselect it by removing it from the list
       let indexOfIngredient : number = newSelectedIngredients.indexOf(ingredient);
-      if (indexOfIngredient != -1) {
-        newSelectedIngredients.splice(indexOfIngredient, 1);
-      }
+      if (indexOfIngredient != -1) { newSelectedIngredients.splice(indexOfIngredient, 1); }
       setSelectedIngredients(newSelectedIngredients);
     } else {
       console.log("is not in - will add");
@@ -58,11 +57,17 @@ const IngredientSelection = () => {
 
         <View style={styles.ingredientsContents}>
           <ScrollView>
-            <Text style={styles.ingredientSection_heading}>Favourite Ingredients</Text>
+            <Text style={styles.ingredientSection_heading}>
+              Favourite Ingredients
+              <Avatar.Icon size={28} icon="star" style={styles.contentSection_avatarIcon} />
+            </Text>
 
             <IngredientButtonGrid ingredientNames={["Chili Oil"]} functionForWhenPressed={addIngredient}/>
 
-            <Text style={styles.ingredientSection_heading}>Recently Used Ingredients</Text>
+            <Text style={styles.ingredientSection_heading}>
+              Recently Used Ingredients
+              <Avatar.Icon size={28} icon="history" style={styles.contentSection_avatarIcon} />
+            </Text>
 
             <IngredientButtonGrid ingredientNames={["Tortilla", "Cheese"]} functionForWhenPressed={addIngredient}/>
 
@@ -79,7 +84,7 @@ const IngredientSelection = () => {
 
         <div className={"header"}>
           <Appbar.Header style={styles.top}>
-
+            <div>
               {/* <div>
                 <Appbar.Content title="Select ingredients you have" />
               </div> */}
@@ -90,7 +95,7 @@ const IngredientSelection = () => {
                   value={searchQuery}
                 />
                 {/* <IconButton icon="microphone" /> */}
-
+            </div>
           </Appbar.Header>
         </div>  
 
@@ -133,6 +138,10 @@ const styles = StyleSheet.create({
     marginTop: 7,
     height: "35px",
     width: "90%",
+  },
+
+  contentSection_avatarIcon: {
+    marginLeft: 5,
   },
 
   ingredientSection_heading: {
