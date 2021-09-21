@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Appbar, Avatar, Text, Searchbar, IconButton, Button, Provider as PaperProvider } from 'react-native-paper';
 
 import IngredientCategory from '../components/IngredientCategory';
-import IngredientButtonGrid from "../components/IngredientButtonGrid"
+import IngredientButtonGrid from "../components/IngredientButtonGrid";
 
 import "../styles/styles.css"
+
+const ContentTitle = ({ title, style }) => (
+  <Appbar.Content
+    title={<Text style={style}> {title} </Text>}
+    style={{ alignItems: 'center' }}
+  />
+);
 
 const IngredientSelection = () => {
 
@@ -26,7 +32,6 @@ const IngredientSelection = () => {
       if (indexOfIngredient != -1) { newSelectedIngredients.splice(indexOfIngredient, 1); }
       setSelectedIngredients(newSelectedIngredients);
     } else {
-      console.log("is not in - will add");
       // If item is not selected, then add it to the list
       newSelectedIngredients.push(ingredient);
       setSelectedIngredients(newSelectedIngredients);
@@ -84,27 +89,34 @@ const IngredientSelection = () => {
 
         <div className={"header"}>
           <Appbar.Header style={styles.top}>
-            <div>
-              {/* <div>
-                <Appbar.Content title="Select ingredients you have" />
-              </div> */}
-
-                <Searchbar style={styles.searchBar}
-                  placeholder="Search"
-                  onChangeText={onChangeSearch}
-                  value={searchQuery}
-                />
-                {/* <IconButton icon="microphone" /> */}
+            <div className={"header_inner"}>
+            <ContentTitle title={'Select ingredients you have'} style={{color:'white'}} />
+              <Searchbar style={styles.searchBar}
+                placeholder="Search"
+                theme={{ roundness:17 }}
+                onChangeText={onChangeSearch}
+                value={searchQuery}
+              />
+              {/* <IconButton icon="microphone" /> */}
             </div>
           </Appbar.Header>
-        </div>  
+        </div>
 
         <div className={"footer"}>
           <Appbar style={styles.bottom}>
-            <Button icon="format-list-bulleted-square" mode="contained" onPress={() => console.log('Pressed')}>
-              Press me
+            <Button 
+              icon="format-list-bulleted-square" 
+              mode="contained" 
+              style={styles.bottomBar_button} 
+              onPress={() => console.log('Pressed')}>
+              Selected Ingredients
             </Button>
-            <Button icon="format-list-bulleted-square" mode="contained" onPress={() => console.log('Pressed')}>
+            <Button 
+              icon="arrow-right" 
+              mode="contained"
+              contentStyle={{ flexDirection:"row-reverse" }}
+              style={styles.bottomBar_button} 
+              onPress={() => console.log('Pressed')}>
               Press me
             </Button>
           </Appbar>
@@ -134,10 +146,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
 
+  screenTitle: {
+    borderColor: "#000",
+    borderWidth: 5,
+  },
+
   searchBar: {
     marginTop: 7,
     height: "35px",
-    width: "90%",
+    //width: "80%",
   },
 
   contentSection_avatarIcon: {
@@ -156,6 +173,11 @@ const styles = StyleSheet.create({
     marginTop: "85px",
     marginBottom: "50px",
     paddingTop: "10px",
+  },
+
+  bottomBar_button: {
+    height: "40px",
+    width: "45%",
   },
 });
 
