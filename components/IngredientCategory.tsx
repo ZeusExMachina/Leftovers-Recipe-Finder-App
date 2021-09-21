@@ -11,11 +11,11 @@ interface Props {
 
 const IngredientCategory = (props : Props) => {
   
-  const [status, setStatus] = useState(false);
+  // const [status, setStatus] = useState(false);
 
-  function onButtonToggle() {
-    setStatus(status === true ? false : true);
-  }
+  // function onButtonToggle() {
+  //   setStatus(status === true ? false : true);
+  // }
 
   return (
     <List.Accordion
@@ -23,13 +23,13 @@ const IngredientCategory = (props : Props) => {
       theme={{ roundness:20 }}
       left={props => <List.Icon {...props} icon="folder" />}>
 
-      <ToggleButton
+      {/* <ToggleButton
         icon="bluetooth"
         value="bluetooth"
         status={status == true ? "checked" : "unchecked"}
         onPress={onButtonToggle}
         theme={{ roundness:50 }}
-      />
+      /> */}
 
       <IngredientButtonGrid ingredientNames={["Apple", "Banana", "Carrot"]} functionForWhenPressed={props.functionForWhenPressed}/>
 
