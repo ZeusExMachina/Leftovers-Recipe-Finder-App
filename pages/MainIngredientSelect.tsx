@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Appbar, Avatar, Text, Searchbar, IconButton, Button, Provider as PaperProvider } from 'react-native-paper';
+import IngredientsListProvider from '../states/SelectedIngredientsList';
 
+// Imported Components
 import IngredientCategory from '../components/IngredientCategory';
 import IngredientButtonGrid from "../components/IngredientButtonGrid";
 
@@ -20,72 +22,36 @@ const IngredientSelection = () => {
 
   const onChangeSearch = query => setSearchQuery(query);
 
-  const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
-
-  function addIngredient(ingredient : string) {
-    let newSelectedIngredients : string[] = [];
-    newSelectedIngredients = newSelectedIngredients.concat(selectedIngredients);
-    
-    if (selectedIngredients.includes(ingredient)) {
-      // If item is selected, deselect it by removing it from the list
-      let indexOfIngredient : number = newSelectedIngredients.indexOf(ingredient);
-      if (indexOfIngredient != -1) { newSelectedIngredients.splice(indexOfIngredient, 1); }
-      setSelectedIngredients(newSelectedIngredients);
-    } else {
-      // If item is not selected, then add it to the list
-      newSelectedIngredients.push(ingredient);
-      setSelectedIngredients(newSelectedIngredients);
-    }
-  }
-
-  useEffect(() => {
-    console.log("useEffect", selectedIngredients);
-  }, [selectedIngredients])
-
   return (
       <PaperProvider>
-        
-          {/* <Badge>3</Badge>
+        <IngredientsListProvider>
+          <View style={styles.ingredientsContents}>
+            <ScrollView>
+              <Text style={styles.ingredientSection_heading}>
+                Favourite Ingredients
+                <Avatar.Icon size={28} icon="star" style={styles.contentSection_avatarIcon} />
+              </Text>
 
-          <Card>
-            <Card.Title title="Card Title" subtitle="Card Subtitle" left={LeftContent} />
-            <Card.Content>
-              <Title>Card title</Title>
-              <Paragraph>Card content</Paragraph>
-            </Card.Content>
-            <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-            <Card.Actions>
-              <Button>Cancel</Button>
-              <Button>Ok</Button>
-            </Card.Actions>
-          </Card> */}
+              <IngredientButtonGrid ingredientNames={["Chili Oil"]}/>
 
-        <View style={styles.ingredientsContents}>
-          <ScrollView>
-            <Text style={styles.ingredientSection_heading}>
-              Favourite Ingredients
-              <Avatar.Icon size={28} icon="star" style={styles.contentSection_avatarIcon} />
-            </Text>
+              <Text style={styles.ingredientSection_heading}>
+                Recently Used Ingredients
+                <Avatar.Icon size={28} icon="history" style={styles.contentSection_avatarIcon} />
+              </Text>
 
-            <IngredientButtonGrid ingredientNames={["Chili Oil"]} functionForWhenPressed={addIngredient}/>
+              <IngredientButtonGrid ingredientNames={["Tortilla", "Cheese"]}/>
 
-            <Text style={styles.ingredientSection_heading}>
-              Recently Used Ingredients
-              <Avatar.Icon size={28} icon="history" style={styles.contentSection_avatarIcon} />
-            </Text>
+              <Text style={styles.ingredientSection_heading}>Food Categories</Text>
 
-            <IngredientButtonGrid ingredientNames={["Tortilla", "Cheese"]} functionForWhenPressed={addIngredient}/>
-
-            <Text style={styles.ingredientSection_heading}>Food Categories</Text>
-
-            <IngredientCategory categoryName="Meat" functionForWhenPressed={addIngredient}/>
-            <IngredientCategory categoryName="Vegetables" functionForWhenPressed={addIngredient}/>
-            <IngredientCategory categoryName="Fruits" functionForWhenPressed={addIngredient}/>
-            <IngredientCategory categoryName="Dairy" functionForWhenPressed={addIngredient}/>
-            <IngredientCategory categoryName="Baking" functionForWhenPressed={addIngredient}/>
-            <IngredientCategory categoryName="Alcohol" functionForWhenPressed={addIngredient}/>
-          </ScrollView>
-        </View>
+              <IngredientCategory categoryName="Meat"/>
+              <IngredientCategory categoryName="Vegetables"/>
+              <IngredientCategory categoryName="Fruits"/>
+              <IngredientCategory categoryName="Dairy"/>
+              <IngredientCategory categoryName="Baking"/>
+              <IngredientCategory categoryName="Alcohol"/>
+            </ScrollView>
+          </View>
+        </IngredientsListProvider>
 
         <div className={"header"}>
           <Appbar.Header style={styles.top}>
@@ -112,12 +78,12 @@ const IngredientSelection = () => {
               Selected Ingredients
             </Button>
             <Button 
-              icon="arrow-right" 
+              icon="arrow-right"
               mode="contained"
               contentStyle={{ flexDirection:"row-reverse" }}
               style={styles.bottomBar_button} 
               onPress={() => console.log('Pressed')}>
-              Press me
+              Find Recipes
             </Button>
           </Appbar>
         </div>

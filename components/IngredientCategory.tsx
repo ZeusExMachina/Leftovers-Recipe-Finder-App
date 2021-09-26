@@ -1,21 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
-import { List, ToggleButton } from 'react-native-paper';
+import { List } from 'react-native-paper';
 
 import IngredientButtonGrid from "../components/IngredientButtonGrid"
 
 interface Props {
   categoryName : String
-  functionForWhenPressed(ingredient:string) : void
 }
 
 const IngredientCategory = (props : Props) => {
-  
-  // const [status, setStatus] = useState(false);
-
-  // function onButtonToggle() {
-  //   setStatus(status === true ? false : true);
-  // }
 
   return (
     <List.Accordion
@@ -23,15 +16,7 @@ const IngredientCategory = (props : Props) => {
       theme={{ roundness:20 }}
       left={props => <List.Icon {...props} icon="folder" />}>
 
-      {/* <ToggleButton
-        icon="bluetooth"
-        value="bluetooth"
-        status={status == true ? "checked" : "unchecked"}
-        onPress={onButtonToggle}
-        theme={{ roundness:50 }}
-      /> */}
-
-      <IngredientButtonGrid ingredientNames={["Apple", "Banana", "Carrot"]} functionForWhenPressed={props.functionForWhenPressed}/>
+      <IngredientButtonGrid ingredientNames={["Apple", "Banana", "Carrot"]}/>
 
     </List.Accordion>
   );
