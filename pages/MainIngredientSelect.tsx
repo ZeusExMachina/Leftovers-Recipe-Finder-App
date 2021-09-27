@@ -9,14 +9,14 @@ import MainPageFooter from "../components/MainPageFooter";
 // Styles for divs
 import "../styles/styles.css"
 
-const IngredientSelection = () => {
+const IngredientSelection = ({ navigation }) => {
   return (
       <PaperProvider>
         <IngredientsContents/>
 
         <MainPageHeader/>
 
-        <MainPageFooter/>
+        <MainPageFooter navigationObj={navigation}/>
       </PaperProvider> 
   );
 }

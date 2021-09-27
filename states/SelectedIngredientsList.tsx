@@ -1,8 +1,9 @@
+// 3rd-party Imports
 import React, { useEffect, useMemo, useState } from 'react'
 
 const selectedIngredientsStateDefaultValue = {
     ingredientsList: [] as string[],
-    updateIngredientsList: (state:string[]) => {} // noop default callback
+    updateIngredientsList: (state:string[]) => {}
 };
 
 const updateIngredientsDefaultValue = (ingredient:string, selectedIngredientsStateDefaultValue) => {};

@@ -1,7 +1,8 @@
+// 3rd-party Imports
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { List } from 'react-native-paper';
-
+// Components
 import IngredientButtonGrid from "../components/IngredientButtonGrid"
 
 interface Props {
@@ -9,7 +10,6 @@ interface Props {
 }
 
 const IngredientCategory = (props : Props) => {
-
   return (
     <List.Accordion
       title={props.categoryName}

@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 
 const IngredientsContents = () => {
     return (
-        <IngredientsListProvider>
+        //<IngredientsListProvider>
           <View style={styles.ingredientsContents}>
             <ScrollView>
               <Text style={styles.ingredientSection_heading}>
@@ -57,7 +57,7 @@ const IngredientsContents = () => {
               <IngredientCategory categoryName="Alcohol"/>
             </ScrollView>
           </View>
-        </IngredientsListProvider>
+        //</IngredientsListProvider>
     );
 }
 

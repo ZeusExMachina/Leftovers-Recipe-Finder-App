@@ -1,40 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+// Screens
 import IngredientSelection from "./pages/MainIngredientSelect";
+import SelectedIngredientsDisplayScreen from './pages/SelectedIngredientsDisplay';
 import RecipeResults from "./pages/RecipeResults";
+// States
+import IngredientsListProvider from './states/SelectedIngredientsList';
 
 const Stack = createStackNavigator();
 
-function IngredientSelectionScreen() {
-  return (
-    <IngredientSelection />
-  );
-}
-
 export default function App() {
   return (
-    // <View style={styles.container}>
-    //   <Text>Open up App.tsx to start working on your app!</Text>
-    //   <StatusBar style="auto" />
-    // </View>
 
-    // <BrowserRouter>
-    //   <Route path = "/" exact={true} component = {IngredientSelection} />
-    //   <Route path = "/ingredient-select" component = {IngredientSelection} />
-    //   <Route path = "/recipe-results" component = {RecipeResults} />
-    // </BrowserRouter>
-    
-    <NavigationContainer>
-      <Stack.Navigator 
-        initialRouteName="IngredientSelection"
-        screenOptions={{
-          headerShown: false
-        }}
-      >
-        <Stack.Screen name="IngredientSelection" component={IngredientSelectionScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <IngredientsListProvider>
+      <NavigationContainer>
+        <Stack.Navigator 
+          initialRouteName="IngredientSelection"
+          screenOptions={{
+            headerShown: false
+          }}
+        >
+          
+          <Stack.Screen name="IngredientSelection" component={IngredientSelection} />
+          <Stack.Screen name="Selected Ingredients" component={SelectedIngredientsDisplayScreen} />
+          
+        </Stack.Navigator>
+      </NavigationContainer>
+    </IngredientsListProvider>
   );
 }

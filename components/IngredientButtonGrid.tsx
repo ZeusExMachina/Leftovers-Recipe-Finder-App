@@ -1,6 +1,8 @@
+// 3rd-party Imports
 import React, { useContext } from 'react';
 import { StyleSheet, FlatList, } from 'react-native';
 import { Chip } from 'react-native-paper';
+// State - Selected Ingredients
 import { SelectedIngredients, UpdateSelectedIngredients } from '../states/SelectedIngredientsList';
 
 interface Props {
@@ -21,7 +23,6 @@ function makeButtonFlatListData(ingredientNames : string[]) : ButtonInFlatList[]
 }
 
 const IngredientButtonGrid = (props : Props) => {
-
     const flatListData = makeButtonFlatListData(props.ingredientNames);
 
     const {ingredientsList, updateIngredientsList} = useContext(SelectedIngredients)
