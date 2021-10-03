@@ -6,15 +6,17 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import IngredientsContents from "../components/IngredientsContents";
 import MainPageHeader from "../components/MainPageHeader";
 import MainPageFooter from "../components/MainPageFooter";
-// Styles for divs
-import "../styles/styles.css"
+// States
+import SearchbarTextInputProvider from '../states/SearchedIngredientsResults';
 
 const IngredientSelection = ({ navigation }) => {
   return (
       <PaperProvider>
-        <IngredientsContents/>
+        <SearchbarTextInputProvider>
+          <IngredientsContents/>
 
-        <MainPageHeader/>
+          <MainPageHeader/>
+        </SearchbarTextInputProvider>
 
         <MainPageFooter navigationObj={navigation}/>
       </PaperProvider> 

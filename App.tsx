@@ -7,6 +7,8 @@ import SelectedIngredientsDisplayScreen from './pages/SelectedIngredientsDisplay
 import RecipeResults from "./pages/RecipeResults";
 // States
 import IngredientsListProvider from './states/SelectedIngredientsList';
+// Styles for divs
+import "./styles/styles.css"
 
 const Stack = createStackNavigator();
 
@@ -16,13 +18,13 @@ export default function App() {
     <IngredientsListProvider>
       <NavigationContainer>
         <Stack.Navigator 
-          initialRouteName="IngredientSelection"
+          initialRouteName="Ingredient Selection"
           screenOptions={{
             headerShown: false
           }}
         >
           
-          <Stack.Screen name="IngredientSelection" component={IngredientSelection} />
+          <Stack.Screen name="Ingredient Selection" component={IngredientSelection} />
           <Stack.Screen name="Selected Ingredients" component={SelectedIngredientsDisplayScreen} />
           
         </Stack.Navigator>

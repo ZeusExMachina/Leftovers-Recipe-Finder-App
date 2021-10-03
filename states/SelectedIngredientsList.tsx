@@ -16,10 +16,6 @@ export default function IngredientsListProvider({ children }) {
 
     const ingredientsListProviderValue = useMemo(() => ({ingredientsList,updateIngredientsList}), [ingredientsList,updateIngredientsList])
 
-    function isInSelectedIngredientsList(ingredient : string) : boolean {
-        return ingredientsList.includes(ingredient);
-    }
-
     function useToggleIngredientSelect(ingredient:string, {ingredientsList,updateIngredientsList}) {
         let newSelectedIngredients : string[] = [];
         newSelectedIngredients = newSelectedIngredients.concat(ingredientsList);
@@ -37,7 +33,7 @@ export default function IngredientsListProvider({ children }) {
     }
 
     useEffect(() => {
-    console.log("useEffect", ingredientsList);
+        console.log("SelectedIngredientsList useEffect", ingredientsList);
     }, [ingredientsList])
 
     return (

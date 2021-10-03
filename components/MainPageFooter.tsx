@@ -31,24 +31,24 @@ const MainPageFooter = (props : Props) => {
 
   return (
     <div className={"footer"}>
-    <Appbar style={styles.bottom}>
-      <Button 
-        icon="format-list-bulleted-square" 
-        mode="contained" 
-        style={styles.bottomBar_button} 
-        onPress={() => { switchToSelectedIngredientsScreen(); }}>
-        Selected Ingredients
-      </Button>
-      <Button 
-        icon="arrow-right"
-        mode="contained"
-        contentStyle={{ flexDirection:"row-reverse" }}
-        style={styles.bottomBar_button} 
-        onPress={() => console.log('Pressed')}>
-        Find Recipes
-      </Button>
-    </Appbar>
-  </div>
+      <Appbar style={styles.bottom}>
+        <Button 
+          icon="format-list-bulleted-square" 
+          mode="contained" 
+          style={styles.bottomBar_button} 
+          onPress={() => { switchToSelectedIngredientsScreen(); }}>
+          Selected Ingredients
+        </Button>
+        <Button 
+          icon="arrow-right"
+          mode="contained"
+          contentStyle={{ flexDirection:"row-reverse" }}
+          style={styles.bottomBar_button} 
+          onPress={() => console.log('Pressed')}>
+          Find Recipes
+        </Button>
+      </Appbar>
+    </div>
   );
 };
 

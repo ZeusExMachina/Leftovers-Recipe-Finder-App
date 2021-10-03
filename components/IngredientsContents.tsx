@@ -30,34 +30,32 @@ const styles = StyleSheet.create({
 
 const IngredientsContents = () => {
     return (
-        //<IngredientsListProvider>
-          <View style={styles.ingredientsContents}>
-            <ScrollView>
-              <Text style={styles.ingredientSection_heading}>
-                Favourite Ingredients
-                <Avatar.Icon size={28} icon="star" style={styles.contentSection_avatarIcon} />
-              </Text>
+        <View style={styles.ingredientsContents}>
+        <ScrollView>
+            <Text style={styles.ingredientSection_heading}>
+            Favourite Ingredients
+            <Avatar.Icon size={28} icon="star" style={styles.contentSection_avatarIcon} />
+            </Text>
 
-              <IngredientButtonGrid ingredientNames={["Chili Oil"]}/>
+            <IngredientButtonGrid ingredientNames={["Chili Oil"]}/>
 
-              <Text style={styles.ingredientSection_heading}>
-                Recently Used Ingredients
-                <Avatar.Icon size={28} icon="history" style={styles.contentSection_avatarIcon} />
-              </Text>
+            <Text style={styles.ingredientSection_heading}>
+            Recently Used Ingredients
+            <Avatar.Icon size={28} icon="history" style={styles.contentSection_avatarIcon} />
+            </Text>
 
-              <IngredientButtonGrid ingredientNames={["Tortilla", "Cheese"]}/>
+            <IngredientButtonGrid ingredientNames={["Tortilla", "Cheese"]}/>
 
-              <Text style={styles.ingredientSection_heading}>Food Categories</Text>
+            <Text style={styles.ingredientSection_heading}>Food Categories</Text>
 
-              <IngredientCategory categoryName="Meat"/>
-              <IngredientCategory categoryName="Vegetables"/>
-              <IngredientCategory categoryName="Fruits"/>
-              <IngredientCategory categoryName="Dairy"/>
-              <IngredientCategory categoryName="Baking"/>
-              <IngredientCategory categoryName="Alcohol"/>
-            </ScrollView>
-          </View>
-        //</IngredientsListProvider>
+            <IngredientCategory categoryName="Meat"/>
+            <IngredientCategory categoryName="Vegetables"/>
+            <IngredientCategory categoryName="Fruits"/>
+            <IngredientCategory categoryName="Dairy"/>
+            <IngredientCategory categoryName="Baking"/>
+            <IngredientCategory categoryName="Alcohol"/>
+        </ScrollView>
+        </View>
     );
 }
 

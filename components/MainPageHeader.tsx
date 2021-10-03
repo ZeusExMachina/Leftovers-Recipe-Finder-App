@@ -1,7 +1,9 @@
 // 3rd-party Imports
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { StyleSheet } from 'react-native';
 import { Appbar, Text, Searchbar, IconButton } from 'react-native-paper';
+// State - Selected Ingredients
+import { SearchedIngredientsResults } from '../states/SearchedIngredientsResults';
 
 const ContentTitle = ({ title, style }) => (
     <Appbar.Content
@@ -36,6 +38,8 @@ const styles = StyleSheet.create({
 });
 
 const MainPageHeader = () => {
+    const {searchedIngredients,setSearchedIngredients} = useContext(SearchedIngredientsResults);
+
     const [searchQuery, setSearchQuery] = useState('');
     const onChangeSearch = query => setSearchQuery(query);
 
