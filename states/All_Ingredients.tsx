@@ -1,23 +1,26 @@
 // 3rd-party Imports
 import React, { useEffect, useMemo, useState } from 'react'
 
-function ingredientsMapDefaultValue() : Map<string,string[]> {
-    var map = new Map<string,string[]>();
-    map.set("Meat", ["Beef", "Pork", "Chicken"]);
-    map.set("Vegetables", ["Potato", "Tomato", "Carrot"]);
-    map.set("Fruits", ["Apple", "Banana", "Orange"]);
-    return map;
-}
+// function ingredientsMapDefaultValue() : Map<string,string[]> {
+//     var map = new Map<string,string[]>();
+//     map.set("Meat", ["Beef", "Pork", "Chicken"]);
+//     map.set("Vegetables", ["Potato", "Tomato", "Carrot"]);
+//     map.set("Fruits", ["Apple", "Banana", "Orange"]);
+//     return map;
+// }
 
-const searchbarTextInputStateDefaultValue = {
-    allIngredients: ingredientsMapDefaultValue(),
+export const searchbarTextInputStateDefaultValue = {
+    allIngredients: new Map<string,string[]>()
+                        .set("Meat", ["Beef", "Pork", "Chicken"])
+                        .set("Vegetables", ["Potato", "Tomato", "Carrot"])
+                        .set("Fruits", ["Apple", "Banana", "Orange"]),
     setAllIngredients: (state:Map<string,string[]>) => {}
 };
 
 export const AllIngredients = React.createContext(searchbarTextInputStateDefaultValue);
 
 export default function AllIngredientsProvider({ children }) {
-    const [allIngredients, setAllIngredients] = useState<Map<string,string[]>>(searchbarTextInputStateDefaultValue);
+    const [allIngredients, setAllIngredients] = useState<Map<string,string[]>>(searchbarTextInputStateDefaultValue.allIngredients);
 
     const allIngredientsProviderValue = useMemo(() => ({allIngredients,setAllIngredients}), [allIngredients,setAllIngredients]);
 
