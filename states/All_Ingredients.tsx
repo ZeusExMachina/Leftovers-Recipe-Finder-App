@@ -7,10 +7,10 @@ export default function IngredientsListProvider({ children }) {
     const searchedIngredientsProviderValue = useMemo(() => ({searchedIngredients,setSearchedIngredients}), [searchedIngredients,setSearchedIngredients]);
 
     function updateAndRefreshAllIngredients({ingredientsList,updateIngredientsList}) {
-        let new
+        //let new
     }
 
     return (
-
+        
     );
 }

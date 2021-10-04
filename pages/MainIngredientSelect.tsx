@@ -7,16 +7,19 @@ import IngredientsContents from "../components/IngredientsContents";
 import MainPageHeader from "../components/MainPageHeader";
 import MainPageFooter from "../components/MainPageFooter";
 // States
-import SearchbarTextInputProvider from '../states/SearchedIngredientsResults';
+import SearchbarTextInputProvider from "../states/SearchbarTextInput";
+import SearchedIngredientsResultsProvider from '../states/SearchedIngredientsResults';
 
 const IngredientSelection = ({ navigation }) => {
   return (
       <PaperProvider>
-        <SearchbarTextInputProvider>
-          <IngredientsContents/>
+        <SearchedIngredientsResultsProvider>
+          <SearchbarTextInputProvider>
+            <IngredientsContents/>
 
-          <MainPageHeader/>
-        </SearchbarTextInputProvider>
+            <MainPageHeader/>
+          </SearchbarTextInputProvider>
+        </SearchedIngredientsResultsProvider>
 
         <MainPageFooter navigationObj={navigation}/>
       </PaperProvider> 

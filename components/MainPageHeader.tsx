@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import { StyleSheet } from 'react-native';
 import { Appbar, Text, Searchbar, IconButton } from 'react-native-paper';
 // State - Selected Ingredients
+import { SearchbarTextInput } from "../states/SearchbarTextInput";
 import { SearchedIngredientsResults } from '../states/SearchedIngredientsResults';
 
 const ContentTitle = ({ title, style }) => (
@@ -38,10 +39,14 @@ const styles = StyleSheet.create({
 });
 
 const MainPageHeader = () => {
+    const {searchInput,setSearchInput} = useContext(SearchbarTextInput);
     const {searchedIngredients,setSearchedIngredients} = useContext(SearchedIngredientsResults);
 
-    const [searchQuery, setSearchQuery] = useState('');
-    const onChangeSearch = query => setSearchQuery(query);
+    //const [searchQuery, setSearchQuery] = useState<string>("");
+
+    // const onChangeSearch = (query:string) => {
+    //   setSearchInput(query);
+    // };
 
     return (
         <div className={"header"}>
@@ -52,8 +57,8 @@ const MainPageHeader = () => {
                 <Searchbar style={styles.searchBar}
                   placeholder="Search"
                   theme={{ roundness:17 }}
-                  onChangeText={onChangeSearch}
-                  value={searchQuery}
+                  onChangeText={setSearchInput}
+                  value={searchInput}
                 />
                 {/* <IconButton icon="microphone" /> */}
               </div>
