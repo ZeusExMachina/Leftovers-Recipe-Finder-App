@@ -1,7 +1,9 @@
 // 3rd-party Imports
 import React, { useContext } from 'react';
-import { StyleSheet, FlatList, } from 'react-native';
+import { StyleSheet, FlatList } from 'react-native';
 import { Chip } from 'react-native-paper';
+// Components
+import IngredientButton from './IngredientButton';
 // State - Selected Ingredients
 import { SelectedIngredients, UpdateSelectedIngredients } from '../states/SelectedIngredientsList';
 
@@ -28,20 +30,20 @@ const IngredientButtonGrid = (props : Props) => {
     const {ingredientsList, updateIngredientsList} = useContext(SelectedIngredients)
     const useToggleIngredientSelect = useContext(UpdateSelectedIngredients)
 
+    function isSelected(ingredientName:string) : boolean {
+        return ingredientsList.includes(ingredientName);
+    }
+
+    function toggleIngredientSelectHandler(ingredientName:string) {
+        useToggleIngredientSelect(ingredientName, {ingredientsList, updateIngredientsList});
+    }
+
     return (
         <div style={{margin: 5}}>
             <FlatList
                 data={flatListData}
                 renderItem={({item}) => (
-                    <Chip 
-                        icon="information"
-                        mode="outlined"
-                        selected={ ingredientsList.includes(item.name) }
-                        textStyle={ styles.ingredientButton_text }
-                        style={ styles.ingredientButton } 
-                        onPress={() => { useToggleIngredientSelect(item.name, {ingredientsList, updateIngredientsList}); }}>
-                        {item.name}
-                    </Chip>
+                    <IngredientButton ingredientName={item.name} isSelected={isSelected} toggleHandler={toggleIngredientSelectHandler}/>
                 )}
                 numColumns={2}>
             </FlatList>

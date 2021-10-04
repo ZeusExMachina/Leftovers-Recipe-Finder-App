@@ -15,7 +15,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <AllIngredientsProvider>
+    //<AllIngredientsProvider>
       <IngredientsListProvider>
         <NavigationContainer>
           <Stack.Navigator 
@@ -31,6 +31,6 @@ export default function App() {
           </Stack.Navigator>
         </NavigationContainer>
       </IngredientsListProvider>
-    </AllIngredientsProvider>
+    //</AllIngredientsProvider>
   );
 }

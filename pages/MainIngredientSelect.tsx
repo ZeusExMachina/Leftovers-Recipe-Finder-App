@@ -13,13 +13,13 @@ import SearchedIngredientsResultsProvider from '../states/SearchedIngredientsRes
 const IngredientSelection = ({ navigation }) => {
   return (
       <PaperProvider>
-        <SearchedIngredientsResultsProvider>
+        {/* <SearchedIngredientsResultsProvider> */}
           <SearchbarTextInputProvider>
             <IngredientsContents/>
 
             <MainPageHeader/>
           </SearchbarTextInputProvider>
-        </SearchedIngredientsResultsProvider>
+        {/* </SearchedIngredientsResultsProvider> */}
 
         <MainPageFooter navigationObj={navigation}/>
       </PaperProvider> 

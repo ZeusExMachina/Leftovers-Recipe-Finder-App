@@ -1,6 +1,6 @@
 // 3rd-party Imports
 import React, { useEffect, useMemo, useState, useContext } from 'react'
-import searchbarTextInputStateDefaultValue from "../states/All_Ingredients"
+//import searchbarTextInputStateDefaultValue from "../states/All_Ingredients"
 import { UpdateSelectedIngredients } from './SelectedIngredientsList';
 
 const searchedIngredientsStateDefaultValue = {
