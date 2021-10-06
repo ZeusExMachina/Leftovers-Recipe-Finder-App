@@ -28,3 +28,9 @@
     display: flex;
     flex-direction: row;
 }
+
+.ingredientModal_container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}

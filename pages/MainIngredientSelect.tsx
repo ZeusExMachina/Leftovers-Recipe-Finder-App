@@ -12,7 +12,7 @@ import SearchedIngredientsResultsProvider from '../states/SearchedIngredientsRes
 
 const IngredientSelection = ({ navigation }) => {
   return (
-      <PaperProvider>
+      <>
         {/* <SearchedIngredientsResultsProvider> */}
           <SearchbarTextInputProvider>
             <IngredientsContents/>
@@ -22,7 +22,7 @@ const IngredientSelection = ({ navigation }) => {
         {/* </SearchedIngredientsResultsProvider> */}
 
         <MainPageFooter navigationObj={navigation}/>
-      </PaperProvider> 
+      </> 
   );
 }
 

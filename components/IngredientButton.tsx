@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { Chip, Modal, Portal, Text } from 'react-native-paper';
+import React, { useState, useContext } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Chip } from 'react-native-paper';
+import { initialWindowMetrics } from 'react-native-safe-area-context';
+// Components
+import IngredientModalPopup from './IngredientModalPopup';
+// States
+import { ScrollEnabled } from "../states/ScrollingEnabled";
 
 interface Props {
     ingredientName : string
@@ -9,20 +14,24 @@ interface Props {
 }
 
 const IngredientButton = (props:Props) => {
+    const {scrollEnabled, setScrollEnabled} = useContext(ScrollEnabled);
+
+    // Modal State and functions
     const [modalIsVisible, setModalIsVisible] = useState(false);
 
-    const showModal = () => setModalIsVisible(true);
-    const hideModal = () => setModalIsVisible(false);
-    const containerStyle = {backgroundColor: 'white', padding: 20};
+    function showModal() {
+        setModalIsVisible(true);
+        setScrollEnabled(false);
+    }
 
     return (
         <>
-            <Portal>
-                <Modal visible={modalIsVisible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-                <Text>Example Modal.  Click outside this area to dismiss.</Text>
-                </Modal>
-            </Portal>
-            <Chip 
+            <IngredientModalPopup 
+                ingredientName={props.ingredientName} 
+                modalIsVisible={modalIsVisible} 
+                setModalIsVisible={setModalIsVisible}
+            />
+            <Chip
                 icon="information"
                 mode="outlined"
                 selected={ props.isSelected(props.ingredientName) }
@@ -37,11 +46,6 @@ const IngredientButton = (props:Props) => {
 }
 
 const styles = StyleSheet.create({
-    // ingredientButton_container: {
-    //     display: "flex",
-    //     justifyContent: "space-evenly",
-    // },
-
     ingredientButton: {
       //backgroundColor: "purple",
       width: "47.5%",
@@ -57,7 +61,7 @@ const styles = StyleSheet.create({
       paddingLeft: "20px",
       paddingRight: "20px",
       fontSize: 20,
-    }
+    },
 });
 
 export default IngredientButton;
