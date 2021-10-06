@@ -1,24 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Modal, Portal, Text, Avatar, ToggleButton } from 'react-native-paper';
-// States
-import { ScrollEnabled } from "../states/ScrollingEnabled";
 
 interface Props {
     ingredientName : string
     modalIsVisible : boolean
-    setModalIsVisible : (state:boolean) => void
+    hideModal() : void
 }
 
 const IngredientModalPopup = (props : Props) => {
-    const {scrollEnabled, setScrollEnabled} = useContext(ScrollEnabled);
-
-    // Modal State and functions
-    function hideModal() {
-        props.setModalIsVisible(false);
-        setScrollEnabled(true);
-    }
-
     // Favourite toggle button State and functions
     const [isFavourite, setIsFavourite] = useState<'checked'|'unchecked'>('unchecked');
 
@@ -28,7 +18,7 @@ const IngredientModalPopup = (props : Props) => {
 
     return (
         <Portal>
-            <Modal visible={props.modalIsVisible} onDismiss={hideModal} contentContainerStyle={styles.modalStyles}>
+            <Modal visible={props.modalIsVisible} onDismiss={props.hideModal} contentContainerStyle={styles.modalStyles}>
                 <View style={styles.innerModal_container}>
                     <View style={styles.avatar_and_favouritesToggle_view}>
                         <Avatar.Image size={100} source={require('../assets/favicon.png')}/>

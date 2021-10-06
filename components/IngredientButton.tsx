@@ -23,13 +23,17 @@ const IngredientButton = (props:Props) => {
         setModalIsVisible(true);
         setScrollEnabled(false);
     }
+    function hideModal() {
+        setModalIsVisible(false);
+        setScrollEnabled(true);
+    }
 
     return (
         <>
             <IngredientModalPopup 
                 ingredientName={props.ingredientName} 
                 modalIsVisible={modalIsVisible} 
-                setModalIsVisible={setModalIsVisible}
+                hideModal={hideModal}
             />
             <Chip
                 icon="information"
