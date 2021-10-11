@@ -24,7 +24,7 @@ const IngredientCategory = (props : Props) => {
 
 const styles = StyleSheet.create({
   ingredientCategory_dropDown: {
-    height: "20px",
+    height: 20,
   },
 });
 

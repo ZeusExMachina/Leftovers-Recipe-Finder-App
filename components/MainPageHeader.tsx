@@ -1,6 +1,6 @@
 // 3rd-party Imports
 import React, { useState, useContext } from "react";
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Appbar, Text, Searchbar, IconButton } from 'react-native-paper';
 // State - Selected Ingredients
 import { SearchbarTextInput } from "../states/SearchbarTextInput";
@@ -14,57 +14,62 @@ const ContentTitle = ({ title, style }) => (
 );
 
 const styles = StyleSheet.create({
-    top: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        height: "85px",
-        display: "flex",
-        justifyContent: "center",
-    },
-    
-    searchBar: {
-        marginTop: 7,
-        marginLeft: 5,
-        marginRight: 5,
-        height: "35px",
-        //width: "80%",
-    },
+  header: {
+    position: "relative",
+    top: 0,
+    left: 0,
+    right: 0,
+    marginTop: 0,
+    height: 90,
+  },
 
-    screenTitle: {
-        borderColor: "#000",
-        borderWidth: 5,
-    },
+  top: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: 10,
+      height: 90,
+      display: "flex",
+      justifyContent: "center",
+      paddingBottom: 10,
+  },
+  
+  searchBar: {
+    position: "relative",
+      //marginTop: 5,
+      //marginLeft: 5,
+      //marginRight: 5,
+    height: 35,
+    width: "100%",
+    alignSelf: "center",
+  },
 });
 
 const MainPageHeader = () => {
     const {searchInput,setSearchInput} = useContext(SearchbarTextInput);
     const {searchedIngredients,setSearchedIngredients} = useContext(SearchedIngredientsResults);
 
-    //const [searchQuery, setSearchQuery] = useState<string>("");
+    // const [searchQuery, setSearchQuery] = useState<string>("");
 
     // const onChangeSearch = (query:string) => {
     //   setSearchInput(query);
     // };
 
     return (
-        <div className={"header"}>
-          <Appbar.Header style={styles.top}>
-            <div className={"header_inner"}>
-              <ContentTitle title={'Select ingredients you have'} style={{color:'white'}} />
-              <div>
-                <Searchbar style={styles.searchBar}
-                  placeholder="Search"
-                  theme={{ roundness:17 }}
-                  onChangeText={setSearchInput}
-                  value={searchInput}
-                />
-                {/* <IconButton icon="microphone" /> */}
-              </div>
-            </div>
-          </Appbar.Header>
-        </div>
+      <View style={styles.header} onLayout={event => { const layout = event.nativeEvent.layout; console.log('y:', layout.y); }}>
+        <Appbar.Header style={styles.top}>
+          <View style={{alignItems: "center", marginTop:10}}>
+            <ContentTitle title={'Select ingredients you have'} style={{position:"relative", fontSize:22, color:'white'}} />
+            <Searchbar style={styles.searchBar}
+              placeholder="Search"
+              theme={{ roundness:17 }}
+              onChangeText={setSearchInput}
+              value={searchInput}
+            />
+            {/* <IconButton icon="microphone" /> */}
+          </View>
+        </Appbar.Header>
+      </View>
     );
 };
 

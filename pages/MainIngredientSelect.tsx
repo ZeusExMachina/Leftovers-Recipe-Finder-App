@@ -1,7 +1,6 @@
 // 3rd-paarty Imports
 import React from "react";
-import { StyleSheet } from 'react-native';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
 // Components
 import IngredientsContents from "../components/IngredientsContents";
 import MainPageHeader from "../components/MainPageHeader";
@@ -12,17 +11,17 @@ import SearchedIngredientsResultsProvider from '../states/SearchedIngredientsRes
 
 const IngredientSelection = ({ navigation }) => {
   return (
-      <>
+    <SearchbarTextInputProvider>
+      <View style={{ flex:1 }}>
         {/* <SearchedIngredientsResultsProvider> */}
-          <SearchbarTextInputProvider>
-            <IngredientsContents/>
-
-            <MainPageHeader/>
-          </SearchbarTextInputProvider>
+        <MainPageHeader/>
+      
+        <IngredientsContents/>
         {/* </SearchedIngredientsResultsProvider> */}
 
         <MainPageFooter navigationObj={navigation}/>
-      </> 
+      </View>
+    </SearchbarTextInputProvider>
   );
 }
 

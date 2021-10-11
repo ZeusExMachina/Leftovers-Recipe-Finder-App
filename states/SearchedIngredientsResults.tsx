@@ -24,7 +24,7 @@ export default function SearchedIngredientsResultsProvider({ children }) {
             setSearchedIngredients([]);
         } else {
             // Otherwise, search for ingredients from All_Ingredients and display them
-            var searchResults : string[] = [];
+            let searchResults : string[] = [];
             allIngredients.forEach((value: string[], key: string) => {
                 for (let i = 0; i < value.length; i++) {
                     if (value[i].startsWith(searchQuery)) {

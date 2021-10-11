@@ -1,36 +1,49 @@
 // 3rd-party Imports
-import React from "react";
-import { StyleSheet } from 'react-native';
+import React, { useContext } from "react";
+import { StyleSheet, View, Linking, Alert } from 'react-native';
 import { Appbar, Button } from 'react-native-paper';
+import { InAppBrowser } from 'react-native-inappbrowser-reborn'
+// Components
+import RecipeResults from "../pages/RecipeResults";
+// States
+import { SelectedIngredients } from '../states/SelectedIngredientsList';
 
 interface Props {
   navigationObj
 }
 
 const styles = StyleSheet.create({
+    footer: {
+      position: 'relative',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: 55,
+    },
+
     bottom: {
         position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "60px",
+        height: 55,
         display: "flex",
         justifyContent: "space-evenly",
     },
 
     bottomBar_button: {
-        height: "40px",
+        height: 40,
         width: "45%",
     },
 });
 
 const MainPageFooter = (props : Props) => {
-   const switchToSelectedIngredientsScreen = () => {
-     props.navigationObj.navigate("Selected Ingredients");
-   }
+  const switchToSelectedIngredientsScreen = () => {
+    props.navigationObj.navigate("Selected Ingredients");
+  }
 
   return (
-    <div className={"footer"}>
+    <View style={styles.footer}>
       <Appbar style={styles.bottom}>
         <Button 
           icon="format-list-bulleted-square" 
@@ -39,16 +52,17 @@ const MainPageFooter = (props : Props) => {
           onPress={() => { switchToSelectedIngredientsScreen(); }}>
           Selected Ingredients
         </Button>
-        <Button 
+        {/* <Button 
           icon="arrow-right"
           mode="contained"
           contentStyle={{ flexDirection:"row-reverse" }}
           style={styles.bottomBar_button} 
-          onPress={() => console.log('Pressed')}>
+          onPress={() => { console.log('Find Recipes pressed'); openLink(); }}>
           Find Recipes
-        </Button>
+        </Button> */}
+        <RecipeResults/>
       </Appbar>
-    </div>
+    </View>
   );
 };
 

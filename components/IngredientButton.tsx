@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
     ingredientButton_text: {
     //   display: 'flex',
     //   justifyContent: "center",
-      paddingLeft: "20px",
-      paddingRight: "20px",
+      paddingLeft: 20,
+      paddingRight: 20,
       fontSize: 20,
     },
 });

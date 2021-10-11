@@ -21,11 +21,11 @@ const IngredientModalPopup = (props : Props) => {
             <Modal visible={props.modalIsVisible} onDismiss={props.hideModal} contentContainerStyle={styles.modalStyles}>
                 <View style={styles.innerModal_container}>
                     <View style={styles.avatar_and_favouritesToggle_view}>
-                        <Avatar.Image size={100} source={require('../assets/favicon.png')}/>
-                        <ToggleButton icon={'star-outline'} size={50} status={isFavourite} onPress={onButtonToggle}/>
+                        <Avatar.Image size={80} source={require('../assets/favicon.png')}/>
+                        <ToggleButton icon={'star-outline'} size={55} status={isFavourite} onPress={onButtonToggle}/>
                     </View>
-                    <Text style={{fontSize: 17, paddingTop: 30}}><b>{props.ingredientName}</b></Text>
-                    <Text style={{fontSize: 17, paddingTop: 20}}><b>Category:</b> [Food Category Name Here]</Text>
+                    <Text style={{fontSize: 17, paddingTop: 30}}>{props.ingredientName}</Text>
+                    <Text style={{fontSize: 17, paddingTop: 20}}>Category: [Food Category Name Here]</Text>
                 </View>
             </Modal>
         </Portal>
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     },
 
     innerModal_container: {
+        flex: 1,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: "space-evenly",

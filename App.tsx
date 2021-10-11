@@ -11,7 +11,7 @@ import AllIngredientsProvider from './states/All_Ingredients';
 import IngredientsListProvider from './states/SelectedIngredientsList';
 import ScrollingEnabledProvider from './states/ScrollingEnabled';
 // Styles for divs
-import "./styles/styles.css"
+//import "./styles/styles.css"
 
 const Stack = createStackNavigator();
 
