@@ -6,30 +6,42 @@ import { Button } from "react-native-paper";
 // States
 import { SelectedIngredients } from '../states/SelectedIngredientsList';
 
+async function openInAppBrowserWindow(ingredientsList : string[]) {
+  if (ingredientsList.length < 1) { return }
+
+  let url = "https://google.com/search?q=Recipes+with";
+  for (let i = 0; i < ingredientsList.length; i++) {
+    url = url.concat("+" + ingredientsList[i].replace(" ", "+"));
+    if (i == ingredientsList.length-2) { url = url.concat(",+and"); }
+    else if (i < ingredientsList.length-2) { url = url.concat(","); }
+  }
+
+  await WebBrowser.openBrowserAsync(url);
+}
+
 const RecipeResults = () => {
-    const {ingredientsList,updateIngredientsList} = useContext(SelectedIngredients);
+  const {ingredientsList,updateIngredientsList} = useContext(SelectedIngredients); 
+    // let url = "https://google.com/search?q=Recipes+with";
+    // for (let i = 0; i < ingredientsList.length; i++) {
+    //   url = url.concat("+" + ingredientsList[i].replace(" ", "+"));
+    //   if (i == ingredientsList.length-2) { url = url.concat(",+and"); }
+    //   else if (i < ingredientsList.length-2) { url = url.concat(","); }
+    // }
 
-    let url = "https://google.com/search?q=Recipes+with";
-    for (let i = 0; i < ingredientsList.length; i++) {
-      url = url.concat("+" + ingredientsList[i].replace(" ", "+"));
-      if (i == ingredientsList.length-2) { url = url.concat(",+and"); }
-      else if (i < ingredientsList.length-2) { url = url.concat(","); }
-    }
-
-    return (
-        <Button 
-            icon="arrow-right"
-            mode="contained"
-            contentStyle={{ flexDirection:"row-reverse" }}
-            style={styles.bottomBar_button} 
-            onPress={async () => { 
-                await WebBrowser.openBrowserAsync(url);
-                // openLink(url);
-            }
-        }>
-            Find Recipes
-        </Button>
-    );
+  return (
+      <Button 
+          icon="arrow-right"
+          mode="contained"
+          contentStyle={{ flexDirection:"row-reverse" }}
+          style={styles.bottomBar_button} 
+          onPress={async () => { 
+            openInAppBrowserWindow(ingredientsList);
+            // openLink(url);
+          }
+      }>
+          Find Recipes
+      </Button>
+  );
 }
 
 // async function openLink(url:string) {
