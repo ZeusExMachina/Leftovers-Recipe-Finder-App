@@ -53,7 +53,7 @@ const MainPageHeader = () => {
     // };
 
     return (
-      <View style={styles.header} onLayout={event => { const layout = event.nativeEvent.layout; console.log('y:', layout.y); }}>
+      <View style={styles.header}>
         <Appbar.Header style={styles.top}>
           <View style={{alignItems: "center", marginTop:10}}>
             <ContentTitle title={'Select ingredients you have'} style={{position:"relative", fontSize:22, color:'white'}} />

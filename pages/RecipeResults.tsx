@@ -21,12 +21,6 @@ async function openInAppBrowserWindow(ingredientsList : string[]) {
 
 const RecipeResults = () => {
   const {ingredientsList,updateIngredientsList} = useContext(SelectedIngredients); 
-    // let url = "https://google.com/search?q=Recipes+with";
-    // for (let i = 0; i < ingredientsList.length; i++) {
-    //   url = url.concat("+" + ingredientsList[i].replace(" ", "+"));
-    //   if (i == ingredientsList.length-2) { url = url.concat(",+and"); }
-    //   else if (i < ingredientsList.length-2) { url = url.concat(","); }
-    // }
 
   return (
       <Button 

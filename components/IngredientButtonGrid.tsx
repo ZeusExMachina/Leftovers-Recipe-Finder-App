@@ -39,7 +39,7 @@ const IngredientButtonGrid = (props : Props) => {
     }
 
     return (
-        <View style={{margin: 5}}>
+        <View style={{flex:1, margin: 5}}>
             <FlatList
                 data={flatListData}
                 scrollEnabled={false}

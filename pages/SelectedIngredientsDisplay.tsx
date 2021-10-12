@@ -25,26 +25,22 @@ const SelectedIngredientsDisplayScreen = ({ navigation }) => {
 
     return (
         <View style={{flex:1}}>
-            <View style={{height:50, borderWidth:10, borderColor:"#000"}}>
+            <View style={styles.header}>
                 <Appbar.Header style={styles.top}>
-                    <View style={{alignItems: "center"}}>
-                        <ContentTitle title={'Selected Ingredients'} style={{color:'white'}} />
-                    </View>
+                    <ContentTitle title={'Selected Ingredients'} style={{marginTop:15, fontSize:22, color:'white'}} />
                 </Appbar.Header>
             </View>
-
-            <View>
-                <IngredientButtonGrid ingredientNames={ingredientsList}/>
-            </View>
             
-            <View style={{height:60, borderWidth:10, borderColor:"#000"}}>
+            <IngredientButtonGrid ingredientNames={ingredientsList}/>
+            
+            <View style={styles.footer}>
                 <Appbar style={styles.bottom}>
                     <Button 
                         icon="close" 
                         mode="contained" 
                         style={styles.bottomBar_button} 
                         onPress={() => { switchToIngredientSelectionScreen(); }}>
-                        Selected Ingredients
+                        Back
                     </Button>
                 </Appbar>
             </View>
@@ -53,31 +49,32 @@ const SelectedIngredientsDisplayScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    // footer: {
-    //     position: 'absolute',
-    //     bottom: 50,
-    //     left: 0,
-    //     right: 0,
-    //     marginBottom: '0px',
-    //     height: '60px',
-    // },
+    header: {
+        position: "relative",
+        top: 0,
+        left: 0,
+        right: 0,
+        marginTop: 0,
+        height: 60,
+        //height:50,
+        //borderWidth:10, borderColor:"#000"
+    },
 
     top: {
         position: 'absolute',
         left: 0,
         right: 0,
         top: 0,
-        height: 50,
+        height: 60,
         display: "flex",
         justifyContent: "center",
     },
 
     footer: {
-        //position: 'fixed',
+        position: 'relative',
         bottom: 0,
         left: 0,
         right: 0,
-        marginBottom: 0,
         height: 60,
     },
 
