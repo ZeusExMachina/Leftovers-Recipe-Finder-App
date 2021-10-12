@@ -36,9 +36,6 @@ const styles = StyleSheet.create({
   
   searchBar: {
     position: "relative",
-      //marginTop: 5,
-      //marginLeft: 5,
-      //marginRight: 5,
     height: 35,
     width: "100%",
     alignSelf: "center",
