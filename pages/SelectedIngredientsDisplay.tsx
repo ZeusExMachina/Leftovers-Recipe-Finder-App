@@ -21,7 +21,6 @@ const SelectedIngredientsDisplayScreen = ({ navigation }) => {
     }
 
     const {ingredientsList, updateIngredientsList} = useContext(SelectedIngredients);
-    console.log(ingredientsList);
 
     return (
         <View style={{flex:1}}>
@@ -36,7 +35,7 @@ const SelectedIngredientsDisplayScreen = ({ navigation }) => {
             <View style={styles.footer}>
                 <Appbar style={styles.bottom}>
                     <Button 
-                        icon="close" 
+                        icon="arrow-left" 
                         mode="contained" 
                         style={styles.bottomBar_button} 
                         onPress={() => { switchToIngredientSelectionScreen(); }}>
@@ -55,9 +54,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         marginTop: 0,
-        height: 60,
-        //height:50,
-        //borderWidth:10, borderColor:"#000"
+        height: 55,
     },
 
     top: {
@@ -65,7 +62,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         top: 0,
-        height: 60,
+        height: 55,
         display: "flex",
         justifyContent: "center",
     },
@@ -75,7 +72,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        height: 60,
+        height: 55,
     },
 
     bottom: {
@@ -91,6 +88,7 @@ const styles = StyleSheet.create({
     bottomBar_button: {
         height: 40,
         width: "45%",
+        fontSize: 17,
     },
 });
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { Portal, Modal, Provider as PaperProvider } from 'react-native-paper';
 // Screens
 import IngredientSelection from "./pages/MainIngredientSelect";
@@ -30,7 +30,14 @@ export default function App() {
                   }}
                 >
                   <Stack.Screen name="Ingredient Selection" component={IngredientSelection} />
-                  <Stack.Screen name="Selected Ingredients" component={SelectedIngredientsDisplayScreen} />
+                  <Stack.Screen
+                    name="Selected Ingredients"
+                    options={{
+                      cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+                      gestureEnabled: true,
+                      gestureDirection: 'vertical',
+                    }}
+                    component={SelectedIngredientsDisplayScreen} />
                   
                 </Stack.Navigator>
               </NavigationContainer>

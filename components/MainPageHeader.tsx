@@ -63,7 +63,6 @@ const MainPageHeader = () => {
               onChangeText={setSearchInput}
               value={searchInput}
             />
-            {/* <IconButton icon="microphone" /> */}
           </View>
         </Appbar.Header>
       </View>

@@ -13,28 +13,29 @@ interface Props {
 }
 
 const styles = StyleSheet.create({
-    footer: {
-      position: 'relative',
-      bottom: 0,
+  footer: {
+    position: 'relative',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 55,
+  },
+
+  bottom: {
+      position: 'absolute',
       left: 0,
       right: 0,
+      bottom: 0,
       height: 55,
-    },
+      display: "flex",
+      justifyContent: "space-evenly",
+  },
 
-    bottom: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: 55,
-        display: "flex",
-        justifyContent: "space-evenly",
-    },
-
-    bottomBar_button: {
-        height: 40,
-        width: "45%",
-    },
+  bottomBar_button: {
+      height: 40,
+      width: "45%",
+      fontSize: 17,
+  },
 });
 
 const MainPageFooter = (props : Props) => {
@@ -52,14 +53,6 @@ const MainPageFooter = (props : Props) => {
           onPress={() => { switchToSelectedIngredientsScreen(); }}>
           Selected Ingredients
         </Button>
-        {/* <Button 
-          icon="arrow-right"
-          mode="contained"
-          contentStyle={{ flexDirection:"row-reverse" }}
-          style={styles.bottomBar_button} 
-          onPress={() => { console.log('Find Recipes pressed'); openLink(); }}>
-          Find Recipes
-        </Button> */}
         <RecipeResults/>
       </Appbar>
     </View>
