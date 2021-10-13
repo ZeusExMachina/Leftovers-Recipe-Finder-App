@@ -21,11 +21,11 @@ const IngredientModalPopup = (props : Props) => {
             <Modal visible={props.modalIsVisible} onDismiss={props.hideModal} contentContainerStyle={styles.modalStyles}>
                 <View style={styles.innerModal_container}>
                     <View style={styles.avatar_and_favouritesToggle_view}>
-                        <Avatar.Image size={80} source={require('../assets/favicon.png')}/>
-                        <ToggleButton icon={'star-outline'} size={55} status={isFavourite} onPress={onButtonToggle}/>
+                        <Avatar.Image size={90} source={require('../assets/favicon.png')}/>
+                        <ToggleButton icon={'star-outline'} size={50} status={isFavourite} onPress={onButtonToggle} style={{width:50, height:50}}/>
                     </View>
-                    <Text style={{fontSize: 17, paddingTop: 30}}>{props.ingredientName}</Text>
-                    <Text style={{fontSize: 17, paddingTop: 20}}>Category: [Food Category Name Here]</Text>
+                    <Text style={{fontSize: 20, paddingTop: 30}}>{props.ingredientName}</Text>
+                    <Text style={{fontSize: 20, paddingTop: 20}}>Category: [Food Category Name Here]</Text>
                 </View>
             </Modal>
         </Portal>
@@ -40,8 +40,6 @@ const styles = StyleSheet.create({
         marginBottom: '25%',
         marginLeft: '12.5%',
         marginRight: '12.5%',
-        paddingTop: '40%',
-        paddingBottom: '40%',
         paddingLeft: 20,
         paddingRight:20,
     },
@@ -50,9 +48,7 @@ const styles = StyleSheet.create({
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: "space-evenly",
-        // borderColor: "#000",
-        // borderWidth: 5,
+        justifyContent: "center",
     },
 
     avatar_and_favouritesToggle_view: {

@@ -1,6 +1,7 @@
 // 3rd-party Imports
 import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { Button } from 'react-native-paper';
 // Components
 import IngredientButton from './IngredientButton';
 // State - Selected Ingredients
@@ -8,7 +9,7 @@ import { SelectedIngredients, UpdateSelectedIngredients } from '../states/Select
 
 interface Props {
     ingredientNames : string[]
-    objectsForNavigatingToAnotherScreen? : {navigationObj:any, screenName:string}
+    extrasScreenObjs? : {navigationObj:any, screenName:string}
 }
 
 const IngredientButtonGrid = (props : Props) => {
@@ -35,21 +36,23 @@ const IngredientButtonGrid = (props : Props) => {
         return ingredientsInColumn;
     }
 
-    const maxDisplayed : number = 5;
+    const switchToExtrasScreen = () => {
+        props.extrasScreenObjs?.navigationObj.navigate(props.extrasScreenObjs?.screenName);
+    }
 
     return (
-        (props.objectsForNavigatingToAnotherScreen === undefined || props.ingredientNames.length < 5)
+        (props.extrasScreenObjs === undefined || props.ingredientNames.length < 5)
             ?   
                 <View style={styles.columnsContainer}>
                     <View style={styles.singleColumnContainer}>
                         {getListOfIngredientsInRow(true).map((ingredientName,i) => 
                             React.createElement(IngredientButton,
-                                                {ingredientName:ingredientName, isSelected:isSelected, toggleHandler:toggleIngredientSelectHandler}))}
+                                                {key:i, ingredientName:ingredientName, isSelected:isSelected, toggleHandler:toggleIngredientSelectHandler}))}
                     </View>
                     <View style={styles.singleColumnContainer}>
                         {getListOfIngredientsInRow(false).map((ingredientName,i) => 
                             React.createElement(IngredientButton,
-                                                {ingredientName:ingredientName, isSelected:isSelected, toggleHandler:toggleIngredientSelectHandler}))}
+                                                {key:i, ingredientName:ingredientName, isSelected:isSelected, toggleHandler:toggleIngredientSelectHandler}))}
                     </View>
                 </View>
             :
@@ -57,11 +60,16 @@ const IngredientButtonGrid = (props : Props) => {
                     <View style={styles.singleColumnContainer}>
                         {[props.ingredientNames[0],props.ingredientNames[2]].map((ingredientName,i) => 
                             React.createElement(IngredientButton,
-                                                {ingredientName:ingredientName, isSelected:isSelected, toggleHandler:toggleIngredientSelectHandler}))}
+                                                {key:i, ingredientName:ingredientName, isSelected:isSelected, toggleHandler:toggleIngredientSelectHandler}))}
                     </View>
                     <View style={styles.singleColumnContainer}>
                         <IngredientButton ingredientName={props.ingredientNames[1]} isSelected={isSelected} toggleHandler={toggleIngredientSelectHandler}/>
-                        
+                        <Button 
+                            mode="text" 
+                            style={{}} 
+                            onPress={() => { switchToExtrasScreen(); }}>
+                            Selected Ingredients
+                        </Button>
                     </View>
                 </View>
     );

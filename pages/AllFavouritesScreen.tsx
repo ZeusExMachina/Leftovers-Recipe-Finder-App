@@ -2,8 +2,6 @@
 import React, { useContext } from "react";
 import { StyleSheet, View } from 'react-native';
 import { Appbar, Button, Text } from 'react-native-paper';
-// States
-import { SelectedIngredients } from '../states/SelectedIngredientsList';
 // Components
 import IngredientButtonGrid from "../components/IngredientButtonGrid";
 
@@ -14,25 +12,15 @@ const ContentTitle = ({ title, style }) => (
     />
 );
 
-const SelectedIngredientsDisplayScreen = ({ navigation }) => {
+const AllFavouriteIngredients = ({ navigation }) => {
     const switchToIngredientSelectionScreen = () => {
         navigation.navigate("Ingredient Selection");
     }
-
-    const {ingredientsList, updateIngredientsList} = useContext(SelectedIngredients);
 
     return (
         <View style={{flex:1}}>
             <View style={styles.header}>
                 <Appbar.Header style={styles.top}>
-                    <ContentTitle title={'Selected Ingredients'} style={{marginTop:15, fontSize:22, color:'white'}} />
-                </Appbar.Header>
-            </View>
-            
-            <IngredientButtonGrid ingredientNames={ingredientsList}/>
-            
-            <View style={styles.footer}>
-                <Appbar style={styles.bottom}>
                     <Button 
                         icon="arrow-left" 
                         mode="contained" 
@@ -40,11 +28,14 @@ const SelectedIngredientsDisplayScreen = ({ navigation }) => {
                         onPress={() => { switchToIngredientSelectionScreen(); }}>
                         Back
                     </Button>
-                </Appbar>
+                    <ContentTitle title={'All Favourite Ingredients'} style={{marginTop:15, fontSize:22, color:'white'}} />
+                </Appbar.Header>
             </View>
+            
+            <IngredientButtonGrid ingredientNames={ingredientsList}/>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     header: {
@@ -83,12 +74,6 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "space-evenly",
     },
-
-    bottomBar_button: {
-        height: 40,
-        width: "45%",
-        fontSize: 17,
-    },
 });
 
-export default SelectedIngredientsDisplayScreen;
+export default AllFavouriteIngredients;
