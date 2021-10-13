@@ -13,7 +13,11 @@ export const searchbarTextInputStateDefaultValue = {
     allIngredients: new Map<string,string[]>()
                         .set("Meat", ["Beef", "Pork", "Chicken"])
                         .set("Vegetables", ["Potato", "Tomato", "Carrot"])
-                        .set("Fruits", ["Apple", "Banana", "Orange"]),
+                        .set("Fruits", ["Apple", "Banana", "Orange"])
+                        .set("Dairy", ["Milk", "Cheese", "Yogurt"])
+                        .set("Baking", ["Flour", "Sugar", "Sprinkles"])
+                        .set("Alcohol", ["Red Wine", "White Wine", "Beer"])
+                        .set("Seasonings", ["Parsley", "Cumin", "Basil"])
     setAllIngredients: (state:Map<string,string[]>) => {}
 };
 

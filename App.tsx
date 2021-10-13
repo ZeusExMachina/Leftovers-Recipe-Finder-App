@@ -9,7 +9,6 @@ import RecipeResults from "./pages/RecipeResults";
 // States
 import AllIngredientsProvider from './states/All_Ingredients';
 import IngredientsListProvider from './states/SelectedIngredientsList';
-import ScrollingEnabledProvider from './states/ScrollingEnabled';
 
 const Stack = createStackNavigator();
 
@@ -18,7 +17,6 @@ export default function App() {
     <PaperProvider>
       {/* <AllIngredientsProvider> */}
         <IngredientsListProvider>
-          <ScrollingEnabledProvider>
             <Portal.Host>
               <NavigationContainer>
                 <Stack.Navigator 
@@ -40,7 +38,6 @@ export default function App() {
                 </Stack.Navigator>
               </NavigationContainer>
             </Portal.Host>
-          </ScrollingEnabledProvider>
         </IngredientsListProvider>
       {/* </AllIngredientsProvider> */}
     </PaperProvider>

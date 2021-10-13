@@ -5,9 +5,10 @@ import { Button, Snackbar } from "react-native-paper";
 // States
 import { SelectedIngredients } from '../states/SelectedIngredientsList';
 
-async function openInAppBrowserWindow(ingredientsList : string[]) : number {
+async function openInAppBrowserWindow(ingredientsList:string[], setSnackBarVisible:(state:boolean) => void) {
   if (ingredientsList.length < 1) {
-    return 1;
+    setSnackBarVisible(true);
+    return;
   }
 
   let url = "https://google.com/search?q=Recipes+with";
@@ -18,7 +19,6 @@ async function openInAppBrowserWindow(ingredientsList : string[]) : number {
   }
 
   await WebBrowser.openBrowserAsync(url);
-  return 0;
 }
 
 const RecipeResults = () => {
@@ -37,13 +37,12 @@ const RecipeResults = () => {
         contentStyle={{ flexDirection:"row-reverse" }}
         style={styles.bottomBar_button} 
         onPress={async () => { 
-          if (openInAppBrowserWindow(ingredientsList) != 0) {
-            setSnackBarVisible(true);
-          }
+          openInAppBrowserWindow(ingredientsList, setSnackBarVisible)
         }
       }>
           Find Recipes
       </Button>
+      
       <Snackbar
         visible={snackBarVisible}
         onDismiss={() => {dismissSnackBar()}}

@@ -2,45 +2,11 @@
 import React, { useContext } from "react";
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Avatar, Text } from 'react-native-paper';
-// States
-import { ScrollEnabled } from "../states/ScrollingEnabled";
 // Components
 import IngredientCategory from '../components/IngredientCategory';
 import IngredientButtonGrid from "../components/IngredientButtonGrid";
 
-const styles = StyleSheet.create({
-    ingredientsContents: {
-        flex: 1,
-        //marginTop: "85px",
-        //marginBottom: "50px",
-        paddingTop: 10,
-    },
-
-    contentSection_avatarIcon: {
-        marginLeft: 5,
-    },
-    
-    ingredientSection_heading: {
-        marginTop: 0,
-        marginBottom: 5,
-        marginLeft: 8,
-        fontSize: 20,
-    },
-});
-
 const IngredientsContents = () => {
-    const {scrollEnabled, setScrollEnabled} = useContext(ScrollEnabled);
-
-    function isScrollEnabled() : boolean {
-        console.log("Hi", scrollEnabled);
-        return scrollEnabled;
-    }
-
-    const handleScroll = event => {
-        console.log("Hi");
-        console.log(event.nativeEvent.contentOffset.y);
-    }
-
     return (
         <View style={styles.ingredientsContents}>
             <ScrollView scrollEnabled={true} style={styles.ingredientsContents}>
@@ -75,5 +41,24 @@ const IngredientsContents = () => {
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    ingredientsContents: {
+        flex: 1,
+        paddingTop: 10,
+        paddingBottom: 5,
+    },
+
+    contentSection_avatarIcon: {
+        marginLeft: 5,
+    },
+    
+    ingredientSection_heading: {
+        marginTop: 0,
+        marginBottom: 5,
+        marginLeft: 8,
+        fontSize: 20,
+    },
+});
 
 export default IngredientsContents;

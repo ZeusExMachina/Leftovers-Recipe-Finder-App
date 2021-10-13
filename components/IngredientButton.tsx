@@ -3,8 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { Chip } from 'react-native-paper';
 // Components
 import IngredientModalPopup from './IngredientModalPopup';
-// States
-import { ScrollEnabled } from "../states/ScrollingEnabled";
 
 interface Props {
     ingredientName : string
@@ -13,26 +11,15 @@ interface Props {
 }
 
 const IngredientButton = (props:Props) => {
-    const {scrollEnabled, setScrollEnabled} = useContext(ScrollEnabled);
-
     // Modal State and functions
     const [modalIsVisible, setModalIsVisible] = useState(false);
-
-    function showModal() {
-        setModalIsVisible(true);
-        setScrollEnabled(false);
-    }
-    function hideModal() {
-        setModalIsVisible(false);
-        setScrollEnabled(true);
-    }
 
     return (
         <>
             <IngredientModalPopup 
                 ingredientName={props.ingredientName} 
                 modalIsVisible={modalIsVisible} 
-                hideModal={hideModal}
+                hideModal={() => { setModalIsVisible(false) }}
             />
             <Chip
                 icon="information"
@@ -41,7 +28,7 @@ const IngredientButton = (props:Props) => {
                 textStyle={ styles.ingredientButton_text }
                 style={ styles.ingredientButton } 
                 onPress={() => { props.toggleHandler(props.ingredientName); }}
-                onLongPress={() => { showModal(); }}>
+                onLongPress={() => { setModalIsVisible(true) }}>
                 {props.ingredientName}
             </Chip>
         </>
