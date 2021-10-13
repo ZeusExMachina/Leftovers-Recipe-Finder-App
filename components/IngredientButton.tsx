@@ -52,9 +52,7 @@ const IngredientButton = (props:Props) => {
 const styles = StyleSheet.create({
     ingredientButton: {
       //backgroundColor: "purple",
-      width: "47.5%",
-      marginLeft: "1.25%",
-      marginRight: "1.25%",
+      width: "96.5%",
       marginTop: 4,
       marginBottom: 4,
     },

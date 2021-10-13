@@ -11,22 +11,7 @@ interface Props {
     ingredientNames : string[]
 }
 
-type ButtonInFlatList = {
-    name: string;
-    key: number;
-};
-
-function makeButtonFlatListData(ingredientNames : string[]) : ButtonInFlatList[] {
-    let data : ButtonInFlatList[] = [];
-    for (let i = 0; i < ingredientNames.length; i++) {
-        data.push({ name : ingredientNames[i], key : i })
-    }
-    return data;
-}
-
 const IngredientButtonGrid = (props : Props) => {
-    const flatListData = makeButtonFlatListData(props.ingredientNames);
-
     const {ingredientsList, updateIngredientsList} = useContext(SelectedIngredients)
     const useToggleIngredientSelect = useContext(UpdateSelectedIngredients)
 
@@ -38,22 +23,40 @@ const IngredientButtonGrid = (props : Props) => {
         useToggleIngredientSelect(ingredientName, {ingredientsList, updateIngredientsList});
     }
 
+    function getListOfIngredientsInRow(left:boolean) : string[] {
+        let ingredientsInColumn : string[] = [];
+        const modulusDenominator : number = left ? 0 : 1;
+        for (var i = 0; i < props.ingredientNames.length; i++) {
+            if(i % 2 == modulusDenominator) {
+                ingredientsInColumn.push(props.ingredientNames[i]);
+            }
+        }
+
+        return ingredientsInColumn;
+    }
+
     return (
-        <View style={{flex:1, margin: 5}}>
-            <FlatList
-                data={flatListData}
-                scrollEnabled={false}
-                renderItem={({item}) => (
-                    <IngredientButton ingredientName={item.name} isSelected={isSelected} toggleHandler={toggleIngredientSelectHandler}/>
-                )}
-                numColumns={2}>
-            </FlatList>
+        <View style={{flex:1, margin: 5, display:'flex', flexDirection:'row'}}>
+            <View style={styles.singleColumnContainer}>
+                {getListOfIngredientsInRow(true).map((ingredientName,i) => 
+                    React.createElement(IngredientButton,
+                                        {ingredientName:ingredientName, isSelected:isSelected, toggleHandler:toggleIngredientSelectHandler}))}
+            </View>
+
+            <View style={styles.singleColumnContainer}>
+                {getListOfIngredientsInRow(false).map((ingredientName,i) => 
+                    React.createElement(IngredientButton,
+                                        {ingredientName:ingredientName, isSelected:isSelected, toggleHandler:toggleIngredientSelectHandler}))}
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-
+    singleColumnContainer: {
+        width:"50%",
+        alignItems:'center',
+    }
 });
 
 export default IngredientButtonGrid;
