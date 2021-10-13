@@ -1,7 +1,6 @@
 // 3rd-party Imports
 import React, { useContext } from 'react';
-import { StyleSheet, FlatList, View } from 'react-native';
-import { Chip } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
 // Components
 import IngredientButton from './IngredientButton';
 // State - Selected Ingredients
@@ -9,6 +8,7 @@ import { SelectedIngredients, UpdateSelectedIngredients } from '../states/Select
 
 interface Props {
     ingredientNames : string[]
+    objectsForNavigatingToAnotherScreen? : {navigationObj:any, screenName:string}
 }
 
 const IngredientButtonGrid = (props : Props) => {
@@ -35,27 +35,51 @@ const IngredientButtonGrid = (props : Props) => {
         return ingredientsInColumn;
     }
 
-    return (
-        <View style={{flex:1, margin: 5, display:'flex', flexDirection:'row'}}>
-            <View style={styles.singleColumnContainer}>
-                {getListOfIngredientsInRow(true).map((ingredientName,i) => 
-                    React.createElement(IngredientButton,
-                                        {ingredientName:ingredientName, isSelected:isSelected, toggleHandler:toggleIngredientSelectHandler}))}
-            </View>
+    const maxDisplayed : number = 5;
 
-            <View style={styles.singleColumnContainer}>
-                {getListOfIngredientsInRow(false).map((ingredientName,i) => 
-                    React.createElement(IngredientButton,
-                                        {ingredientName:ingredientName, isSelected:isSelected, toggleHandler:toggleIngredientSelectHandler}))}
-            </View>
-        </View>
+    return (
+        (props.objectsForNavigatingToAnotherScreen === undefined || props.ingredientNames.length < 5)
+            ?   
+                <View style={styles.columnsContainer}>
+                    <View style={styles.singleColumnContainer}>
+                        {getListOfIngredientsInRow(true).map((ingredientName,i) => 
+                            React.createElement(IngredientButton,
+                                                {ingredientName:ingredientName, isSelected:isSelected, toggleHandler:toggleIngredientSelectHandler}))}
+                    </View>
+                    <View style={styles.singleColumnContainer}>
+                        {getListOfIngredientsInRow(false).map((ingredientName,i) => 
+                            React.createElement(IngredientButton,
+                                                {ingredientName:ingredientName, isSelected:isSelected, toggleHandler:toggleIngredientSelectHandler}))}
+                    </View>
+                </View>
+            :
+                <View style={styles.columnsContainer}>
+                    <View style={styles.singleColumnContainer}>
+                        {[props.ingredientNames[0],props.ingredientNames[2]].map((ingredientName,i) => 
+                            React.createElement(IngredientButton,
+                                                {ingredientName:ingredientName, isSelected:isSelected, toggleHandler:toggleIngredientSelectHandler}))}
+                    </View>
+                    <View style={styles.singleColumnContainer}>
+                        <IngredientButton ingredientName={props.ingredientNames[1]} isSelected={isSelected} toggleHandler={toggleIngredientSelectHandler}/>
+                        
+                    </View>
+                </View>
     );
 }
 
 const styles = StyleSheet.create({
+    columnsContainer: {
+        flex:1,
+        margin: 5,
+        display:'flex',
+        flexDirection:'row'
+    },
+
     singleColumnContainer: {
         width:"50%",
         alignItems:'center',
+        display:'flex',
+        flexDirection:'column',
     }
 });
 

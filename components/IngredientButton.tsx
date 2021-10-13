@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Chip } from 'react-native-paper';
-import { initialWindowMetrics } from 'react-native-safe-area-context';
 // Components
 import IngredientModalPopup from './IngredientModalPopup';
 // States
@@ -51,15 +50,12 @@ const IngredientButton = (props:Props) => {
 
 const styles = StyleSheet.create({
     ingredientButton: {
-      //backgroundColor: "purple",
       width: "96.5%",
       marginTop: 4,
       marginBottom: 4,
     },
 
     ingredientButton_text: {
-    //   display: 'flex',
-    //   justifyContent: "center",
       paddingLeft: 20,
       paddingRight: 20,
       fontSize: 20,
