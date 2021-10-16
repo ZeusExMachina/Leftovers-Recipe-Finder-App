@@ -1,11 +1,10 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
-import { Portal, Modal, Provider as PaperProvider } from 'react-native-paper';
+import { Portal, Provider as PaperProvider } from 'react-native-paper';
 // Screens
 import IngredientSelection from "./pages/MainIngredientSelect";
 import SelectedIngredientsDisplayScreen from './pages/SelectedIngredientsDisplay';
-import RecipeResults from "./pages/RecipeResults";
 // States
 import AllIngredientsProvider from './states/All_Ingredients';
 import IngredientsListProvider from './states/SelectedIngredientsList';
@@ -15,7 +14,7 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <PaperProvider>
-      {/* <AllIngredientsProvider> */}
+      <AllIngredientsProvider>
         <IngredientsListProvider>
             <Portal.Host>
               <NavigationContainer>
@@ -39,7 +38,7 @@ export default function App() {
               </NavigationContainer>
             </Portal.Host>
         </IngredientsListProvider>
-      {/* </AllIngredientsProvider> */}
+      </AllIngredientsProvider>
     </PaperProvider>
   );
 }

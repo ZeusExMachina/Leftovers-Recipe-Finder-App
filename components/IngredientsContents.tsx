@@ -5,8 +5,26 @@ import { Avatar, Text } from 'react-native-paper';
 // Components
 import IngredientCategory from '../components/IngredientCategory';
 import IngredientButtonGrid from "../components/IngredientButtonGrid";
+// States
+import { AllIngredients } from "../states/All_Ingredients";
+
+function convertAllIngredientsIntoMap(allIngredients : Map<string,string>) : Map<string,string[]> {
+    let mapOfCategoriesAndIngredients = new Map<string,string[]>();
+
+    allIngredients.forEach((category:string, ingredient:string) => {
+        let categoryList = mapOfCategoriesAndIngredients.get(category);
+        if (categoryList == undefined) { mapOfCategoriesAndIngredients.set(category,[ingredient]); }
+        else { categoryList.push(ingredient); }
+    });
+
+    console.log("mapOfCategoriesAndIngredients", mapOfCategoriesAndIngredients);
+
+    return mapOfCategoriesAndIngredients;
+}
 
 const IngredientsContents = () => {
+    const {allIngredients, setAllIngredients} = useContext(AllIngredients);
+
     return (
         <View style={styles.ingredientsContents}>
             <ScrollView scrollEnabled={true} style={styles.ingredientsContents}>
@@ -17,7 +35,7 @@ const IngredientsContents = () => {
                     <Avatar.Icon size={28} icon="star" style={styles.contentSection_avatarIcon} />
                 </View>
 
-                <IngredientButtonGrid ingredientNames={["Chili Oil"]}/>
+                <IngredientButtonGrid ingredientNames={[]}/>
 
                 <View style={{flexDirection:"row"}}>
                     <Text style={styles.ingredientSection_heading}>
@@ -26,17 +44,20 @@ const IngredientsContents = () => {
                     <Avatar.Icon size={28} icon="history" style={styles.contentSection_avatarIcon} />
                 </View>
 
-                <IngredientButtonGrid ingredientNames={["Tortilla", "Cheese"]}/>
+                <IngredientButtonGrid ingredientNames={[]}/>
 
                 <Text style={styles.ingredientSection_heading}>Food Categories</Text>
 
-                <IngredientCategory categoryName="Meat"/>
+                {Array.from(convertAllIngredientsIntoMap(allIngredients)).map(([ingredientCategory,ingredientNames], i) => 
+                    React.createElement(IngredientCategory, {key:i, categoryName:ingredientCategory, ingredientNames:ingredientNames}))}
+
+                {/* <IngredientCategory categoryName="Meat"/>
                 <IngredientCategory categoryName="Vegetables"/>
                 <IngredientCategory categoryName="Fruits"/>
                 <IngredientCategory categoryName="Dairy"/>
                 <IngredientCategory categoryName="Baking"/>
                 <IngredientCategory categoryName="Alcohol"/>
-                <IngredientCategory categoryName="Seasonings"/>
+                <IngredientCategory categoryName="Seasonings"/> */}
             </ScrollView>
         </View>
     );

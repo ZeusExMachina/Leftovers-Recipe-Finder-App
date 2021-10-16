@@ -6,7 +6,8 @@ import { List } from 'react-native-paper';
 import IngredientButtonGrid from "../components/IngredientButtonGrid"
 
 interface Props {
-  categoryName : String
+  categoryName : string
+  ingredientNames : string[]
 }
 
 const IngredientCategory = (props : Props) => {
@@ -16,7 +17,7 @@ const IngredientCategory = (props : Props) => {
       theme={{ roundness:20 }}
       left={props => <List.Icon {...props} icon="folder" />}>
 
-      <IngredientButtonGrid ingredientNames={["Apple", "Banana", "Carrot"]}/>
+      <IngredientButtonGrid ingredientNames={props.ingredientNames}/>
 
     </List.Accordion>
   );

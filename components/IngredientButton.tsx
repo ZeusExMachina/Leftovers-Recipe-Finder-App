@@ -1,8 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Chip } from 'react-native-paper';
+import { Avatar, Chip } from 'react-native-paper';
 // Components
 import IngredientModalPopup from './IngredientModalPopup';
+// Firebase
+import { getImageUrlOfIngredient } from "../firebase-access/Firebase_Client"
 
 interface Props {
     ingredientName : string
@@ -10,19 +12,31 @@ interface Props {
     toggleHandler(ingredientName:string) : void
 }
 
+// function ingredientNameTransform(ingredientName : string) : string {
+//     return ingredientName.toLowerCase().replace(" ", "-").concat(".png");
+// }
+
 const IngredientButton = (props:Props) => {
     // Modal State and functions
-    const [modalIsVisible, setModalIsVisible] = useState(false);
+    const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
+
+    const [ingredientImageUrl, setIngredientImageUrl] = useState<string>("DefaultVal");
+
+    useEffect(() => {
+        getImageUrlOfIngredient(props.ingredientName)
+            .then(value => setIngredientImageUrl(value));
+    }, [ingredientImageUrl]);
 
     return (
-        <>
+        <View>
             <IngredientModalPopup 
-                ingredientName={props.ingredientName} 
-                modalIsVisible={modalIsVisible} 
+                ingredientName={ props.ingredientName } 
+                imageUrl={ ingredientImageUrl }
+                modalIsVisible={ modalIsVisible } 
                 hideModal={() => { setModalIsVisible(false) }}
             />
             <Chip
-                icon="information"
+                avatar={<Avatar.Image size={24} source={{ uri: ingredientImageUrl }}/>}
                 mode="outlined"
                 selected={ props.isSelected(props.ingredientName) }
                 textStyle={ styles.ingredientButton_text }
@@ -31,21 +45,21 @@ const IngredientButton = (props:Props) => {
                 onLongPress={() => { setModalIsVisible(true) }}>
                 {props.ingredientName}
             </Chip>
-        </>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     ingredientButton: {
-      width: "96.5%",
-      marginTop: 4,
-      marginBottom: 4,
+        width: "96.5%",
+        marginTop: 4,
+        marginBottom: 4,
     },
 
     ingredientButton_text: {
-      paddingLeft: 20,
-      paddingRight: 20,
-      fontSize: 20,
+        width: "72%",
+        height: 25,
+        fontSize: 14,
     },
 });
 

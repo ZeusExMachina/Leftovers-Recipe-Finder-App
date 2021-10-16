@@ -14,7 +14,7 @@ export default function SearchbarTextInputProvider({ children }) {
     const searchInputProviderValue = useMemo(() => ({searchInput,setSearchInput}), [searchInput,setSearchInput]);
 
     useEffect(() => {
-        console.log("SearchbarTextInput useEffect", searchInput);
+        //console.log("SearchbarTextInput useEffect", searchInput);
     }, [searchInput]);
 
     return (

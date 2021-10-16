@@ -1,40 +1,24 @@
 // 3rd-party Imports
 import React, { useEffect, useMemo, useState } from 'react'
+// Firebase
+import getAllIngredients from '../firebase-access/Firebase_Client';
 
-// function ingredientsMapDefaultValue() : Map<string,string[]> {
-//     var map = new Map<string,string[]>();
-//     map.set("Meat", ["Beef", "Pork", "Chicken"]);
-//     map.set("Vegetables", ["Potato", "Tomato", "Carrot"]);
-//     map.set("Fruits", ["Apple", "Banana", "Orange"]);
-//     return map;
-// }
-
-export const searchbarTextInputStateDefaultValue = {
-    allIngredients: new Map<string,string[]>()
-                        .set("Meat", ["Beef", "Pork", "Chicken"])
-                        .set("Vegetables", ["Potato", "Tomato", "Carrot"])
-                        .set("Fruits", ["Apple", "Banana", "Orange"])
-                        .set("Dairy", ["Milk", "Cheese", "Yogurt"])
-                        .set("Baking", ["Flour", "Sugar", "Sprinkles"])
-                        .set("Alcohol", ["Red Wine", "White Wine", "Beer"])
-                        .set("Seasonings", ["Parsley", "Cumin", "Basil"])
-    setAllIngredients: (state:Map<string,string[]>) => {}
+const allIngredientsStateDefaultValue = {
+    allIngredients: new Map<string,string>().set("Default", "value"),
+    setAllIngredients: (state:Map<string,string>) => {}
 };
 
-export const AllIngredients = React.createContext(searchbarTextInputStateDefaultValue);
+export const AllIngredients = React.createContext(allIngredientsStateDefaultValue); 
 
 export default function AllIngredientsProvider({ children }) {
-    const [allIngredients, setAllIngredients] = useState<Map<string,string[]>>(searchbarTextInputStateDefaultValue.allIngredients);
+    const [allIngredients, setAllIngredients] = useState<Map<string,string>>(allIngredientsStateDefaultValue.allIngredients);
 
     const allIngredientsProviderValue = useMemo(() => ({allIngredients,setAllIngredients}), [allIngredients,setAllIngredients]);
 
-    function updateAndRefreshAllIngredients({allIngredients,setAllIngredients}) {
-        //let new
-    }
-
     useEffect(() => {
-        console.log("All_Ingredients useEffect", allIngredients);
-    }, [allIngredients]);
+        getAllIngredients().then(value => { setAllIngredients(value); console.log("AllIngredients useEffect inner", allIngredients); });
+        console.log("AllIngredients useEffect", allIngredients);
+    }, []);
 
     return (
         <AllIngredients.Provider value={allIngredientsProviderValue}>

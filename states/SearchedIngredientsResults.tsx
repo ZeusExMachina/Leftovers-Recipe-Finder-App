@@ -37,7 +37,7 @@ export default function SearchedIngredientsResultsProvider({ children }) {
     }
 
     useEffect(() => {
-        console.log("SearchedIngredientsResults useEffect", searchedIngredients);
+        //console.log("SearchedIngredientsResults useEffect", searchedIngredients);
     }, [searchedIngredients]);
 
     return (

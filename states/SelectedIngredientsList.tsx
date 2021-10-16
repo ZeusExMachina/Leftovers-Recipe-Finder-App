@@ -33,7 +33,7 @@ export default function IngredientsListProvider({ children }) {
     }
 
     useEffect(() => {
-        console.log("SelectedIngredientsList useEffect", ingredientsList);
+        //console.log("SelectedIngredientsList useEffect", ingredientsList);
     }, [ingredientsList])
 
     return (
