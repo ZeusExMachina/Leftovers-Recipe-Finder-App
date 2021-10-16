@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 // Firebase
 import getAllIngredients from '../firebase-access/Firebase_Client';
 
-const allIngredientsStateDefaultValue = {
+export const allIngredientsStateDefaultValue = {
     allIngredients: new Map<string,string>().set("Default", "value"),
     setAllIngredients: (state:Map<string,string>) => {}
 };

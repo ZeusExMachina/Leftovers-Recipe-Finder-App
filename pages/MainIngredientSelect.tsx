@@ -11,17 +11,17 @@ import SearchedIngredientsResultsProvider from '../states/SearchedIngredientsRes
 
 const IngredientSelection = ({ navigation }) => {
   return (
-    <SearchbarTextInputProvider>
-      <View style={{ flex:1 }}>
-        {/* <SearchedIngredientsResultsProvider> */}
-        <MainPageHeader/>
-      
-        <IngredientsContents/>
-        {/* </SearchedIngredientsResultsProvider> */}
-
-        <MainPageFooter navigationObj={navigation}/>
-      </View>
-    </SearchbarTextInputProvider>
+    <SearchedIngredientsResultsProvider>
+      <SearchbarTextInputProvider>
+        <View style={{ flex:1 }}>
+          <MainPageHeader/>
+        
+          <IngredientsContents/>
+          
+          <MainPageFooter navigationObj={navigation}/>
+        </View>
+      </SearchbarTextInputProvider>
+    </SearchedIngredientsResultsProvider>
   );
 }
 

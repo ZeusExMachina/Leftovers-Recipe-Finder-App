@@ -7,6 +7,8 @@ import IngredientCategory from '../components/IngredientCategory';
 import IngredientButtonGrid from "../components/IngredientButtonGrid";
 // States
 import { AllIngredients } from "../states/All_Ingredients";
+import { SearchbarTextInput } from "../states/SearchbarTextInput";
+import { SearchedIngredientsResults } from '../states/SearchedIngredientsResults'
 
 function convertAllIngredientsIntoMap(allIngredients : Map<string,string>) : Map<string,string[]> {
     let mapOfCategoriesAndIngredients = new Map<string,string[]>();
@@ -17,55 +19,62 @@ function convertAllIngredientsIntoMap(allIngredients : Map<string,string>) : Map
         else { categoryList.push(ingredient); }
     });
 
-    console.log("mapOfCategoriesAndIngredients", mapOfCategoriesAndIngredients);
-
     return mapOfCategoriesAndIngredients;
 }
 
+
 const IngredientsContents = () => {
     const {allIngredients, setAllIngredients} = useContext(AllIngredients);
+    const {searchInput,setSearchInput} = useContext(SearchbarTextInput);
+    const {searchedIngredients,setSearchedIngredients} = useContext(SearchedIngredientsResults);
 
     return (
-        <View style={styles.ingredientsContents}>
-            <ScrollView scrollEnabled={true} style={styles.ingredientsContents}>
-                <View style={{flexDirection:"row"}}>
-                    <Text style={styles.ingredientSection_heading}>
-                        Favourite Ingredients
-                    </Text>
-                    <Avatar.Icon size={28} icon="star" style={styles.contentSection_avatarIcon} />
-                </View>
+        (searchInput.length < 1)
+            ?
+                <ScrollView scrollEnabled={true} style={styles.ingredientsContents}>
+                    <View style={{flexDirection:"row"}}>
+                        <Text style={styles.ingredientSection_heading}>
+                            Favourite Ingredients
+                        </Text>
+                        <Avatar.Icon size={28} icon="star" style={styles.contentSection_avatarIcon} />
+                    </View>
 
-                <IngredientButtonGrid ingredientNames={[]}/>
+                    <IngredientButtonGrid ingredientNames={[]}/>
 
-                <View style={{flexDirection:"row"}}>
-                    <Text style={styles.ingredientSection_heading}>
-                        Recently Used Ingredients
-                    </Text>
-                    <Avatar.Icon size={28} icon="history" style={styles.contentSection_avatarIcon} />
-                </View>
+                    <View style={{flexDirection:"row"}}>
+                        <Text style={styles.ingredientSection_heading}>
+                            Recently Used Ingredients
+                        </Text>
+                        <Avatar.Icon size={28} icon="history" style={styles.contentSection_avatarIcon} />
+                    </View>
 
-                <IngredientButtonGrid ingredientNames={[]}/>
+                    <IngredientButtonGrid ingredientNames={[]}/>
 
-                <Text style={styles.ingredientSection_heading}>Food Categories</Text>
+                    <Text style={styles.ingredientSection_heading}>Food Categories</Text>
 
-                {Array.from(convertAllIngredientsIntoMap(allIngredients)).map(([ingredientCategory,ingredientNames], i) => 
-                    React.createElement(IngredientCategory, {key:i, categoryName:ingredientCategory, ingredientNames:ingredientNames}))}
-
-                {/* <IngredientCategory categoryName="Meat"/>
-                <IngredientCategory categoryName="Vegetables"/>
-                <IngredientCategory categoryName="Fruits"/>
-                <IngredientCategory categoryName="Dairy"/>
-                <IngredientCategory categoryName="Baking"/>
-                <IngredientCategory categoryName="Alcohol"/>
-                <IngredientCategory categoryName="Seasonings"/> */}
-            </ScrollView>
-        </View>
+                    {Array.from(convertAllIngredientsIntoMap(allIngredients)).map(([ingredientCategory,ingredientNames], i) => 
+                        React.createElement(IngredientCategory, {key:i, categoryName:ingredientCategory, ingredientNames:ingredientNames}))}
+                </ScrollView>
+            :
+                (searchedIngredients.length < 1)
+                    ?
+                        <View style={styles.ingredientsContents}>
+                            <Text
+                                style={{marginTop:15, marginLeft:15, marginRight:15, alignItems:"center", fontSize:17}}>
+                                No ingredients found. You may need to check your spelling, or we may not have the ingredient you are looking for.
+                            </Text>
+                        </View>
+                    :
+                        <ScrollView scrollEnabled={true} style={styles.ingredientsContents}>
+                            <IngredientButtonGrid ingredientNames={searchedIngredients}/>
+                        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     ingredientsContents: {
         flex: 1,
+        marginTop:10,
         paddingTop: 10,
         paddingBottom: 5,
     },
