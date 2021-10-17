@@ -12,6 +12,26 @@ const ContentTitle = ({ title, style }) => (
     />
 );
 
+const MainPageHeader = () => {
+    const {searchInput,setSearchInput} = useContext(SearchbarTextInput);
+
+    return (
+      <View style={styles.header}>
+        <Appbar.Header style={styles.top}>
+          <View style={{alignItems: "center", marginTop:10}}>
+            <ContentTitle title={'Select ingredients you have'} style={{position:"relative", fontSize:22, color:'white'}} />
+            <Searchbar style={styles.searchBar}
+              placeholder="Search"
+              theme={{ roundness:17 }}
+              onChangeText={setSearchInput}
+              value={searchInput}
+            />
+          </View>
+        </Appbar.Header>
+      </View>
+    );
+};
+
 const styles = StyleSheet.create({
   header: {
     position: "relative",
@@ -40,25 +60,5 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 });
-
-const MainPageHeader = () => {
-    const {searchInput,setSearchInput} = useContext(SearchbarTextInput);
-
-    return (
-      <View style={styles.header}>
-        <Appbar.Header style={styles.top}>
-          <View style={{alignItems: "center", marginTop:10}}>
-            <ContentTitle title={'Select ingredients you have'} style={{position:"relative", fontSize:22, color:'white'}} />
-            <Searchbar style={styles.searchBar}
-              placeholder="Search"
-              theme={{ roundness:17 }}
-              onChangeText={setSearchInput}
-              value={searchInput}
-            />
-          </View>
-        </Appbar.Header>
-      </View>
-    );
-};
 
 export default MainPageHeader

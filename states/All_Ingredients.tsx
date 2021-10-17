@@ -17,7 +17,7 @@ export default function AllIngredientsProvider({ children }) {
 
     useEffect(() => {
         getAllIngredients().then(value => { setAllIngredients(value); console.log("AllIngredients useEffect inner", allIngredients); });
-        console.log("AllIngredients useEffect", allIngredients);
+        //console.log("AllIngredients useEffect", allIngredients);
     }, []);
 
     return (

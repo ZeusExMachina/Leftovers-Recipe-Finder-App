@@ -12,10 +12,6 @@ interface Props {
     toggleHandler(ingredientName:string) : void
 }
 
-// function ingredientNameTransform(ingredientName : string) : string {
-//     return ingredientName.toLowerCase().replace(" ", "-").concat(".png");
-// }
-
 const IngredientButton = (props:Props) => {
     // Modal State and functions
     const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
@@ -25,6 +21,7 @@ const IngredientButton = (props:Props) => {
     useEffect(() => {
         getImageUrlOfIngredient(props.ingredientName)
             .then(value => setIngredientImageUrl(value));
+        console.log(ingredientImageUrl);
     }, [ingredientImageUrl]);
 
     return (

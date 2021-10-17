@@ -14,7 +14,6 @@ export const UpdateSearchedIngredients = React.createContext(updateSearchedIngre
 
 export default function SearchedIngredientsResultsProvider({ children }) {
     const [searchedIngredients, setSearchedIngredients] = useState<string[]>(searchedIngredientsStateDefaultValue.searchedIngredients);
-
     const searchedIngredientsProviderValue = useMemo(() => ({searchedIngredients,setSearchedIngredients}), [searchedIngredients,setSearchedIngredients]);
 
     function updateSearchedIngredients(searchQuery:string, {searchedIngredients,setSearchedIngredients}, {allIngredients,setAllIngredients}) {
@@ -34,7 +33,7 @@ export default function SearchedIngredientsResultsProvider({ children }) {
     }
 
     useEffect(() => {
-        console.log("SearchedIngredientsResults useEffect", searchedIngredients);
+        //console.log("SearchedIngredientsResults useEffect", searchedIngredients);
     }, [searchedIngredients]);
 
     return (

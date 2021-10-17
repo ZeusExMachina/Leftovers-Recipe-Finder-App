@@ -25,8 +25,4 @@ const IngredientSelection = ({ navigation }) => {
   );
 }
 
-const styles = StyleSheet.create({
-
-});
-
 export default IngredientSelection
