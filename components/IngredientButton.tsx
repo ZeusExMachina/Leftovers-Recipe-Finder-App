@@ -21,7 +21,7 @@ const IngredientButton = (props:Props) => {
     useEffect(() => {
         getImageUrlOfIngredient(props.ingredientName)
             .then(value => setIngredientImageUrl(value));
-        console.log(ingredientImageUrl);
+        // console.log(ingredientImageUrl);
     }, [ingredientImageUrl]);
 
     return (

@@ -4,13 +4,16 @@ import { StyleSheet, View } from 'react-native';
 import { Text, TextInput, Button } from 'react-native-paper';
 // States
 import { CurrentUser, CreateNewUser } from "../states/CurrentUser"
+import { FavouriteIngredients, RefreshFavouriteIngredients } from "../states/All_FavouriteIngredients";
 
 const CreateAccountLandingPage = ({ navigation }) => {
-    const [usernameText, setUsernameText] = useState<string>("")
-    const [passwordText, setPasswordText] = useState<string>("")
+    const [usernameText, setUsernameText] = useState<string>("");
+    const [passwordText, setPasswordText] = useState<string>("");
 
-    const {currentUser, setCurrentUser} = useContext(CurrentUser)
-    const createNewUser = useContext(CreateNewUser)
+    const {currentUser, setCurrentUser} = useContext(CurrentUser);
+    const createNewUser = useContext(CreateNewUser);
+    const {favouriteIngredients, setFavouriteIngredients} = useContext(FavouriteIngredients)
+    const refreshFavouriteIngredients = useContext(RefreshFavouriteIngredients);
 
     async function createNewAccount() {
         if (usernameText.length < 1) {
@@ -25,6 +28,7 @@ const CreateAccountLandingPage = ({ navigation }) => {
         if (createUser_result) {
             // No existing user has this username, so new account creation is successful. Change to MainIngredientSelect page
             navigation.navigate("Ingredient Selection");
+            await refreshFavouriteIngredients(currentUser, setFavouriteIngredients);
         } else {
             // Username already exists, show this message on snackbar
             return;
@@ -76,7 +80,7 @@ const CreateAccountLandingPage = ({ navigation }) => {
                 onPress={() => goToLogin()}
                 style={{ alignSelf:"center", width:"45%" }}
             >
-                Sign in here
+                Log in
             </Button>
         </View>
     );

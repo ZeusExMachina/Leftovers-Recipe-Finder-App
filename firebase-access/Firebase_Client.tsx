@@ -41,10 +41,54 @@ export async function addNewUser(username:string, password:string) : Promise<boo
 
     const newUserRef = FirestoreDB.collection("users").doc(username);
     const setWithMerge = newUserRef.set({
-        password: password
+        password: password,
+        favourites: [],
+        recent: []
     }, { merge: true })
 
     return Promise.resolve(true);
+}
+
+export async function getUserFavourites(username:string) : Promise<string[]> {
+    if (await userExists(username) == false) { return Promise.resolve([]); }
+
+    let favourites : string[] = [];
+    const userRef = FirestoreDB.collection("users").doc(username);
+    const userSnapshot = await userRef.get()
+    favourites = userSnapshot.get("favourites")
+
+    return Promise.resolve(favourites);
+}
+
+export async function getUserRecent(username:string) : Promise<string[]> {
+    if (await userExists(username) == false) { return Promise.resolve([]); }
+
+    let recent : string[] = [];
+    const userRef = FirestoreDB.collection("users").doc(username);
+    const userSnapshot = await userRef.get()
+    recent = userSnapshot.get("recent")
+
+    return Promise.resolve(recent);
+}
+
+export async function toggleFavouriteIngredient(ingredient:string, username:string) {
+    if (await userExists(username) == false) { return }
+
+    const currentFavourites = await getUserFavourites(username);
+    const userRef = FirestoreDB.collection("users").doc(username);
+
+    if (currentFavourites.includes(ingredient)) { 
+        // It is currently a favourite ingredient, so remove it from favourites
+        const indexOfIngredientInFavourites = currentFavourites.indexOf(ingredient);
+        if (indexOfIngredientInFavourites != -1) { currentFavourites.splice(indexOfIngredientInFavourites, 1); }
+    } else {
+        // It is currently not a favourite ingredient, so add it to favourites
+        currentFavourites.push(ingredient)
+    }
+
+    userRef.update({
+        favourites: currentFavourites
+    });
 }
 
 export async function getImageUrlOfIngredient(ingredientName:string) : Promise<string> {

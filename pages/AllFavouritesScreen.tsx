@@ -4,6 +4,8 @@ import { StyleSheet, View } from 'react-native';
 import { Appbar, Button, Text } from 'react-native-paper';
 // Components
 import IngredientButtonGrid from "../components/IngredientButtonGrid";
+// States
+import { FavouriteIngredients } from "../states/All_FavouriteIngredients";
 
 const ContentTitle = ({ title, style }) => (
     <Appbar.Content
@@ -13,6 +15,8 @@ const ContentTitle = ({ title, style }) => (
 );
 
 const AllFavouriteIngredients = ({ navigation }) => {
+    const {favouriteIngredients, setFavouriteIngredients} = useContext(FavouriteIngredients);
+
     const switchToIngredientSelectionScreen = () => {
         navigation.navigate("Ingredient Selection");
     }
@@ -24,7 +28,7 @@ const AllFavouriteIngredients = ({ navigation }) => {
                     <Button 
                         icon="arrow-left" 
                         mode="contained" 
-                        style={styles.bottomBar_button} 
+                        style={{}} 
                         onPress={() => { switchToIngredientSelectionScreen(); }}>
                         Back
                     </Button>
@@ -32,7 +36,7 @@ const AllFavouriteIngredients = ({ navigation }) => {
                 </Appbar.Header>
             </View>
             
-            <IngredientButtonGrid ingredientNames={ingredientsList}/>
+            <IngredientButtonGrid ingredientNames={favouriteIngredients}/>
         </View>
     );
 }

@@ -7,6 +7,7 @@ import IngredientCategory from '../components/IngredientCategory';
 import IngredientButtonGrid from "../components/IngredientButtonGrid";
 // States
 import { AllIngredients } from "../states/All_Ingredients";
+import { FavouriteIngredients } from "../states/All_FavouriteIngredients";
 import { SearchbarTextInput } from "../states/SearchbarTextInput";
 import { SearchedIngredientsResults } from '../states/SearchedIngredientsResults'
 
@@ -19,14 +20,20 @@ function convertAllIngredientsIntoMap(allIngredients : Map<string,string>) : Map
         else { categoryList.push(ingredient); }
     });
 
+    // console.log("mapOfCategoriesAndIngredients", mapOfCategoriesAndIngredients);
+
     return mapOfCategoriesAndIngredients;
 }
 
-
 const IngredientsContents = () => {
     const {allIngredients, setAllIngredients} = useContext(AllIngredients);
+    const {favouriteIngredients, setFavouriteIngredients} = useContext(FavouriteIngredients);
     const {searchInput,setSearchInput} = useContext(SearchbarTextInput);
     const {searchedIngredients,setSearchedIngredients} = useContext(SearchedIngredientsResults);
+
+    // OR store these lists in their own states, which are updated whenever the Firebase is updated. This way, it doesn't retrieve a new list every time
+    // const favouriteIngredients = await getUserFavourites(currentUser);
+    // const recentIngredients = await getUserRecent(currentUser);
 
     return (
         (searchInput.length < 1)
@@ -39,7 +46,7 @@ const IngredientsContents = () => {
                         <Avatar.Icon size={28} icon="star" style={styles.contentSection_avatarIcon} />
                     </View>
 
-                    <IngredientButtonGrid ingredientNames={[]}/>
+                    <IngredientButtonGrid ingredientNames={favouriteIngredients}/>
 
                     <View style={{flexDirection:"row"}}>
                         <Text style={styles.ingredientSection_heading}>

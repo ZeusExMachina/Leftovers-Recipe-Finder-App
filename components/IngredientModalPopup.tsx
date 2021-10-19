@@ -1,8 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Modal, Portal, Text, Avatar, ToggleButton } from 'react-native-paper';
 // States
+import { CurrentUser } from "../states/CurrentUser"
 import { AllIngredients } from "../states/All_Ingredients";
+import { FavouriteIngredients, RefreshFavouriteIngredients } from '../states/All_FavouriteIngredients';
+// Firebase
+import { toggleFavouriteIngredient } from "../firebase-access/Firebase_Client"
 
 interface Props {
     ingredientName : string
@@ -11,15 +15,32 @@ interface Props {
     hideModal() : void
 }
 
-const IngredientModalPopup = (props : Props) => {
-    // Favourite toggle button State and functions
-    const [isFavourite, setIsFavourite] = useState<'checked'|'unchecked'>('unchecked');
+function convertBoolToCheckedOrUnchecked(isChecked:boolean) : 'checked'|'unchecked' {
+    if (isChecked) { return 'checked'; }
+    else { return 'unchecked'; }
+}
 
-    function onButtonToggle() {
-        setIsFavourite(isFavourite == 'checked' ? 'unchecked' : 'checked');
+const IngredientModalPopup = (props : Props) => {
+    const {currentUser, setCurrentUser} = useContext(CurrentUser);
+    const {allIngredients, setAllIngredients} = useContext(AllIngredients);
+    const {favouriteIngredients, setFavouriteIngredients} = useContext(FavouriteIngredients);
+    const refreshFavouriteIngredients = useContext(RefreshFavouriteIngredients);
+
+    const [isFavourite, setIsFavourite] = useState<'checked'|'unchecked'>(checkIfIngredientIsFavourite());
+
+    useEffect(() => {
+        setIsFavourite(checkIfIngredientIsFavourite())
+    }, [favouriteIngredients]);
+
+    async function onButtonToggle() {
+        await toggleFavouriteIngredient(props.ingredientName, currentUser);
+        refreshFavouriteIngredients(currentUser, setFavouriteIngredients);
     };
 
-    const {allIngredients, setAllIngredients} = useContext(AllIngredients);
+    function checkIfIngredientIsFavourite() : 'checked'|'unchecked' {
+        if (favouriteIngredients.includes(props.ingredientName)) { return 'checked';}
+        else { return 'unchecked'; }
+    }
 
     return (
         <Portal>

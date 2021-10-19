@@ -16,8 +16,8 @@ export default function AllIngredientsProvider({ children }) {
     const allIngredientsProviderValue = useMemo(() => ({allIngredients,setAllIngredients}), [allIngredients,setAllIngredients]);
 
     useEffect(() => {
-        getAllIngredients().then(value => { setAllIngredients(value); console.log("AllIngredients useEffect inner", allIngredients); });
-        //console.log("AllIngredients useEffect", allIngredients);
+        getAllIngredients().then(value => { setAllIngredients(value); });
+        // console.log("AllIngredients useEffect", allIngredients);
     }, []);
 
     return (

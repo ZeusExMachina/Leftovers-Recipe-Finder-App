@@ -10,6 +10,7 @@ import SelectedIngredientsDisplayScreen from './pages/SelectedIngredientsDisplay
 import CurrentUserProvider from './states/CurrentUser';
 import LoginPage from './pages/LoginPage';
 import AllIngredientsProvider from './states/All_Ingredients';
+import FavouriteIngredientsProvider from './states/All_FavouriteIngredients';
 import IngredientsListProvider from './states/SelectedIngredientsList';
 
 const Stack = createStackNavigator();
@@ -19,31 +20,33 @@ export default function App() {
     <PaperProvider>
       <CurrentUserProvider>
         <AllIngredientsProvider>
-          <IngredientsListProvider>
-              <Portal.Host>
-                <NavigationContainer>
-                  <Stack.Navigator 
-                    initialRouteName="CreateAccountLandingPage"
-                    screenOptions={{
-                      headerShown: false
-                    }}
-                  >
-                    <Stack.Screen name="CreateAccountLandingPage" component={CreateAccountLandingPage}/>
-                    <Stack.Screen name="LoginPage" component={LoginPage}/>
-                    <Stack.Screen name="Ingredient Selection" component={IngredientSelection}/>
-                    <Stack.Screen
-                      name="Selected Ingredients"
-                      options={{
-                        cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
-                        gestureEnabled: true,
-                        gestureDirection: 'vertical',
+          <FavouriteIngredientsProvider>
+            <IngredientsListProvider>
+                <Portal.Host>
+                  <NavigationContainer>
+                    <Stack.Navigator 
+                      initialRouteName="CreateAccountLandingPage"
+                      screenOptions={{
+                        headerShown: false
                       }}
-                      component={SelectedIngredientsDisplayScreen}/>
-                    
-                  </Stack.Navigator>
-                </NavigationContainer>
-              </Portal.Host>
-          </IngredientsListProvider>
+                    >
+                      <Stack.Screen name="CreateAccountLandingPage" component={CreateAccountLandingPage}/>
+                      <Stack.Screen name="LoginPage" component={LoginPage}/>
+                      <Stack.Screen name="Ingredient Selection" component={IngredientSelection}/>
+                      <Stack.Screen
+                        name="Selected Ingredients"
+                        options={{
+                          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+                          gestureEnabled: true,
+                          gestureDirection: 'vertical',
+                        }}
+                        component={SelectedIngredientsDisplayScreen}/>
+                      
+                    </Stack.Navigator>
+                  </NavigationContainer>
+                </Portal.Host>
+            </IngredientsListProvider>
+          </FavouriteIngredientsProvider>
         </AllIngredientsProvider>
       </CurrentUserProvider>
     </PaperProvider>
