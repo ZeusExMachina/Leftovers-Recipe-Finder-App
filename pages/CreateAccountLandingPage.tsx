@@ -27,8 +27,8 @@ const CreateAccountLandingPage = ({ navigation }) => {
         const createUser_result = await createNewUser(usernameText, passwordText, {currentUser, setCurrentUser});
         if (createUser_result) {
             // No existing user has this username, so new account creation is successful. Change to MainIngredientSelect page
-            navigation.navigate("Ingredient Selection");
             await refreshFavouriteIngredients(currentUser, setFavouriteIngredients);
+            navigation.navigate("Ingredient Selection");
         } else {
             // Username already exists, show this message on snackbar
             return;

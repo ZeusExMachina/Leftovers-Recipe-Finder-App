@@ -1,7 +1,7 @@
 // 3rd-party Imports
 import React, { useContext } from "react";
-import { StyleSheet, View } from 'react-native';
-import { Appbar, Button, Text } from 'react-native-paper';
+import { StyleSheet, View, ScrollView } from 'react-native';
+import { Appbar, Avatar, Button, Text } from 'react-native-paper';
 // Components
 import IngredientButtonGrid from "../components/IngredientButtonGrid";
 // States
@@ -14,7 +14,7 @@ const ContentTitle = ({ title, style }) => (
     />
 );
 
-const AllFavouriteIngredients = ({ navigation }) => {
+const AllFavouriteIngredientsScreen = ({ navigation }) => {
     const {favouriteIngredients, setFavouriteIngredients} = useContext(FavouriteIngredients);
 
     const switchToIngredientSelectionScreen = () => {
@@ -26,17 +26,23 @@ const AllFavouriteIngredients = ({ navigation }) => {
             <View style={styles.header}>
                 <Appbar.Header style={styles.top}>
                     <Button 
-                        icon="arrow-left" 
-                        mode="contained" 
-                        style={{}} 
-                        onPress={() => { switchToIngredientSelectionScreen(); }}>
-                        Back
+                        mode="contained"
+                        compact={true}
+                        theme={{ roundness:20 }}
+                        style={{ position:"absolute", top:25, left:10, width:40, height:40 }}
+                        onPress={() => { switchToIngredientSelectionScreen(); }}
+                    >
+                        <Avatar.Icon icon="arrow-left" size={28}></Avatar.Icon>
                     </Button>
-                    <ContentTitle title={'All Favourite Ingredients'} style={{marginTop:15, fontSize:22, color:'white'}} />
+                    <View style={{alignItems: "center", top:32, left:5 }}>
+                        <ContentTitle title={'All Favourite Ingredients'} style={{position:"relative", fontSize:19, color:'white'}} />
+                    </View>
                 </Appbar.Header>
             </View>
             
-            <IngredientButtonGrid ingredientNames={favouriteIngredients}/>
+            <ScrollView>
+                <IngredientButtonGrid ingredientNames={favouriteIngredients}/>
+            </ScrollView>
         </View>
     );
 }
@@ -48,7 +54,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         marginTop: 0,
-        height: 55,
+        height: 75,
     },
 
     top: {
@@ -56,28 +62,10 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         top: 0,
-        height: 55,
+        height: 75,
         display: "flex",
         justifyContent: "center",
     },
-
-    footer: {
-        position: 'relative',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: 55,
-    },
-
-    bottom: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: 60,
-        display: "flex",
-        justifyContent: "space-evenly",
-    },
 });
 
-export default AllFavouriteIngredients;
+export default AllFavouriteIngredientsScreen;

@@ -16,7 +16,7 @@ const IngredientSelection = ({ navigation }) => {
         <View style={{ flex:1 }}>
           <MainPageHeader/>
         
-          <IngredientsContents/>
+          <IngredientsContents navigationObj={navigation}/>
           
           <MainPageFooter navigationObj={navigation}/>
         </View>

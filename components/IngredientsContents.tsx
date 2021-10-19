@@ -6,10 +6,15 @@ import { Avatar, Text } from 'react-native-paper';
 import IngredientCategory from '../components/IngredientCategory';
 import IngredientButtonGrid from "../components/IngredientButtonGrid";
 // States
+import { CurrentUser } from "../states/CurrentUser";
 import { AllIngredients } from "../states/All_Ingredients";
-import { FavouriteIngredients } from "../states/All_FavouriteIngredients";
+import { FavouriteIngredients, RefreshFavouriteIngredients } from "../states/All_FavouriteIngredients";
 import { SearchbarTextInput } from "../states/SearchbarTextInput";
 import { SearchedIngredientsResults } from '../states/SearchedIngredientsResults'
+
+interface Props {
+    navigationObj:any
+}
 
 function convertAllIngredientsIntoMap(allIngredients : Map<string,string>) : Map<string,string[]> {
     let mapOfCategoriesAndIngredients = new Map<string,string[]>();
@@ -25,15 +30,19 @@ function convertAllIngredientsIntoMap(allIngredients : Map<string,string>) : Map
     return mapOfCategoriesAndIngredients;
 }
 
-const IngredientsContents = () => {
+const IngredientsContents = (props : Props) => {
+    const {currentUser, setCurrentUser} = useContext(CurrentUser)
     const {allIngredients, setAllIngredients} = useContext(AllIngredients);
     const {favouriteIngredients, setFavouriteIngredients} = useContext(FavouriteIngredients);
     const {searchInput,setSearchInput} = useContext(SearchbarTextInput);
     const {searchedIngredients,setSearchedIngredients} = useContext(SearchedIngredientsResults);
+    const refreshFavouriteIngredients = useContext(RefreshFavouriteIngredients);
 
     // OR store these lists in their own states, which are updated whenever the Firebase is updated. This way, it doesn't retrieve a new list every time
     // const favouriteIngredients = await getUserFavourites(currentUser);
     // const recentIngredients = await getUserRecent(currentUser);
+
+    refreshFavouriteIngredients(currentUser, setFavouriteIngredients);
 
     return (
         (searchInput.length < 1)
@@ -46,7 +55,10 @@ const IngredientsContents = () => {
                         <Avatar.Icon size={28} icon="star" style={styles.contentSection_avatarIcon} />
                     </View>
 
-                    <IngredientButtonGrid ingredientNames={favouriteIngredients}/>
+                    <IngredientButtonGrid
+                        ingredientNames={favouriteIngredients}
+                        extrasScreenObjs={{navigationObj:props.navigationObj, screenName:"All Favourites List", extraScreenLinkMessage:"See all..."}}
+                    />
 
                     <View style={{flexDirection:"row"}}>
                         <Text style={styles.ingredientSection_heading}>

@@ -32,10 +32,11 @@ const RecipeResults = () => {
   return (
     <>
       <Button
-        icon="arrow-right"
+        icon="magnify"
         mode="contained"
         contentStyle={{ flexDirection:"row-reverse" }}
-        style={styles.bottomBar_button} 
+        style={styles.bottomBar_button}
+        labelStyle={{ fontSize:14 }}
         onPress={async () => { 
           openInAppBrowserWindow(ingredientsList, setSnackBarVisible)
         }

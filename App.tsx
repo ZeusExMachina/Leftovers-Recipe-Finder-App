@@ -12,6 +12,7 @@ import LoginPage from './pages/LoginPage';
 import AllIngredientsProvider from './states/All_Ingredients';
 import FavouriteIngredientsProvider from './states/All_FavouriteIngredients';
 import IngredientsListProvider from './states/SelectedIngredientsList';
+import AllFavouriteIngredientsScreen from './pages/AllFavouritesScreen';
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,7 @@ export default function App() {
                           gestureDirection: 'vertical',
                         }}
                         component={SelectedIngredientsDisplayScreen}/>
+                      <Stack.Screen name="All Favourites List" component={AllFavouriteIngredientsScreen}/>
                       
                     </Stack.Navigator>
                   </NavigationContainer>

@@ -1,6 +1,6 @@
 // 3rd-party Imports
 import React, { useContext } from "react";
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import { Appbar, Button, Text } from 'react-native-paper';
 // States
 import { SelectedIngredients } from '../states/SelectedIngredientsList';
@@ -25,11 +25,13 @@ const SelectedIngredientsDisplayScreen = ({ navigation }) => {
         <View style={{flex:1}}>
             <View style={styles.header}>
                 <Appbar.Header style={styles.top}>
-                    <ContentTitle title={'Selected Ingredients'} style={{marginTop:15, fontSize:22, color:'white'}} />
+                    <ContentTitle title={'Selected Ingredients'} style={{fontSize:22, color:'white'}} />
                 </Appbar.Header>
             </View>
             
-            <IngredientButtonGrid ingredientNames={ingredientsList}/>
+            <ScrollView>
+                <IngredientButtonGrid ingredientNames={ingredientsList}/>
+            </ScrollView>
             
             <View style={styles.footer}>
                 <Appbar style={styles.bottom}>
@@ -42,6 +44,7 @@ const SelectedIngredientsDisplayScreen = ({ navigation }) => {
                     </Button>
                 </Appbar>
             </View>
+            
         </View>
     );
 };

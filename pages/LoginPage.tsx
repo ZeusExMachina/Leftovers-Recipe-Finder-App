@@ -27,8 +27,8 @@ const LoginPage = ({ navigation }) => {
         const login_result = await authenticateUser(usernameText, passwordText, {currentUser, setCurrentUser});
         if (login_result) {
             // User exists, so account authentication was successful. Switch to MainIngredientSelect page
-            navigation.navigate("Ingredient Selection");
             await refreshFavouriteIngredients(currentUser, setFavouriteIngredients);
+            navigation.navigate("Ingredient Selection");
         } else {
             // Username-Password pair doesn't exist, so open snackbar
             return;

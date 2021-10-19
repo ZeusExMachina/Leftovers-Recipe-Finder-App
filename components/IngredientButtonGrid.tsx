@@ -9,7 +9,7 @@ import { SelectedIngredients, UpdateSelectedIngredients } from '../states/Select
 
 interface Props {
     ingredientNames : string[]
-    extrasScreenObjs? : {navigationObj:any, screenName:string}
+    extrasScreenObjs? : {navigationObj:any, screenName:string, extraScreenLinkMessage:string}
 }
 
 const IngredientButtonGrid = (props : Props) => {
@@ -66,9 +66,11 @@ const IngredientButtonGrid = (props : Props) => {
                         <IngredientButton ingredientName={props.ingredientNames[1]} isSelected={isSelected} toggleHandler={toggleIngredientSelectHandler}/>
                         <Button 
                             mode="text" 
-                            style={{}} 
+                            theme={{ roundness:20 }}
+                            style={{ alignSelf:"center", width:"80%", display:"flex", justifyContent:"center" }} 
+                            labelStyle={{ fontSize:11 }}
                             onPress={() => { switchToExtrasScreen(); }}>
-                            Selected Ingredients
+                            {props.extrasScreenObjs?.extraScreenLinkMessage}
                         </Button>
                     </View>
                 </View>
