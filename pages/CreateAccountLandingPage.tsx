@@ -6,9 +6,9 @@ import { Text, TextInput, Button } from 'react-native-paper';
 import SnackbarMessagePopup from '../components/SnackbarMessagePopup';
 // States
 import { CurrentUser, CreateNewUser } from "../states/CurrentUser"
-import { SelectedIngredients, ClearAllSelectedIngredients } from "../states/SelectedIngredientsList";
-import { FavouriteIngredients, RefreshFavouriteIngredients } from "../states/All_FavouriteIngredients";
-import { RecentIngredients, RefreshRecentIngredients } from "../states/RecentIngredients";
+import { ClearAllSelectedIngredients } from "../states/SelectedIngredientsList";
+import { RefreshFavouriteIngredients } from "../states/All_FavouriteIngredients";
+import { RefreshRecentIngredients } from "../states/RecentIngredients";
 import { ShowSnackbarMessage } from "../states/SnackbarVisible";
 
 const CreateAccountLandingPage = ({ navigation }) => {
@@ -17,33 +17,28 @@ const CreateAccountLandingPage = ({ navigation }) => {
     const [passwordText, setPasswordText] = useState<string>("");
 
     // Imported states
-    const {currentUser, setCurrentUser} = useContext(CurrentUser);
+    const currentUser = useContext(CurrentUser);
     const createNewUser = useContext(CreateNewUser);
-    const {ingredientsList, updateIngredientsList} = useContext(SelectedIngredients);
     const clearSelectedIngredients = useContext(ClearAllSelectedIngredients);
-    const {favouriteIngredients, setFavouriteIngredients} = useContext(FavouriteIngredients)
     const refreshFavouriteIngredients = useContext(RefreshFavouriteIngredients);
-    const {recentIngredients, setRecentIngredients} = useContext(RecentIngredients);
     const refreshRecentIngredients = useContext(RefreshRecentIngredients);
     const showSnackbarMessage = useContext(ShowSnackbarMessage);
 
     async function createNewAccount() {
         if (usernameText.length < 1) {
-            // Open snackbar
             showSnackbarMessage("Username needs to be at least 1 character long. Please try again");
             return;
         } else if (passwordText.length < 1) {
-            // Open snackbar
             showSnackbarMessage("Password needs to be at least 1 character long. Please try again");
             return;
         }
 
-        const createUser_result = await createNewUser(usernameText, passwordText, {currentUser, setCurrentUser});
+        const createUser_result = await createNewUser(usernameText, passwordText);
         if (createUser_result) {
             // No existing user has this username, so new account creation is successful. Change to MainIngredientSelect page
-            await refreshFavouriteIngredients(currentUser, setFavouriteIngredients);
-            await refreshRecentIngredients(currentUser, setRecentIngredients);
-            clearSelectedIngredients(updateIngredientsList);
+            await refreshFavouriteIngredients(currentUser);
+            await refreshRecentIngredients(currentUser);
+            clearSelectedIngredients();
             navigation.navigate("Ingredient Selection");
         } else {
             // Username already exists, show this message on snackbar

@@ -14,11 +14,10 @@ export default function SnackbarVisibleProvider({ children }) {
     const [snackbarVisible, setSnackbarVisible] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const snackbarVisibleProviderValue = useMemo(() => ({snackbarVisible, setSnackbarVisible}), [snackbarVisible, setSnackbarVisible]);
-    //const snackbarMessageProviderValue = useMemo(() => ({snackbarMessage, setSnackbarMessage}), [snackbarMessage, setSnackbarMessage]);
 
     useEffect(() => {
-        console.log("snackbarVisible", snackbarVisible);
-        console.log("snackbarMessage", snackbarMessage);
+        // console.log("snackbarVisible", snackbarVisible);
+        // console.log("snackbarMessage", snackbarMessage);
     }, [snackbarVisible]);
 
     function showSnackbarMessage(message : string) {

@@ -13,15 +13,15 @@ interface Props {
 }
 
 const IngredientButtonGrid = (props : Props) => {
-    const {ingredientsList, updateIngredientsList} = useContext(SelectedIngredients)
+    const selectedIngredients = useContext(SelectedIngredients)
     const useToggleIngredientSelect = useContext(UpdateSelectedIngredients)
 
     function isSelected(ingredientName:string) : boolean {
-        return ingredientsList.includes(ingredientName);
+        return selectedIngredients.includes(ingredientName);
     }
 
     function toggleIngredientSelectHandler(ingredientName:string) {
-        useToggleIngredientSelect(ingredientName, {ingredientsList, updateIngredientsList});
+        useToggleIngredientSelect(ingredientName);
     }
 
     function getListOfIngredientsInRow(left:boolean) : string[] {

@@ -7,7 +7,7 @@ import SnackbarMessagePopup from '../components/SnackbarMessagePopup';
 // States
 import { CurrentUser } from "../states/CurrentUser";
 import { SelectedIngredients } from '../states/SelectedIngredientsList';
-import { RecentIngredients, RefreshRecentIngredients } from "../states/RecentIngredients";
+import { RefreshRecentIngredients } from "../states/RecentIngredients";
 import { ShowSnackbarMessage } from "../states/SnackbarVisible";
 // Firebase
 import { updateRecentList } from '../firebase-access/Firebase_Client'
@@ -25,9 +25,8 @@ function createSearchUrl(ingredientsList:string[]) : string {
 }
 
 const RecipeResults = () => {
-  const {currentUser, setCurrentUser} = useContext(CurrentUser);
-  const {ingredientsList, updateIngredientsList} = useContext(SelectedIngredients);
-  const {recentIngredients, setRecentIngredients} = useContext(RecentIngredients);
+  const currentUser = useContext(CurrentUser);
+  const selectedIngredients = useContext(SelectedIngredients);
   const refreshRecentIngredients = useContext(RefreshRecentIngredients);
   const showSnackbarMessage = useContext(ShowSnackbarMessage);
 
@@ -41,7 +40,7 @@ const RecipeResults = () => {
   
     await WebBrowser.openBrowserAsync(url);
     await updateRecentList(ingredientsList, currentUser);
-    refreshRecentIngredients(currentUser, setRecentIngredients);
+    refreshRecentIngredients(currentUser);
   }
   
   return (  
@@ -53,7 +52,7 @@ const RecipeResults = () => {
         style={styles.bottomBar_button}
         labelStyle={{ fontSize:14 }}
         onPress={async () => { 
-          await openInAppBrowserWindow(ingredientsList);
+          await openInAppBrowserWindow(selectedIngredients);
         }
       }>
           Find Recipes

@@ -19,7 +19,7 @@ const SelectedIngredientsDisplayScreen = ({ navigation }) => {
         navigation.navigate("Ingredient Selection");
     }
 
-    const {ingredientsList, updateIngredientsList} = useContext(SelectedIngredients);
+    const selectedIngredients = useContext(SelectedIngredients);
 
     return (
         <View style={{flex:1}}>
@@ -30,7 +30,7 @@ const SelectedIngredientsDisplayScreen = ({ navigation }) => {
             </View>
             
             <ScrollView>
-                <IngredientButtonGrid ingredientNames={ingredientsList}/>
+                <IngredientButtonGrid ingredientNames={selectedIngredients}/>
             </ScrollView>
             
             <View style={styles.footer}>

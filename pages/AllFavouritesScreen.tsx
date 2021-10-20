@@ -15,7 +15,7 @@ const ContentTitle = ({ title, style }) => (
 );
 
 const AllFavouriteIngredientsScreen = ({ navigation }) => {
-    const {favouriteIngredients, setFavouriteIngredients} = useContext(FavouriteIngredients);
+    const favouriteIngredients = useContext(FavouriteIngredients);
 
     const switchToIngredientSelectionScreen = () => {
         navigation.navigate("Ingredient Selection");

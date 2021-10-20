@@ -1,50 +1,41 @@
 // 3rd-party Imports
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-const selectedIngredientsStateDefaultValue = {
-    ingredientsList: [] as string[],
-    updateIngredientsList: (state:string[]) => {}
-};
-
-const clearSelectedDefaultValue = (updateIngredientsList:(state:string[])=>void) => {};
-const updateIngredientsDefaultValue = (ingredient:string, selectedIngredientsStateDefaultValue) => {};
-
-export const SelectedIngredients = React.createContext(selectedIngredientsStateDefaultValue);
-export const ClearAllSelectedIngredients = React.createContext(clearSelectedDefaultValue)
-export const UpdateSelectedIngredients = React.createContext(updateIngredientsDefaultValue);
+export const SelectedIngredients = React.createContext([] as string[]);
+export const ClearAllSelectedIngredients = React.createContext(() => {})
+export const UpdateSelectedIngredients = React.createContext((ingredient:string) => {});
 
 export default function IngredientsListProvider({ children }) {
-    const [ingredientsList, updateIngredientsList] = useState<string[]>([]);
-    const ingredientsListProviderValue = useMemo(() => ({ingredientsList,updateIngredientsList}), [ingredientsList,updateIngredientsList])
+    const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
 
-    function clearSelectedIngredients(updateIngredientsList:(state:string[])=>void) {
-        updateIngredientsList([]);
+    function clearSelectedIngredients() {
+        setSelectedIngredients([]);
     }
 
-    function useToggleIngredientSelect(ingredient:string, {ingredientsList,updateIngredientsList}) {
+    function toggleIngredientSelect(ingredient:string) {
         let newSelectedIngredients : string[] = [];
-        newSelectedIngredients = newSelectedIngredients.concat(ingredientsList);
+        newSelectedIngredients = newSelectedIngredients.concat(selectedIngredients);
         
-        if (ingredientsList.includes(ingredient)) {
+        if (selectedIngredients.includes(ingredient)) {
           // If item is selected, deselect it by removing it from the list
           let indexOfIngredient : number = newSelectedIngredients.indexOf(ingredient);
           if (indexOfIngredient != -1) { newSelectedIngredients.splice(indexOfIngredient, 1); }
-          updateIngredientsList(newSelectedIngredients);
+          setSelectedIngredients(newSelectedIngredients);
         } else {
           // If item is not selected, then add it to the list
           newSelectedIngredients.push(ingredient);
-          updateIngredientsList(newSelectedIngredients);
+          setSelectedIngredients(newSelectedIngredients);
         }
     }
 
     useEffect(() => {
         //console.log("SelectedIngredientsList useEffect", ingredientsList);
-    }, [ingredientsList])
+    }, [selectedIngredients])
 
     return (
-        <SelectedIngredients.Provider value={ingredientsListProviderValue}>
+        <SelectedIngredients.Provider value={selectedIngredients}>
             <ClearAllSelectedIngredients.Provider value={clearSelectedIngredients}>
-                <UpdateSelectedIngredients.Provider value={useToggleIngredientSelect}>
+                <UpdateSelectedIngredients.Provider value={toggleIngredientSelect}>
                     {children}
                 </UpdateSelectedIngredients.Provider>
             </ClearAllSelectedIngredients.Provider>

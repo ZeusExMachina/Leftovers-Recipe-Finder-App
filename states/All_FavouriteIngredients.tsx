@@ -1,36 +1,28 @@
 // 3rd-party Imports
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 // Firebase
 import { getUserFavourites } from '../firebase-access/Firebase_Client';
 
-const favouriteIngredientsStateDefaultValue = {
-    favouriteIngredients: [] as string[],
-    setFavouriteIngredients: (state:string[]) => {}
-};
-
-const refreshFavouriteIngredientsDefaultValue = async (username:string, setFavouriteIngredients) => {}
-
-export const FavouriteIngredients = React.createContext(favouriteIngredientsStateDefaultValue);
-export const RefreshFavouriteIngredients = React.createContext(refreshFavouriteIngredientsDefaultValue);
+export const FavouriteIngredients = React.createContext([] as string[]);
+export const RefreshFavouriteIngredients = React.createContext(async (username:string) => {});
 
 export default function FavouriteIngredientsProvider({ children }) {
     const [favouriteIngredients, setFavouriteIngredients] = useState<string[]>([]);
-    const favouriteIngredientsProviderValue = useMemo(() => ({favouriteIngredients, setFavouriteIngredients}), [favouriteIngredients, setFavouriteIngredients]);
 
     useEffect(() => {
         //console.log("FavouriteIngredients useEffect", favouriteIngredients);
     }, [favouriteIngredients])
 
-    async function refreshFavouriteIngredients(username:string, setFavouriteIngredientsFunc:(faves:string[])=>void) {
+    async function refreshFavouriteIngredients(username:string) {
         const favouritesFromFirebase = await getUserFavourites(username);
 
         if (!arraysAreEqual(favouriteIngredients, favouritesFromFirebase)) {
-            setFavouriteIngredientsFunc(favouritesFromFirebase);
+            setFavouriteIngredients(favouritesFromFirebase);
         }
     }
 
     return (
-        <FavouriteIngredients.Provider value={favouriteIngredientsProviderValue}>
+        <FavouriteIngredients.Provider value={favouriteIngredients}>
             <RefreshFavouriteIngredients.Provider value={refreshFavouriteIngredients}>
                 { children }
             </RefreshFavouriteIngredients.Provider>

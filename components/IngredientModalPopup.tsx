@@ -15,15 +15,10 @@ interface Props {
     hideModal() : void
 }
 
-function convertBoolToCheckedOrUnchecked(isChecked:boolean) : 'checked'|'unchecked' {
-    if (isChecked) { return 'checked'; }
-    else { return 'unchecked'; }
-}
-
 const IngredientModalPopup = (props : Props) => {
-    const {currentUser, setCurrentUser} = useContext(CurrentUser);
-    const {allIngredients, setAllIngredients} = useContext(AllIngredients);
-    const {favouriteIngredients, setFavouriteIngredients} = useContext(FavouriteIngredients);
+    const currentUser = useContext(CurrentUser);
+    const allIngredients = useContext(AllIngredients);
+    const favouriteIngredients = useContext(FavouriteIngredients);
     const refreshFavouriteIngredients = useContext(RefreshFavouriteIngredients);
 
     const [isFavourite, setIsFavourite] = useState<'checked'|'unchecked'>(checkIfIngredientIsFavourite());
@@ -34,7 +29,7 @@ const IngredientModalPopup = (props : Props) => {
 
     async function onButtonToggle() {
         await toggleFavouriteIngredient(props.ingredientName, currentUser);
-        refreshFavouriteIngredients(currentUser, setFavouriteIngredients);
+        refreshFavouriteIngredients(currentUser);
     };
 
     function checkIfIngredientIsFavourite() : 'checked'|'unchecked' {

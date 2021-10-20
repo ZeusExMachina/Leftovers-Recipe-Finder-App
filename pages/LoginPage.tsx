@@ -6,44 +6,39 @@ import { Text, TextInput, Button } from 'react-native-paper';
 import SnackbarMessagePopup from '../components/SnackbarMessagePopup';
 // States
 import { CurrentUser, AuthenticateUser } from "../states/CurrentUser"
-import { SelectedIngredients, ClearAllSelectedIngredients } from "../states/SelectedIngredientsList";
-import { FavouriteIngredients, RefreshFavouriteIngredients } from "../states/All_FavouriteIngredients";
-import { RecentIngredients, RefreshRecentIngredients } from "../states/RecentIngredients";
+import { ClearAllSelectedIngredients } from "../states/SelectedIngredientsList";
+import { RefreshFavouriteIngredients } from "../states/All_FavouriteIngredients";
+import { RefreshRecentIngredients } from "../states/RecentIngredients";
 import { ShowSnackbarMessage } from "../states/SnackbarVisible";
 
 const LoginPage = ({ navigation }) => {
     // Local states
-    const [usernameText, setUsernameText] = useState<string>("")
-    const [passwordText, setPasswordText] = useState<string>("")
+    const [usernameText, setUsernameText] = useState<string>("");
+    const [passwordText, setPasswordText] = useState<string>("");
 
     // Imported states
-    const {currentUser, setCurrentUser} = useContext(CurrentUser)
-    const authenticateUser = useContext(AuthenticateUser)
-    const {ingredientsList, updateIngredientsList} = useContext(SelectedIngredients);
+    const currentUser = useContext(CurrentUser);
+    const authenticateUser = useContext(AuthenticateUser);
     const clearSelectedIngredients = useContext(ClearAllSelectedIngredients);
-    const {favouriteIngredients, setFavouriteIngredients} = useContext(FavouriteIngredients)
     const refreshFavouriteIngredients = useContext(RefreshFavouriteIngredients);
-    const {recentIngredients, setRecentIngredients} = useContext(RecentIngredients);
     const refreshRecentIngredients = useContext(RefreshRecentIngredients);
     const showSnackbarMessage = useContext(ShowSnackbarMessage);
 
     async function loginToAccount() {
         if (usernameText.length < 1) {
-            // Open snackbar
             showSnackbarMessage("Username needs to be at least 1 character long. Please try again");
             return;
         } else if (passwordText.length < 1) {
-            // Open snackbar
             showSnackbarMessage("Password needs to be at least 1 character long. Please try again");
             return;
         }
 
-        const login_result = await authenticateUser(usernameText, passwordText, {currentUser, setCurrentUser});
+        const login_result = await authenticateUser(usernameText, passwordText);
         if (login_result) {
             // User exists, so account authentication was successful. Switch to MainIngredientSelect page
-            await refreshFavouriteIngredients(currentUser, setFavouriteIngredients);
-            await refreshRecentIngredients(currentUser, setRecentIngredients);
-            clearSelectedIngredients(updateIngredientsList);
+            await refreshFavouriteIngredients(currentUser);
+            await refreshRecentIngredients(currentUser);
+            clearSelectedIngredients();
             navigation.navigate("Ingredient Selection");
         } else {
             // Username-Password pair doesn't exist, so open snackbar

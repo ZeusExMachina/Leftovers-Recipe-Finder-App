@@ -11,7 +11,7 @@ import { AllIngredients } from "../states/All_Ingredients";
 import { FavouriteIngredients, RefreshFavouriteIngredients } from "../states/All_FavouriteIngredients";
 import { SearchbarTextInput } from "../states/SearchbarTextInput";
 import { SearchedIngredientsResults } from '../states/SearchedIngredientsResults'
-import { RecentIngredients, GetRecentIngredientsAsArray, RefreshRecentIngredients } from "../states/RecentIngredients";
+import { GetRecentIngredientsAsArray, RefreshRecentIngredients } from "../states/RecentIngredients";
 
 interface Props {
     navigationObj:any
@@ -32,13 +32,12 @@ function convertAllIngredientsIntoMap(allIngredients : Map<string,string>) : Map
 }
 
 const IngredientsContents = (props : Props) => {
-    const {currentUser, setCurrentUser} = useContext(CurrentUser)
-    const {allIngredients, setAllIngredients} = useContext(AllIngredients);
+    const currentUser = useContext(CurrentUser)
+    const allIngredients = useContext(AllIngredients);
     const {searchInput,setSearchInput} = useContext(SearchbarTextInput);
-    const {searchedIngredients,setSearchedIngredients} = useContext(SearchedIngredientsResults);
-    const {favouriteIngredients, setFavouriteIngredients} = useContext(FavouriteIngredients);
+    const searchedIngredients = useContext(SearchedIngredientsResults);
+    const favouriteIngredients = useContext(FavouriteIngredients);
     const refreshFavouriteIngredients = useContext(RefreshFavouriteIngredients);
-    const {recentIngredients, setRecentIngredients} = useContext(RecentIngredients);
     const getRecentIngredientsAsArray = useContext(GetRecentIngredientsAsArray);
     const refreshRecentIngredients = useContext(RefreshRecentIngredients);
 
@@ -46,8 +45,8 @@ const IngredientsContents = (props : Props) => {
     // const favouriteIngredients = await getUserFavourites(currentUser);
     // const recentIngredients = await getUserRecent(currentUser);
 
-    refreshFavouriteIngredients(currentUser, setFavouriteIngredients);
-    refreshRecentIngredients(currentUser, setRecentIngredients);
+    refreshFavouriteIngredients(currentUser);
+    refreshRecentIngredients(currentUser);
 
     return (
         (searchInput.length < 1)

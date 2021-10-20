@@ -1,22 +1,19 @@
 // 3rd-party Imports
-import React, { useEffect, useMemo, useState, useContext } from 'react'
-import allIngredientsStateDefaultValue from "../states/All_Ingredients"
+import React, { useEffect, useState, useContext } from 'react'
+// States
+import { AllIngredients } from './All_Ingredients';
 
-const searchedIngredientsStateDefaultValue = {
-    searchedIngredients: [] as string[],
-    setSearchedIngredients: (state:string[]) => {}
-};
-
-const updateSearchedIngredientsDefaultValue = (searchQuery:string, searchedIngredientsStateDefaultValue, allIngredientsStateDefaultValue) => {};
-
-export const SearchedIngredientsResults = React.createContext(searchedIngredientsStateDefaultValue);
-export const UpdateSearchedIngredients = React.createContext(updateSearchedIngredientsDefaultValue);
+export const SearchedIngredientsResults = React.createContext([] as string[]);
+export const UpdateSearchedIngredients = React.createContext((searchQuery:string) => {});
 
 export default function SearchedIngredientsResultsProvider({ children }) {
-    const [searchedIngredients, setSearchedIngredients] = useState<string[]>(searchedIngredientsStateDefaultValue.searchedIngredients);
-    const searchedIngredientsProviderValue = useMemo(() => ({searchedIngredients,setSearchedIngredients}), [searchedIngredients,setSearchedIngredients]);
+    // Local states
+    const [searchedIngredients, setSearchedIngredients] = useState<string[]>([] as string[]);
 
-    function updateSearchedIngredients(searchQuery:string, {searchedIngredients,setSearchedIngredients}, {allIngredients,setAllIngredients}) {
+    // Imported states
+    const allIngredients = useContext(AllIngredients);
+
+    function updateSearchedIngredients(searchQuery : string) {
         if (searchQuery.length < 1) {
             // If nothing is typed into the search bar, then no ingredients are returned as results
             setSearchedIngredients([]);
@@ -37,7 +34,7 @@ export default function SearchedIngredientsResultsProvider({ children }) {
     }, [searchedIngredients]);
 
     return (
-        <SearchedIngredientsResults.Provider value={searchedIngredientsProviderValue}>
+        <SearchedIngredientsResults.Provider value={searchedIngredients}>
             <UpdateSearchedIngredients.Provider value={updateSearchedIngredients}>
                 {children}
             </UpdateSearchedIngredients.Provider>

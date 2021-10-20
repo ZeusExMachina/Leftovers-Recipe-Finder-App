@@ -1,19 +1,12 @@
 // 3rd-party Imports
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // Firebase
 import getAllIngredients from '../firebase-access/Firebase_Client';
 
-export const allIngredientsStateDefaultValue = {
-    allIngredients: new Map<string,string>().set("Default", "value"),
-    setAllIngredients: (state:Map<string,string>) => {}
-};
-
-export const AllIngredients = React.createContext(allIngredientsStateDefaultValue); 
+export const AllIngredients = React.createContext(new Map<string,string>()); 
 
 export default function AllIngredientsProvider({ children }) {
-    const [allIngredients, setAllIngredients] = useState<Map<string,string>>(allIngredientsStateDefaultValue.allIngredients);
-
-    const allIngredientsProviderValue = useMemo(() => ({allIngredients,setAllIngredients}), [allIngredients,setAllIngredients]);
+    const [allIngredients, setAllIngredients] = useState<Map<string,string>>(new Map<string,string>());
 
     useEffect(() => {
         getAllIngredients().then(value => { setAllIngredients(value); });
@@ -21,7 +14,7 @@ export default function AllIngredientsProvider({ children }) {
     }, []);
 
     return (
-        <AllIngredients.Provider value={allIngredientsProviderValue}>
+        <AllIngredients.Provider value={allIngredients}>
             {children}
         </AllIngredients.Provider>
     );
