@@ -4,15 +4,20 @@ import { StyleSheet, View } from 'react-native';
 import { Text, TextInput, Button } from 'react-native-paper';
 // States
 import { CurrentUser, CreateNewUser } from "../states/CurrentUser"
+import { SelectedIngredients, ClearAllSelectedIngredients } from "../states/SelectedIngredientsList";
 import { FavouriteIngredients, RefreshFavouriteIngredients } from "../states/All_FavouriteIngredients";
 import { RecentIngredients, RefreshRecentIngredients } from "../states/RecentIngredients";
 
 const CreateAccountLandingPage = ({ navigation }) => {
+    // Local states
     const [usernameText, setUsernameText] = useState<string>("");
     const [passwordText, setPasswordText] = useState<string>("");
 
+    // Imported states
     const {currentUser, setCurrentUser} = useContext(CurrentUser);
     const createNewUser = useContext(CreateNewUser);
+    const {ingredientsList, updateIngredientsList} = useContext(SelectedIngredients);
+    const clearSelectedIngredients = useContext(ClearAllSelectedIngredients);
     const {favouriteIngredients, setFavouriteIngredients} = useContext(FavouriteIngredients)
     const refreshFavouriteIngredients = useContext(RefreshFavouriteIngredients);
     const {recentIngredients, setRecentIngredients} = useContext(RecentIngredients);
@@ -32,6 +37,7 @@ const CreateAccountLandingPage = ({ navigation }) => {
             // No existing user has this username, so new account creation is successful. Change to MainIngredientSelect page
             await refreshFavouriteIngredients(currentUser, setFavouriteIngredients);
             await refreshRecentIngredients(currentUser, setRecentIngredients);
+            clearSelectedIngredients(updateIngredientsList);
             navigation.navigate("Ingredient Selection");
         } else {
             // Username already exists, show this message on snackbar

@@ -6,15 +6,21 @@ const selectedIngredientsStateDefaultValue = {
     updateIngredientsList: (state:string[]) => {}
 };
 
+const clearSelectedDefaultValue = (updateIngredientsList:(state:string[])=>void) => {};
 const updateIngredientsDefaultValue = (ingredient:string, selectedIngredientsStateDefaultValue) => {};
 
 export const SelectedIngredients = React.createContext(selectedIngredientsStateDefaultValue);
+export const ClearAllSelectedIngredients = React.createContext(clearSelectedDefaultValue)
 export const UpdateSelectedIngredients = React.createContext(updateIngredientsDefaultValue);
 
 export default function IngredientsListProvider({ children }) {
     const [ingredientsList, updateIngredientsList] = useState<string[]>([]);
 
     const ingredientsListProviderValue = useMemo(() => ({ingredientsList,updateIngredientsList}), [ingredientsList,updateIngredientsList])
+
+    function clearSelectedIngredients(updateIngredientsList:(state:string[])=>void) {
+        updateIngredientsList([]);
+    }
 
     function useToggleIngredientSelect(ingredient:string, {ingredientsList,updateIngredientsList}) {
         let newSelectedIngredients : string[] = [];
@@ -38,9 +44,11 @@ export default function IngredientsListProvider({ children }) {
 
     return (
         <SelectedIngredients.Provider value={ingredientsListProviderValue}>
-            <UpdateSelectedIngredients.Provider value={useToggleIngredientSelect}>
-                {children}
-            </UpdateSelectedIngredients.Provider>
+            <ClearAllSelectedIngredients.Provider value={clearSelectedIngredients}>
+                <UpdateSelectedIngredients.Provider value={useToggleIngredientSelect}>
+                    {children}
+                </UpdateSelectedIngredients.Provider>
+            </ClearAllSelectedIngredients.Provider>
         </SelectedIngredients.Provider>
     );
 }

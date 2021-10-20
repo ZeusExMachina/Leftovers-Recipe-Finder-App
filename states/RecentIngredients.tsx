@@ -1,7 +1,7 @@
 // 3rd-party Imports
 import React, { useState, useMemo, useEffect } from 'react'
 // Firebase
-import { getUserFavourites, getUserRecent } from '../firebase-access/Firebase_Client';
+import { getUserRecent } from '../firebase-access/Firebase_Client';
 
 const recentIngredientsStateDefaultValue = {
     recentIngredients: new Map<string,number>(),
