@@ -2,11 +2,14 @@
 import React, { useState, useContext } from "react";
 import { View } from 'react-native';
 import { Text, TextInput, Button } from 'react-native-paper';
+// Components
+import SnackbarMessagePopup from '../components/SnackbarMessagePopup';
 // States
 import { CurrentUser, AuthenticateUser } from "../states/CurrentUser"
 import { SelectedIngredients, ClearAllSelectedIngredients } from "../states/SelectedIngredientsList";
 import { FavouriteIngredients, RefreshFavouriteIngredients } from "../states/All_FavouriteIngredients";
 import { RecentIngredients, RefreshRecentIngredients } from "../states/RecentIngredients";
+import { ShowSnackbarMessage } from "../states/SnackbarVisible";
 
 const LoginPage = ({ navigation }) => {
     // Local states
@@ -22,13 +25,16 @@ const LoginPage = ({ navigation }) => {
     const refreshFavouriteIngredients = useContext(RefreshFavouriteIngredients);
     const {recentIngredients, setRecentIngredients} = useContext(RecentIngredients);
     const refreshRecentIngredients = useContext(RefreshRecentIngredients);
+    const showSnackbarMessage = useContext(ShowSnackbarMessage);
 
     async function loginToAccount() {
         if (usernameText.length < 1) {
             // Open snackbar
+            showSnackbarMessage("Username needs to be at least 1 character long. Please try again");
             return;
         } else if (passwordText.length < 1) {
             // Open snackbar
+            showSnackbarMessage("Password needs to be at least 1 character long. Please try again");
             return;
         }
 
@@ -41,6 +47,7 @@ const LoginPage = ({ navigation }) => {
             navigation.navigate("Ingredient Selection");
         } else {
             // Username-Password pair doesn't exist, so open snackbar
+            showSnackbarMessage("Username or password is invalid. Please a valid username and password");
             return;
         }
     }
@@ -85,6 +92,8 @@ const LoginPage = ({ navigation }) => {
             >
                 Log in
             </Button>
+
+            <SnackbarMessagePopup/>
         </View>
     )
 };

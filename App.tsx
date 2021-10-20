@@ -2,6 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { Portal, Provider as PaperProvider } from 'react-native-paper';
+// Components
+import SnackbarMessagePopup from './components/SnackbarMessagePopup';
 // Screens
 import CreateAccountLandingPage from './pages/CreateAccountLandingPage';
 import IngredientSelection from "./pages/MainIngredientSelect";
@@ -15,17 +17,19 @@ import RecentIngredientsProvider from './states/RecentIngredients';
 import IngredientsListProvider from './states/SelectedIngredientsList';
 import AllFavouriteIngredientsScreen from './pages/AllFavouritesScreen';
 import AllRecentIngredientsScreen from './pages/AllRecentsScreen';
+import SnackbarVisibleProvider from './states/SnackbarVisible';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <PaperProvider>
-      <CurrentUserProvider>
-        <AllIngredientsProvider>
-          <FavouriteIngredientsProvider>
-            <RecentIngredientsProvider>
-              <IngredientsListProvider>
+      <SnackbarVisibleProvider>
+        <CurrentUserProvider>
+          <AllIngredientsProvider>
+            <FavouriteIngredientsProvider>
+              <RecentIngredientsProvider>
+                <IngredientsListProvider>
                   <Portal.Host>
                     <NavigationContainer>
                       <Stack.Navigator 
@@ -51,11 +55,12 @@ export default function App() {
                       </Stack.Navigator>
                     </NavigationContainer>
                   </Portal.Host>
-              </IngredientsListProvider>
-            </RecentIngredientsProvider>
-          </FavouriteIngredientsProvider>
-        </AllIngredientsProvider>
-      </CurrentUserProvider>
+                </IngredientsListProvider>
+              </RecentIngredientsProvider>
+            </FavouriteIngredientsProvider>
+          </AllIngredientsProvider>
+        </CurrentUserProvider>
+      </SnackbarVisibleProvider>
     </PaperProvider>
   );
 }

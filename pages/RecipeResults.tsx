@@ -1,11 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import * as WebBrowser from 'expo-web-browser';
 import { StyleSheet } from 'react-native';
-import { Button, Snackbar } from "react-native-paper";
+import { Button } from "react-native-paper";
+// Components
+import SnackbarMessagePopup from '../components/SnackbarMessagePopup';
 // States
 import { CurrentUser } from "../states/CurrentUser";
 import { SelectedIngredients } from '../states/SelectedIngredientsList';
 import { RecentIngredients, RefreshRecentIngredients } from "../states/RecentIngredients";
+import { ShowSnackbarMessage } from "../states/SnackbarVisible";
 // Firebase
 import { updateRecentList } from '../firebase-access/Firebase_Client'
 
@@ -26,14 +29,11 @@ const RecipeResults = () => {
   const {ingredientsList, updateIngredientsList} = useContext(SelectedIngredients);
   const {recentIngredients, setRecentIngredients} = useContext(RecentIngredients);
   const refreshRecentIngredients = useContext(RefreshRecentIngredients);
+  const showSnackbarMessage = useContext(ShowSnackbarMessage);
 
-  // State of Snackbar message
-  const [snackBarVisible, setSnackBarVisible] = useState<boolean>(false);
-  const dismissSnackBar = () => setSnackBarVisible(false);
-
-  async function openInAppBrowserWindow(ingredientsList:string[], setSnackBarVisible:(state:boolean) => void) {
+  async function openInAppBrowserWindow(ingredientsList:string[]) {
     if (ingredientsList.length < 1) {
-      setSnackBarVisible(true);
+      showSnackbarMessage("No ingredients selected. Please select ingredients to use in a recipe");
       return;
     }
   
@@ -43,8 +43,8 @@ const RecipeResults = () => {
     await updateRecentList(ingredientsList, currentUser);
     refreshRecentIngredients(currentUser, setRecentIngredients);
   }
-
-  return (
+  
+  return (  
     <>
       <Button
         icon="magnify"
@@ -53,23 +53,13 @@ const RecipeResults = () => {
         style={styles.bottomBar_button}
         labelStyle={{ fontSize:14 }}
         onPress={async () => { 
-          openInAppBrowserWindow(ingredientsList, setSnackBarVisible)
+          await openInAppBrowserWindow(ingredientsList);
         }
       }>
           Find Recipes
       </Button>
       
-      <Snackbar
-        visible={snackBarVisible}
-        onDismiss={() => {dismissSnackBar()}}
-        action={{
-          label: 'OK',
-          onPress: () => {dismissSnackBar()}
-        }}
-        style={{width:"91%", marginBottom:65}}
-      >
-        No ingredients selected. Please select ingredients to use in a recipe.
-      </Snackbar>
+      <SnackbarMessagePopup/>
     </>
   );
 }

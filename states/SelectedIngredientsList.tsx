@@ -15,7 +15,6 @@ export const UpdateSelectedIngredients = React.createContext(updateIngredientsDe
 
 export default function IngredientsListProvider({ children }) {
     const [ingredientsList, updateIngredientsList] = useState<string[]>([]);
-
     const ingredientsListProviderValue = useMemo(() => ({ingredientsList,updateIngredientsList}), [ingredientsList,updateIngredientsList])
 
     function clearSelectedIngredients(updateIngredientsList:(state:string[])=>void) {

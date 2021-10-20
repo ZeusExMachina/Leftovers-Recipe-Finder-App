@@ -1,12 +1,15 @@
 // 3rd-paarty Imports
 import React, { useState, useContext } from "react";
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { Text, TextInput, Button } from 'react-native-paper';
+// Components
+import SnackbarMessagePopup from '../components/SnackbarMessagePopup';
 // States
 import { CurrentUser, CreateNewUser } from "../states/CurrentUser"
 import { SelectedIngredients, ClearAllSelectedIngredients } from "../states/SelectedIngredientsList";
 import { FavouriteIngredients, RefreshFavouriteIngredients } from "../states/All_FavouriteIngredients";
 import { RecentIngredients, RefreshRecentIngredients } from "../states/RecentIngredients";
+import { ShowSnackbarMessage } from "../states/SnackbarVisible";
 
 const CreateAccountLandingPage = ({ navigation }) => {
     // Local states
@@ -22,13 +25,16 @@ const CreateAccountLandingPage = ({ navigation }) => {
     const refreshFavouriteIngredients = useContext(RefreshFavouriteIngredients);
     const {recentIngredients, setRecentIngredients} = useContext(RecentIngredients);
     const refreshRecentIngredients = useContext(RefreshRecentIngredients);
+    const showSnackbarMessage = useContext(ShowSnackbarMessage);
 
     async function createNewAccount() {
         if (usernameText.length < 1) {
             // Open snackbar
+            showSnackbarMessage("Username needs to be at least 1 character long. Please try again");
             return;
         } else if (passwordText.length < 1) {
             // Open snackbar
+            showSnackbarMessage("Password needs to be at least 1 character long. Please try again");
             return;
         }
 
@@ -41,6 +47,7 @@ const CreateAccountLandingPage = ({ navigation }) => {
             navigation.navigate("Ingredient Selection");
         } else {
             // Username already exists, show this message on snackbar
+            showSnackbarMessage("That username already exists. Please enter a different username");
             return;
         }
     }
@@ -85,6 +92,7 @@ const CreateAccountLandingPage = ({ navigation }) => {
             <Text style={{ fontSize:14, alignSelf:"center", marginTop:30 }}>
                 Already have an account?
             </Text>
+
             <Button
                 mode="text"
                 onPress={() => goToLogin()}
@@ -92,6 +100,8 @@ const CreateAccountLandingPage = ({ navigation }) => {
             >
                 Log in
             </Button>
+
+            <SnackbarMessagePopup/>
         </View>
     );
 };
