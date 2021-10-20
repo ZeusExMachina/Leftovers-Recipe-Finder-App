@@ -50,7 +50,7 @@ const RecipeResults = () => {
         mode="contained"
         contentStyle={{ flexDirection:"row-reverse" }}
         style={styles.bottomBar_button}
-        labelStyle={{ fontSize:14 }}
+        labelStyle={{ fontSize:13 }}
         onPress={async () => { 
           await openInAppBrowserWindow(selectedIngredients);
         }

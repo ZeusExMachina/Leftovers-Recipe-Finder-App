@@ -1,16 +1,19 @@
 // 3rd-party Imports
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View, } from 'react-native';
 import { Appbar, Button, Text } from 'react-native-paper';
 // Components
 import RecipeResults from "../pages/RecipeResults";
 // States
+import { SelectedIngredients } from "../states/SelectedIngredientsList";
 
 interface Props {
   navigationObj
 }
 
 const MainPageFooter = (props : Props) => {
+  const selectedIngredients = useContext(SelectedIngredients);
+
   const switchToSelectedIngredientsScreen = () => {
     props.navigationObj.navigate("Selected Ingredients");
   }
@@ -22,10 +25,10 @@ const MainPageFooter = (props : Props) => {
           icon="format-list-bulleted-square" 
           mode="contained" 
           style={styles.bottomBar_button}
-          labelStyle={{ fontSize: 14 }}
+          labelStyle={{ fontSize: 13 }}
           onPress={() => { switchToSelectedIngredientsScreen(); }}
         >
-          Selected
+          {selectedIngredients.length>0 ? "Selected ("+selectedIngredients.length+")" : "Selected"}
         </Button>
 
         <RecipeResults/>

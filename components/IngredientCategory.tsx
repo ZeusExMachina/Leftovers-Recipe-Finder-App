@@ -1,9 +1,11 @@
 // 3rd-party Imports
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { Avatar, List } from 'react-native-paper';
 // Components
 import IngredientButtonGrid from "../components/IngredientButtonGrid"
+// States
+import { SelectedIngredients } from '../states/SelectedIngredientsList';
 // Firebase
 import { getImageUrlOfIngredient } from "../firebase-access/Firebase_Client"
 
@@ -23,11 +25,25 @@ const IngredientCategory = (props : Props) => {
     // console.log(ingredientImageUrl);
   }, [ingredientImageUrl]);
 
+  // Imported states
+  const selectedIngredients = useContext(SelectedIngredients);
+
+  function getNumberOfIngredientsInCategoryAreSelected() : number {
+    let numberOfSelectedIngredients = 0;
+    for(let i = 0; i < props.ingredientNames.length; i++) {
+      if (selectedIngredients.includes(props.ingredientNames[i])) { numberOfSelectedIngredients++; }
+    }
+    return numberOfSelectedIngredients;
+  }
+
+  const numOfSelected = getNumberOfIngredientsInCategoryAreSelected();
+
   return (
     <List.Accordion
-      title={props.categoryName}
+      title={numOfSelected>0 ? props.categoryName+" ("+numOfSelected+")" : props.categoryName}
       theme={{ roundness:20 }}
-      left={props => <Avatar.Image {...props} size={35} source={{ uri: ingredientImageUrl }} />}>
+      left={props => <Avatar.Image {...props} size={35} source={{ uri: ingredientImageUrl }} />}
+    >
 
       <IngredientButtonGrid ingredientNames={props.ingredientNames}/>
 
