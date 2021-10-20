@@ -6,6 +6,8 @@ import { Appbar, Button, Text } from 'react-native-paper';
 import RecipeResults from "../pages/RecipeResults";
 // States
 import { SelectedIngredients } from "../states/SelectedIngredientsList";
+// Styling
+import { PrimaryThemeColour } from "../styling/Styling";
 
 interface Props {
   navigationObj
@@ -54,12 +56,14 @@ const styles = StyleSheet.create({
       height: 55,
       display: "flex",
       justifyContent: "space-evenly",
-      flexDirection:"row"
+      flexDirection: "row",
+      backgroundColor: PrimaryThemeColour,
   },
 
   bottomBar_button: {
       height: 40,
       width: "45%",
+      backgroundColor: PrimaryThemeColour,
   },
 });
 

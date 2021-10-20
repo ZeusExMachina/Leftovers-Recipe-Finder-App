@@ -11,6 +11,8 @@ import { RefreshRecentIngredients } from "../states/RecentIngredients";
 import { ShowSnackbarMessage } from "../states/SnackbarVisible";
 // Firebase
 import { updateRecentList } from '../firebase-access/Firebase_Client'
+// Styling
+import { PrimaryThemeColour } from "../styling/Styling";
 
 function createSearchUrl(ingredientsList:string[]) : string {
   let url = "https://google.com/search?q=Recipes+with";
@@ -67,6 +69,7 @@ const styles = StyleSheet.create({
     bottomBar_button: {
         height: 40,
         width: "45%",
+        backgroundColor: PrimaryThemeColour,
     },
 
     container: {

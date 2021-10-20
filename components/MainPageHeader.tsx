@@ -4,6 +4,8 @@ import { StyleSheet, View } from 'react-native';
 import { Appbar, Text, Searchbar } from 'react-native-paper';
 // State - Selected Ingredients
 import { SearchbarTextInput } from "../states/SearchbarTextInput";
+// Styling
+import { PrimaryThemeColour, AccentsThemeColour } from "../styling/Styling";
 
 const ContentTitle = ({ title, style }) => (
     <Appbar.Content
@@ -22,7 +24,8 @@ const MainPageHeader = () => {
             <ContentTitle title={'Select ingredients you have'} style={{position:"relative", fontSize:22, color:'white'}} />
             <Searchbar style={styles.searchBar}
               placeholder="Search"
-              theme={{ roundness:17 }}
+              theme={{ roundness:17, colors: { primary: PrimaryThemeColour } }}
+              inputStyle={{ color:AccentsThemeColour }}
               onChangeText={setSearchInput}
               value={searchInput}
             />
@@ -51,6 +54,7 @@ const styles = StyleSheet.create({
       display: "flex",
       justifyContent: "center",
       paddingBottom: 10,
+      backgroundColor: PrimaryThemeColour
   },
   
   searchBar: {

@@ -5,6 +5,8 @@ import { Avatar, Chip } from 'react-native-paper';
 import IngredientModalPopup from './IngredientModalPopup';
 // Firebase
 import { getImageUrlFromStorage } from "../firebase-access/Firebase_Client"
+// Styling
+import { TertiaryThemeColour } from "../styling/Styling";
 
 interface Props {
     ingredientName : string
@@ -37,7 +39,7 @@ const IngredientButton = (props:Props) => {
                 hideModal={() => { setModalIsVisible(false) }}
             />
             <Chip
-                avatar={<Avatar.Image size={24} source={{ uri: ingredientImageUrl }}/>}
+                avatar={<Avatar.Image size={24} style={{ backgroundColor:TertiaryThemeColour }} source={{ uri: ingredientImageUrl }}/>}
                 mode="outlined"
                 selected={ props.isSelected(props.ingredientName) }
                 textStyle={ styles.ingredientButton_text }

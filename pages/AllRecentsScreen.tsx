@@ -6,6 +6,8 @@ import { Appbar, Avatar, Button, Text } from 'react-native-paper';
 import IngredientButtonGrid from "../components/IngredientButtonGrid";
 // States
 import { GetRecentIngredientsAsArray } from "../states/RecentIngredients";
+// Styling
+import { PrimaryThemeColour } from "../styling/Styling";
 
 const ContentTitle = ({ title, style }) => (
     <Appbar.Content
@@ -28,14 +30,14 @@ const AllRecentIngredientsScreen = ({ navigation }) => {
                     <Button 
                         mode="contained"
                         compact={true}
-                        theme={{ roundness:20 }}
-                        style={{ position:"absolute", top:25, left:10, width:40, height:40 }}
+                        theme={{ roundness:20, colors: { primary: PrimaryThemeColour } }}
+                        style={{ position:"absolute", top:25, left:10, width:40, height:40, backgroundColor:PrimaryThemeColour }}
                         onPress={() => { switchToIngredientSelectionScreen(); }}
                     >
-                        <Avatar.Icon icon="arrow-left" size={28}></Avatar.Icon>
+                        <Avatar.Icon icon="arrow-left" style={{ backgroundColor:PrimaryThemeColour }} size={28}></Avatar.Icon>
                     </Button>
                     <View style={{alignItems: "center", top:32, left:5 }}>
-                        <ContentTitle title={'Recently Searched'} style={{position:"relative", fontSize:19, color:'white'}} />
+                        <ContentTitle title={'Recently Used Ingredients'} style={{position:"relative", fontSize:19, color:'white'}} />
                     </View>
                 </Appbar.Header>
             </View>
@@ -65,6 +67,7 @@ const styles = StyleSheet.create({
         height: 75,
         display: "flex",
         justifyContent: "center",
+        backgroundColor:PrimaryThemeColour,
     },
 });
 

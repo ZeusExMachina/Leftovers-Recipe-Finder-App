@@ -6,6 +6,8 @@ import { Button } from 'react-native-paper';
 import IngredientButton from './IngredientButton';
 // State - Selected Ingredients
 import { SelectedIngredients, UpdateSelectedIngredients } from '../states/SelectedIngredientsList';
+// Styling
+import { PrimaryThemeColour } from "../styling/Styling";
 
 interface Props {
     ingredientNames : string[]
@@ -66,9 +68,9 @@ const IngredientButtonGrid = (props : Props) => {
                         <IngredientButton ingredientName={props.ingredientNames[1]} isSelected={isSelected} toggleHandler={toggleIngredientSelectHandler}/>
                         <Button 
                             mode="text" 
-                            theme={{ roundness:20 }}
+                            theme={{ roundness:20, colors: { primary: PrimaryThemeColour } }}
                             style={{ alignSelf:"center", width:"85%", display:"flex", justifyContent:"center" }} 
-                            labelStyle={{ fontSize:11 }}
+                            labelStyle={{ fontSize:11, color:PrimaryThemeColour }}
                             onPress={() => { switchToExtrasScreen(); }}>
                             {props.extrasScreenObjs?.extraScreenLinkMessage}
                         </Button>

@@ -7,6 +7,8 @@ import { AllIngredients } from "../states/All_Ingredients";
 import { FavouriteIngredients, RefreshFavouriteIngredients } from '../states/All_FavouriteIngredients';
 // Firebase
 import { toggleFavouriteIngredient } from "../firebase-access/Firebase_Client"
+// Styling
+import { SecondaryThemeColour, TertiaryThemeColour } from "../styling/Styling";
 
 interface Props {
     ingredientName : string
@@ -42,11 +44,22 @@ const IngredientModalPopup = (props : Props) => {
             <Modal visible={props.modalIsVisible} onDismiss={props.hideModal} contentContainerStyle={styles.modalStyles}>
                 <View style={styles.innerModal_container}>
                     <View style={styles.avatar_and_favouritesToggle_view}>
-                        <Avatar.Image size={90} source={{ uri: props.imageUrl }}/>
-                        <ToggleButton icon={'star-outline'} size={50} status={isFavourite} onPress={onButtonToggle} style={{width:50, height:50}}/>
+                        <Avatar.Image
+                            size={90}
+                            style={{ backgroundColor:TertiaryThemeColour }}
+                            source={{ uri: props.imageUrl }}
+                        />
+                        <ToggleButton
+                            icon={'star-outline'}
+                            size={50}
+                            theme={{ roundness:50 }}
+                            style={ (isFavourite == "checked") ? styles.favouritesButton_selected : styles.favouritesButton_unselected }
+                            status={isFavourite}
+                            onPress={onButtonToggle}
+                        />
                     </View>
-                    <Text style={{fontSize: 20, paddingTop: 30}}>{props.ingredientName}</Text>
-                    <Text style={{fontSize: 20, paddingTop: 20}}>Category: {allIngredients.get(props.ingredientName)}</Text>
+                    <Text style={{ fontSize: 20, paddingTop: 30 }}>{props.ingredientName}</Text>
+                    <Text style={{ fontSize: 20, paddingTop: 20 }}>Category: {allIngredients.get(props.ingredientName)}</Text>
                 </View>
             </Modal>
         </Portal>
@@ -76,6 +89,17 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: "space-between",
+    },
+
+    favouritesButton_unselected: {
+        width:50,
+        height:50,
+    },
+
+    favouritesButton_selected: {
+        width:50,
+        height:50,
+        backgroundColor:SecondaryThemeColour,
     }
 });
 

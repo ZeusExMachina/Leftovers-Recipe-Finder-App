@@ -3,6 +3,8 @@ import React, { useContext } from "react";
 import { Snackbar } from "react-native-paper";
 // States
 import { SnackbarVisible, SnackbarMessage } from "../states/SnackbarVisible";
+// Styling
+import { SecondaryThemeColour } from "../styling/Styling";
 
 const SnackbarMessagePopup = () => {
     const {snackbarVisible, setSnackbarVisible} = useContext(SnackbarVisible);
@@ -10,13 +12,13 @@ const SnackbarMessagePopup = () => {
 
     return (
         <Snackbar
+        style={{ alignSelf:"center", width:"91%", marginBottom:65 }}
         visible={snackbarVisible}
         onDismiss={() => {setSnackbarVisible(false)}}
         action={{
           label: 'OK',
           onPress: () => {setSnackbarVisible(false)}
         }}
-        style={{alignSelf:"center", width:"91%", marginBottom:65}}
       >
         { snackbarMessage }
       </Snackbar>

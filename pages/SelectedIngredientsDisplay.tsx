@@ -6,6 +6,8 @@ import { Appbar, Button, Text } from 'react-native-paper';
 import { SelectedIngredients } from '../states/SelectedIngredientsList';
 // Components
 import IngredientButtonGrid from "../components/IngredientButtonGrid";
+// Styling
+import { PrimaryThemeColour } from "../styling/Styling";
 
 const ContentTitle = ({ title, style }) => (
     <Appbar.Content
@@ -67,6 +69,7 @@ const styles = StyleSheet.create({
         height: 55,
         display: "flex",
         justifyContent: "center",
+        backgroundColor: PrimaryThemeColour,
     },
 
     footer: {
@@ -85,12 +88,14 @@ const styles = StyleSheet.create({
         height: 60,
         display: "flex",
         justifyContent: "space-evenly",
+        backgroundColor: PrimaryThemeColour,
     },
 
     bottomBar_button: {
         height: 40,
         width: "45%",
         fontSize: 17,
+        backgroundColor: PrimaryThemeColour,
     },
 });
 

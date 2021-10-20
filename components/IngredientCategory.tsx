@@ -8,6 +8,8 @@ import IngredientButtonGrid from "../components/IngredientButtonGrid"
 import { SelectedIngredients } from '../states/SelectedIngredientsList';
 // Firebase
 import { getImageUrlFromStorage } from "../firebase-access/Firebase_Client"
+// Styling
+import { PrimaryThemeColour, TertiaryThemeColour } from "../styling/Styling";
 
 interface Props {
   categoryName : string
@@ -45,8 +47,8 @@ const IngredientCategory = (props : Props) => {
   return (
     <List.Accordion
       title={numOfSelected>0 ? props.categoryName+" ("+numOfSelected+")" : props.categoryName}
-      theme={{ roundness:20 }}
-      left={props => <Avatar.Image {...props} size={35} source={{ uri: ingredientImageUrl }} />}
+      theme={{ roundness:20, colors: { primary: PrimaryThemeColour } }}
+      left={props => <Avatar.Image {...props} size={35} style={{ backgroundColor:TertiaryThemeColour }} source={{ uri: ingredientImageUrl }} />}
     >
 
       <IngredientButtonGrid ingredientNames={props.ingredientNames}/>

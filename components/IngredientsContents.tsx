@@ -12,6 +12,8 @@ import { FavouriteIngredients, RefreshFavouriteIngredients } from "../states/All
 import { SearchbarTextInput } from "../states/SearchbarTextInput";
 import { SearchedIngredientsResults } from '../states/SearchedIngredientsResults'
 import { GetRecentIngredientsAsArray, RefreshRecentIngredients } from "../states/RecentIngredients";
+// Styling
+import { SecondaryThemeColour, AccentsThemeColour } from "../styling/Styling";
 
 interface Props {
     navigationObj:any
@@ -82,7 +84,12 @@ const IngredientsContents = (props : Props) => {
                         </>
                     }
 
-                    <Text style={styles.ingredientSection_heading}>Food Categories</Text>
+                    <View style={{flexDirection:"row"}}>
+                        <Text style={styles.ingredientSection_heading}>
+                            Food Categories
+                        </Text>
+                        <Avatar.Icon size={28} icon="food" style={styles.contentSection_avatarIcon} />
+                    </View>
 
                     {Array.from(convertAllIngredientsIntoMap(allIngredients)).map(([ingredientCategory,ingredientNames], i) => 
                         React.createElement(IngredientCategory, {key:i, categoryName:ingredientCategory, ingredientNames:ingredientNames}))}
@@ -113,6 +120,7 @@ const styles = StyleSheet.create({
 
     contentSection_avatarIcon: {
         marginLeft: 5,
+        backgroundColor: SecondaryThemeColour,
     },
     
     ingredientSection_heading: {
@@ -120,6 +128,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         marginLeft: 8,
         fontSize: 20,
+        color: AccentsThemeColour,
     },
 });
 
