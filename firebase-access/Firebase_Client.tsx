@@ -1,8 +1,6 @@
 // Firebase
 import { FirestoreDB, FirebaseStorage } from "../firebase";
 
-const storageRef = FirebaseStorage.ref();
-
 // ------------------------------------
 // Creating new accounts and logging in
 // ------------------------------------
@@ -136,14 +134,10 @@ export async function updateRecentList(mostRecentSearch:string[], username:strin
 // ---------------------------------
 // Retrieving ingredient information
 // ---------------------------------
-export async function getImageUrlOfIngredient(ingredientName:string) : Promise<string> {
-    const imageResult = storageRef.child(ingredientNameTransform(ingredientName));
+export async function getImageUrlFromStorage(imageFileName : string) : Promise<string> {
+    const imageResult = FirebaseStorage.ref().child(imageFileName);
     let imageUrl = imageResult.getDownloadURL();
     return await Promise.resolve(imageUrl);
-}
-
-function ingredientNameTransform(ingredientName : string) : string {
-    return ingredientName.toLowerCase().replace(" ", "-").concat(".png");
 }
 
 export default async function getAllIngredients() : Promise<Map<string,string>> {

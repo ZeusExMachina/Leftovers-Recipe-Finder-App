@@ -7,11 +7,15 @@ import IngredientButtonGrid from "../components/IngredientButtonGrid"
 // States
 import { SelectedIngredients } from '../states/SelectedIngredientsList';
 // Firebase
-import { getImageUrlOfIngredient } from "../firebase-access/Firebase_Client"
+import { getImageUrlFromStorage } from "../firebase-access/Firebase_Client"
 
 interface Props {
   categoryName : string
   ingredientNames : string[]
+}
+
+function ingredientNameTransform(ingredientName : string) : string {
+  return ingredientName.toLowerCase().replace(" ", "-").concat(".png");
 }
 
 const IngredientCategory = (props : Props) => {
@@ -19,7 +23,7 @@ const IngredientCategory = (props : Props) => {
 
   useEffect(() => {
     if (props.ingredientNames.length > 0) {
-      getImageUrlOfIngredient(props.ingredientNames[0])
+        getImageUrlFromStorage(ingredientNameTransform(props.ingredientNames[0]))
         .then(value => setIngredientImageUrl(value));
     }
     // console.log(ingredientImageUrl);

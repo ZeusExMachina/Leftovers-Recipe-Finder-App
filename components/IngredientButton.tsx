@@ -4,12 +4,16 @@ import { Avatar, Chip } from 'react-native-paper';
 // Components
 import IngredientModalPopup from './IngredientModalPopup';
 // Firebase
-import { getImageUrlOfIngredient } from "../firebase-access/Firebase_Client"
+import { getImageUrlFromStorage } from "../firebase-access/Firebase_Client"
 
 interface Props {
     ingredientName : string
     isSelected(ingredientName:string) : boolean
     toggleHandler(ingredientName:string) : void
+}
+
+function ingredientNameTransform(ingredientName : string) : string {
+    return ingredientName.toLowerCase().replace(" ", "-").concat(".png");
 }
 
 const IngredientButton = (props:Props) => {
@@ -19,7 +23,7 @@ const IngredientButton = (props:Props) => {
     const [ingredientImageUrl, setIngredientImageUrl] = useState<string>("DefaultVal");
 
     useEffect(() => {
-        getImageUrlOfIngredient(props.ingredientName)
+        getImageUrlFromStorage(ingredientNameTransform(props.ingredientName))
             .then(value => setIngredientImageUrl(value));
         // console.log(ingredientImageUrl);
     }, [ingredientImageUrl]);

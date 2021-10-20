@@ -41,40 +41,46 @@ const IngredientsContents = (props : Props) => {
     const getRecentIngredientsAsArray = useContext(GetRecentIngredientsAsArray);
     const refreshRecentIngredients = useContext(RefreshRecentIngredients);
 
-    // OR store these lists in their own states, which are updated whenever the Firebase is updated. This way, it doesn't retrieve a new list every time
-    // const favouriteIngredients = await getUserFavourites(currentUser);
-    // const recentIngredients = await getUserRecent(currentUser);
-
     refreshFavouriteIngredients(currentUser);
     refreshRecentIngredients(currentUser);
+
+    const recentIngredients = getRecentIngredientsAsArray();
 
     return (
         (searchInput.length < 1)
             ?
                 <ScrollView scrollEnabled={true} style={styles.ingredientsContents}>
-                    <View style={{flexDirection:"row"}}>
-                        <Text style={styles.ingredientSection_heading}>
-                            Favourite Ingredients
-                        </Text>
-                        <Avatar.Icon size={28} icon="star" style={styles.contentSection_avatarIcon} />
-                    </View>
+                    {favouriteIngredients.length > 0 &&
+                        <>
+                            <View style={{flexDirection:"row"}}>
+                                <Text style={styles.ingredientSection_heading}>
+                                    Favourite Ingredients
+                                </Text>
+                                <Avatar.Icon size={28} icon="star" style={styles.contentSection_avatarIcon} />
+                            </View>
 
-                    <IngredientButtonGrid
-                        ingredientNames={favouriteIngredients}
-                        extrasScreenObjs={{navigationObj:props.navigationObj, screenName:"All Favourites List", extraScreenLinkMessage:"See all..."}}
-                    />
+                            <IngredientButtonGrid
+                                ingredientNames={favouriteIngredients}
+                                extrasScreenObjs={{navigationObj:props.navigationObj, screenName:"All Favourites List", extraScreenLinkMessage:"See all..."}}
+                            />
+                        </>
+                    }
 
-                    <View style={{flexDirection:"row"}}>
-                        <Text style={styles.ingredientSection_heading}>
-                            Recently Used Ingredients
-                        </Text>
-                        <Avatar.Icon size={28} icon="history" style={styles.contentSection_avatarIcon} />
-                    </View>
+                    {recentIngredients.length > 0 &&
+                        <>
+                            <View style={{flexDirection:"row"}}>
+                                <Text style={styles.ingredientSection_heading}>
+                                    Recently Used Ingredients
+                                </Text>
+                                <Avatar.Icon size={28} icon="history" style={styles.contentSection_avatarIcon} />
+                            </View>
 
-                    <IngredientButtonGrid
-                        ingredientNames={getRecentIngredientsAsArray()}
-                        extrasScreenObjs={{navigationObj:props.navigationObj, screenName:"All Recents List", extraScreenLinkMessage:"See all.."}}
-                    />
+                            <IngredientButtonGrid
+                                ingredientNames={recentIngredients}
+                                extrasScreenObjs={{navigationObj:props.navigationObj, screenName:"All Recents List", extraScreenLinkMessage:"See all.."}}
+                            />
+                        </>
+                    }
 
                     <Text style={styles.ingredientSection_heading}>Food Categories</Text>
 
