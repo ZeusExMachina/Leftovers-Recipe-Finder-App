@@ -3,10 +3,9 @@ import { FirestoreDB, FirebaseStorage } from "../firebase";
 
 const storageRef = FirebaseStorage.ref();
 
-function ingredientNameTransform(ingredientName : string) : string {
-    return ingredientName.toLowerCase().replace(" ", "-").concat(".png");
-}
-
+// ------------------------------------
+// Creating new accounts and logging in
+// ------------------------------------
 export async function validateLogin(username:string, password:string) : Promise<boolean> {
     let userExists = false;
 
@@ -22,7 +21,6 @@ export async function validateLogin(username:string, password:string) : Promise<
 }
 
 async function userExists(username:string) : Promise<boolean> {
-    // Check if a user exists - for registering a user
     let userExists = false;
 
     const usersRef = FirestoreDB.collection("users");
@@ -43,12 +41,15 @@ export async function addNewUser(username:string, password:string) : Promise<boo
     const setWithMerge = newUserRef.set({
         password: password,
         favourites: [],
-        recent: []
+        recent: {}, // Map with key->ingredient, value->ingredient was searched for "value" number of times ago
     }, { merge: true })
 
     return Promise.resolve(true);
 }
 
+// ---------------------
+// Favourite Ingredients
+// ---------------------
 export async function getUserFavourites(username:string) : Promise<string[]> {
     if (await userExists(username) == false) { return Promise.resolve([]); }
 
@@ -60,22 +61,10 @@ export async function getUserFavourites(username:string) : Promise<string[]> {
     return Promise.resolve(favourites);
 }
 
-export async function getUserRecent(username:string) : Promise<string[]> {
-    if (await userExists(username) == false) { return Promise.resolve([]); }
-
-    let recent : string[] = [];
-    const userRef = FirestoreDB.collection("users").doc(username);
-    const userSnapshot = await userRef.get()
-    recent = userSnapshot.get("recent")
-
-    return Promise.resolve(recent);
-}
-
 export async function toggleFavouriteIngredient(ingredient:string, username:string) {
     if (await userExists(username) == false) { return }
 
     const currentFavourites = await getUserFavourites(username);
-    const userRef = FirestoreDB.collection("users").doc(username);
 
     if (currentFavourites.includes(ingredient)) { 
         // It is currently a favourite ingredient, so remove it from favourites
@@ -86,15 +75,75 @@ export async function toggleFavouriteIngredient(ingredient:string, username:stri
         currentFavourites.push(ingredient)
     }
 
+    const userRef = FirestoreDB.collection("users").doc(username);
     userRef.update({
         favourites: currentFavourites
     });
 }
 
+// -----------------------------
+// Recently searched Ingredients
+// -----------------------------
+export async function getUserRecent(username:string) : Promise<Map<string,number>> {
+    if (await userExists(username) == false) { return Promise.resolve(new Map<string,number>()); }
+
+    let recent = new Map<string,number>();
+    const userRef = FirestoreDB.collection("users").doc(username);
+    const userSnapshot = await userRef.get();
+    recent = new Map(Object.entries(userSnapshot.get("recent")));
+
+    return Promise.resolve(recent);
+}
+
+function setDifferenceOfTwoArrays<T>(arr1:T[], arr2:T[]) {
+    return arr1.filter(x => !arr2.includes(x));
+}
+
+export async function updateRecentList(mostRecentSearch:string[], username:string) {
+    if (await userExists(username) == false) { return }
+
+    let currentRecent = await getUserRecent(username);
+
+    // Now, iterate through the currentRecent
+    // 1. Remove any ingredients that were searched for at the earliest 4+ searches ago
+    // 2. Reset any ingredients that were just searched for to the lowest setting (i.e. 1)
+    // 3. Finally, add in any ingredients that weren't in currentRecent
+    // 4. Then update the user's document in Firebase
+
+    let ingredientsThatWereAlreadyInRecent : string[] = [];
+    currentRecent.forEach((numberOfSearchesAgo:number, ingredient:string) => {
+        if (mostRecentSearch.includes(ingredient)) {
+            currentRecent.set(ingredient, 1);
+            ingredientsThatWereAlreadyInRecent.push(ingredient);
+        } else if (numberOfSearchesAgo >= 3) {
+            currentRecent.delete(ingredient);
+        } else {
+            currentRecent.set(ingredient, numberOfSearchesAgo+1);
+        }
+    });
+
+    let toAddToRecent = setDifferenceOfTwoArrays(mostRecentSearch, ingredientsThatWereAlreadyInRecent);
+    for (let i = 0; i < toAddToRecent.length; i++) {
+        currentRecent.set(toAddToRecent[i], 1);
+    }
+
+    const userRef = FirestoreDB.collection("users").doc(username);
+    userRef.update({
+        recent: Object.fromEntries(currentRecent)
+    })
+}
+
+// ---------------------------------
+// Retrieving ingredient information
+// ---------------------------------
 export async function getImageUrlOfIngredient(ingredientName:string) : Promise<string> {
     const imageResult = storageRef.child(ingredientNameTransform(ingredientName));
     let imageUrl = imageResult.getDownloadURL();
     return await Promise.resolve(imageUrl);
+}
+
+function ingredientNameTransform(ingredientName : string) : string {
+    return ingredientName.toLowerCase().replace(" ", "-").concat(".png");
 }
 
 export default async function getAllIngredients() : Promise<Map<string,string>> {

@@ -11,6 +11,7 @@ import { AllIngredients } from "../states/All_Ingredients";
 import { FavouriteIngredients, RefreshFavouriteIngredients } from "../states/All_FavouriteIngredients";
 import { SearchbarTextInput } from "../states/SearchbarTextInput";
 import { SearchedIngredientsResults } from '../states/SearchedIngredientsResults'
+import { RecentIngredients, GetRecentIngredientsAsArray, RefreshRecentIngredients } from "../states/RecentIngredients";
 
 interface Props {
     navigationObj:any
@@ -33,16 +34,20 @@ function convertAllIngredientsIntoMap(allIngredients : Map<string,string>) : Map
 const IngredientsContents = (props : Props) => {
     const {currentUser, setCurrentUser} = useContext(CurrentUser)
     const {allIngredients, setAllIngredients} = useContext(AllIngredients);
-    const {favouriteIngredients, setFavouriteIngredients} = useContext(FavouriteIngredients);
     const {searchInput,setSearchInput} = useContext(SearchbarTextInput);
     const {searchedIngredients,setSearchedIngredients} = useContext(SearchedIngredientsResults);
+    const {favouriteIngredients, setFavouriteIngredients} = useContext(FavouriteIngredients);
     const refreshFavouriteIngredients = useContext(RefreshFavouriteIngredients);
+    const {recentIngredients, setRecentIngredients} = useContext(RecentIngredients);
+    const getRecentIngredientsAsArray = useContext(GetRecentIngredientsAsArray);
+    const refreshRecentIngredients = useContext(RefreshRecentIngredients);
 
     // OR store these lists in their own states, which are updated whenever the Firebase is updated. This way, it doesn't retrieve a new list every time
     // const favouriteIngredients = await getUserFavourites(currentUser);
     // const recentIngredients = await getUserRecent(currentUser);
 
     refreshFavouriteIngredients(currentUser, setFavouriteIngredients);
+    refreshRecentIngredients(currentUser, setRecentIngredients);
 
     return (
         (searchInput.length < 1)
@@ -67,7 +72,10 @@ const IngredientsContents = (props : Props) => {
                         <Avatar.Icon size={28} icon="history" style={styles.contentSection_avatarIcon} />
                     </View>
 
-                    <IngredientButtonGrid ingredientNames={[]}/>
+                    <IngredientButtonGrid
+                        ingredientNames={getRecentIngredientsAsArray()}
+                        extrasScreenObjs={{navigationObj:props.navigationObj, screenName:"All Recents List", extraScreenLinkMessage:"See all.."}}
+                    />
 
                     <Text style={styles.ingredientSection_heading}>Food Categories</Text>
 

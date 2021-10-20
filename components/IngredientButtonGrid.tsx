@@ -67,7 +67,7 @@ const IngredientButtonGrid = (props : Props) => {
                         <Button 
                             mode="text" 
                             theme={{ roundness:20 }}
-                            style={{ alignSelf:"center", width:"80%", display:"flex", justifyContent:"center" }} 
+                            style={{ alignSelf:"center", width:"85%", display:"flex", justifyContent:"center" }} 
                             labelStyle={{ fontSize:11 }}
                             onPress={() => { switchToExtrasScreen(); }}>
                             {props.extrasScreenObjs?.extraScreenLinkMessage}

@@ -1,5 +1,5 @@
 // 3rd-party Imports
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 // Firebase
 import { getUserFavourites } from '../firebase-access/Firebase_Client';
 
@@ -47,4 +47,4 @@ function arraysAreEqual(a:string[], b:string[]) {
       if (a[i] !== b[i]) return false;
     }
     return true;
-  }
+}

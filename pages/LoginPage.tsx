@@ -5,6 +5,7 @@ import { Text, TextInput, Button } from 'react-native-paper';
 // States
 import { CurrentUser, AuthenticateUser } from "../states/CurrentUser"
 import { FavouriteIngredients, RefreshFavouriteIngredients } from "../states/All_FavouriteIngredients";
+import { RecentIngredients, RefreshRecentIngredients } from "../states/RecentIngredients";
 
 const LoginPage = ({ navigation }) => {
     const [usernameText, setUsernameText] = useState<string>("")
@@ -14,6 +15,8 @@ const LoginPage = ({ navigation }) => {
     const authenticateUser = useContext(AuthenticateUser)
     const {favouriteIngredients, setFavouriteIngredients} = useContext(FavouriteIngredients)
     const refreshFavouriteIngredients = useContext(RefreshFavouriteIngredients);
+    const {recentIngredients, setRecentIngredients} = useContext(RecentIngredients);
+    const refreshRecentIngredients = useContext(RefreshRecentIngredients);
 
     async function loginToAccount() {
         if (usernameText.length < 1) {
@@ -28,6 +31,7 @@ const LoginPage = ({ navigation }) => {
         if (login_result) {
             // User exists, so account authentication was successful. Switch to MainIngredientSelect page
             await refreshFavouriteIngredients(currentUser, setFavouriteIngredients);
+            await refreshRecentIngredients(currentUser, setRecentIngredients);
             navigation.navigate("Ingredient Selection");
         } else {
             // Username-Password pair doesn't exist, so open snackbar
