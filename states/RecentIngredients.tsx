@@ -2,6 +2,8 @@
 import React, { useState, useContext } from 'react'
 // States
 import { CurrentUser } from "../states/CurrentUser";
+// Utility
+import mapsAreEqual from '../utility/MapsAreEqual';
 // Firebase
 import { getUserRecent, updateRecentList } from '../firebase-access/Firebase_Client';
 
@@ -41,15 +43,4 @@ export default function RecentIngredientsProvider({ children }) {
             </UpdateRecentList.Provider>
         </GetRecentIngredientsAsArray.Provider>
     );
-}
-
-function mapsAreEqual<K,V>(a:Map<K,V>, b:Map<K,V>) {
-    if (a === b) return true;
-    if (a == null || b == null) return false;
-    if (a.size !== b.size) return false;
-
-    a.forEach((value:V, key:K) => {
-        if (key !== key || value !== value) return false;
-    })
-    return true;
 }

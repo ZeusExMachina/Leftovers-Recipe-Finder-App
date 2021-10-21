@@ -2,6 +2,8 @@
 import React, { useContext, useState } from 'react'
 // States
 import { CurrentUser } from "../states/CurrentUser";
+// Utility
+import arraysAreEqual from '../utility/ArraysAreEqual';
 // Firebase
 import { getUserFavourites, toggleFavouriteIngredient } from '../firebase-access/Firebase_Client';
 
@@ -37,15 +39,4 @@ export default function FavouriteIngredientsProvider({ children }) {
             </ToggleFavouriteIngredient.Provider>
         </FavouriteIngredients.Provider>
     );
-}
-
-function arraysAreEqual(a:string[], b:string[]) {
-    if (a === b) return true;
-    if (a == null || b == null) return false;
-    if (a.length !== b.length) return false;
-
-    for (var i = 0; i < a.length; ++i) {
-      if (a[i] !== b[i]) return false;
-    }
-    return true;
 }

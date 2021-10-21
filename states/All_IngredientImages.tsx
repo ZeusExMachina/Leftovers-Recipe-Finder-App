@@ -1,5 +1,7 @@
 // 3rd-party Imports
 import React, { useState, useEffect } from 'react'
+// Utility
+import mapsAreEqual from '../utility/MapsAreEqual';
 // Firebase
 import getAllIngredients, { getImageUrlFromStorage } from "../firebase-access/Firebase_Client"
 
@@ -44,15 +46,4 @@ export default function AllIngredientImagesProvider({ children }) {
 
 function ingredientNameTransform(ingredientName : string) : string {
     return ingredientName.toLowerCase().replace(" ", "-").concat(".png");
-}
-
-function mapsAreEqual<K,V>(a:Map<K,V>, b:Map<K,V>) {
-    if (a === b) return true;
-    if (a == null || b == null) return false;
-    if (a.size !== b.size) return false;
-
-    a.forEach((value:V, key:K) => {
-        if (key !== key || value !== value) return false;
-    })
-    return true;
 }
