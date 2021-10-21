@@ -30,23 +30,20 @@ const CreateAccountLandingPage = ({ navigation }) => {
     async function createNewAccount() {
         setIsLoading(true);
 
-        if (usernameText.length < 1) {
+        const createNewAccountResult : number = await createNewUser(usernameText, passwordText);
+
+        if (createNewAccountResult == 0) {
+            // No existing user has this username, so new account creation is successful. Change to MainIngredientSelect page
+            await refreshFavouriteIngredients(currentUser);
+            await refreshRecentIngredients(currentUser);
+            clearSelectedIngredients();
+            navigation.navigate("Ingredient Selection");
+        } else if (createNewAccountResult == 1) {
             showSnackbarMessage("Username needs to be at least 1 character long. Please try again");
-        } else if (passwordText.length < 1) {
+        } else if (createNewAccountResult == 2) {
             showSnackbarMessage("Password needs to be at least 1 character long. Please try again");
-        } else {
-            const createUser_result = await createNewUser(usernameText, passwordText);
-            if (createUser_result) {
-                // No existing user has this username, so new account creation is successful. Change to MainIngredientSelect page
-                await refreshFavouriteIngredients(currentUser);
-                await refreshRecentIngredients(currentUser);
-                clearSelectedIngredients();
-                navigation.navigate("Ingredient Selection");
-            } else {
-                // Username already exists, show this message on snackbar
-                showSnackbarMessage("That username already exists. Please enter a different username");
-                return;
-            }
+        } else if (createNewAccountResult == 3) {
+            showSnackbarMessage("That username already exists. Please enter a different username");
         }
 
         setIsLoading(false);

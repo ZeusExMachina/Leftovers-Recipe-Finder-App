@@ -1,6 +1,6 @@
 // 3rd-paarty Imports
 import React from "react";
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 // Components
 import IngredientsContents from "../components/IngredientsContents";
 import MainPageHeader from "../components/MainPageHeader";

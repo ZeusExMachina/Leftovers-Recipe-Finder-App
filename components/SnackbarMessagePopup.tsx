@@ -3,8 +3,6 @@ import React, { useContext } from "react";
 import { Snackbar } from "react-native-paper";
 // States
 import { SnackbarVisible, SnackbarMessage } from "../states/SnackbarVisible";
-// Styling
-import { SecondaryThemeColour } from "../styling/Styling";
 
 const SnackbarMessagePopup = () => {
     const {snackbarVisible, setSnackbarVisible} = useContext(SnackbarVisible);

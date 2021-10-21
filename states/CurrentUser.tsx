@@ -4,28 +4,38 @@ import React, { useState } from "react";
 import { validateLogin, addNewUser } from '../firebase-access/Firebase_Client';
 
 export const CurrentUser = React.createContext("")
-export const AuthenticateUser = React.createContext((username:string, password:string) => { return Promise.resolve(false); })
-export const CreateNewUser = React.createContext((username:string, password:string) => { return Promise.resolve(false); })
+export const AuthenticateUser = React.createContext((username:string, password:string) => { return Promise.resolve(-1); })
+export const CreateNewUser = React.createContext((username:string, password:string) => { return Promise.resolve(-1); })
 
 export default function CurrentUserProvider({ children }) {
     const [currentUser, setCurrentUser] = useState<string>("")
 
-    async function authenticateUser(username:string, password:string) : Promise<boolean> {
-        if (await validateLogin(username, password) == true) {
+    async function authenticateUser(username:string, password:string) : Promise<number> {
+        if (username.length < 1) { return Promise.resolve(1); }
+        else if (password.length < 1) { return Promise.resolve(2); }
+
+        const validateLoginResult = await validateLogin(username, password);
+
+        if (validateLoginResult) {
             setCurrentUser(username);
-            return Promise.resolve(true);
+            return Promise.resolve(0);
+        } else {
+            return Promise.resolve(3);
         }
-        return Promise.resolve(false);
     }
 
-    async function createUser(username:string, password:string) : Promise<boolean> {
+    async function createUser(username:string, password:string) : Promise<number> {
+        if (username.length < 1) { return Promise.resolve(1); }
+        else if (password.length < 1) { return Promise.resolve(2); }
+
         const addNewUserResult = await addNewUser(username, password);
 
         if (addNewUserResult) {
             setCurrentUser(username);
-            return Promise.resolve(true);
+            return Promise.resolve(0);
+        } else {
+            return Promise.resolve(3);
         }
-        return Promise.resolve(false)
     }
 
     return (

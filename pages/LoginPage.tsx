@@ -30,23 +30,20 @@ const LoginPage = ({ navigation }) => {
     async function loginToAccount() {
         setIsLoading(true);
 
-        if (usernameText.length < 1) {
+        const authenticateUserResult : number = await authenticateUser(usernameText, passwordText);
+
+        if (authenticateUserResult == 0) {
+            // No existing user has this username, so new account creation is successful. Change to MainIngredientSelect page
+            await refreshFavouriteIngredients(currentUser);
+            await refreshRecentIngredients(currentUser);
+            clearSelectedIngredients();
+            navigation.navigate("Ingredient Selection");
+        } else if (authenticateUserResult == 1) {
             showSnackbarMessage("Username needs to be at least 1 character long. Please try again");
-        } else if (passwordText.length < 1) {
+        } else if (authenticateUserResult == 2) {
             showSnackbarMessage("Password needs to be at least 1 character long. Please try again");
-        } else {
-            const login_result = await authenticateUser(usernameText, passwordText);
-            if (login_result) {
-                // User exists, so account authentication was successful. Switch to MainIngredientSelect page
-                await refreshFavouriteIngredients(currentUser);
-                await refreshRecentIngredients(currentUser);
-                clearSelectedIngredients();
-                navigation.navigate("Ingredient Selection");
-            } else {
-                // Username-Password pair doesn't exist, so open snackbar
-                showSnackbarMessage("Username or password is invalid. Please a valid username and password");
-                return;
-            }
+        } else if (authenticateUserResult == 3) {
+            showSnackbarMessage("Username or password is invalid. Please a valid username and password");
         }
 
         setIsLoading(false);
