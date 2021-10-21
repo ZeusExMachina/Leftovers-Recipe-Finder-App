@@ -7,10 +7,8 @@ import SnackbarMessagePopup from '../components/SnackbarMessagePopup';
 // States
 import { CurrentUser } from "../states/CurrentUser";
 import { SelectedIngredients } from '../states/SelectedIngredientsList';
-import { RefreshRecentIngredients } from "../states/RecentIngredients";
+import { UpdateRecentList, RefreshRecentIngredients } from "../states/RecentIngredients";
 import { ShowSnackbarMessage } from "../states/SnackbarVisible";
-// Firebase
-import { updateRecentList } from '../firebase-access/Firebase_Client'
 // Styling
 import { PrimaryThemeColour } from "../styling/Styling";
 
@@ -27,9 +25,8 @@ function createSearchUrl(ingredientsList:string[]) : string {
 }
 
 const RecipeResults = () => {
-  const currentUser = useContext(CurrentUser);
   const selectedIngredients = useContext(SelectedIngredients);
-  const refreshRecentIngredients = useContext(RefreshRecentIngredients);
+  const updateRecentListInFirebase = useContext(UpdateRecentList);
   const showSnackbarMessage = useContext(ShowSnackbarMessage);
 
   async function openInAppBrowserWindow(ingredientsList:string[]) {
@@ -41,8 +38,7 @@ const RecipeResults = () => {
     const url = createSearchUrl(ingredientsList)
   
     await WebBrowser.openBrowserAsync(url);
-    await updateRecentList(ingredientsList, currentUser);
-    refreshRecentIngredients(currentUser);
+    await updateRecentListInFirebase(ingredientsList);
   }
   
   return (  

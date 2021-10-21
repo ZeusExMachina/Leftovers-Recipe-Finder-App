@@ -10,6 +10,7 @@ import SelectedIngredientsDisplayScreen from './pages/SelectedIngredientsDisplay
 import CurrentUserProvider from './states/CurrentUser';
 import LoginPage from './pages/LoginPage';
 import AllIngredientsProvider from './states/All_Ingredients';
+import AllIngredientImagesProvider from './states/All_IngredientImages';
 import FavouriteIngredientsProvider from './states/All_FavouriteIngredients';
 import RecentIngredientsProvider from './states/RecentIngredients';
 import IngredientsListProvider from './states/SelectedIngredientsList';
@@ -25,37 +26,39 @@ export default function App() {
       <SnackbarVisibleProvider>
         <CurrentUserProvider>
           <AllIngredientsProvider>
-            <FavouriteIngredientsProvider>
-              <RecentIngredientsProvider>
-                <IngredientsListProvider>
-                  <Portal.Host>
-                    <NavigationContainer>
-                      <Stack.Navigator 
-                        initialRouteName="CreateAccountLandingPage"
-                        screenOptions={{
-                          headerShown: false
-                        }}
-                      >
-                        <Stack.Screen name="CreateAccountLandingPage" component={CreateAccountLandingPage}/>
-                        <Stack.Screen name="LoginPage" component={LoginPage}/>
-                        <Stack.Screen name="Ingredient Selection" component={IngredientSelection}/>
-                        <Stack.Screen
-                          name="Selected Ingredients"
-                          options={{
-                            cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
-                            gestureEnabled: true,
-                            gestureDirection: 'vertical',
+            <AllIngredientImagesProvider>
+              <FavouriteIngredientsProvider>
+                <RecentIngredientsProvider>
+                  <IngredientsListProvider>
+                    <Portal.Host>
+                      <NavigationContainer>
+                        <Stack.Navigator 
+                          initialRouteName="CreateAccountLandingPage"
+                          screenOptions={{
+                            headerShown: false
                           }}
-                          component={SelectedIngredientsDisplayScreen}/>
-                        <Stack.Screen name="All Favourites List" component={AllFavouriteIngredientsScreen}/>
-                        <Stack.Screen name="All Recents List" component={AllRecentIngredientsScreen}/>
-                        
-                      </Stack.Navigator>
-                    </NavigationContainer>
-                  </Portal.Host>
-                </IngredientsListProvider>
-              </RecentIngredientsProvider>
-            </FavouriteIngredientsProvider>
+                        >
+                          <Stack.Screen name="CreateAccountLandingPage" component={CreateAccountLandingPage}/>
+                          <Stack.Screen name="LoginPage" component={LoginPage}/>
+                          <Stack.Screen name="Ingredient Selection" component={IngredientSelection}/>
+                          <Stack.Screen
+                            name="Selected Ingredients"
+                            options={{
+                              cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+                              gestureEnabled: true,
+                              gestureDirection: 'vertical',
+                            }}
+                            component={SelectedIngredientsDisplayScreen}/>
+                          <Stack.Screen name="All Favourites List" component={AllFavouriteIngredientsScreen}/>
+                          <Stack.Screen name="All Recents List" component={AllRecentIngredientsScreen}/>
+                          
+                        </Stack.Navigator>
+                      </NavigationContainer>
+                    </Portal.Host>
+                  </IngredientsListProvider>
+                </RecentIngredientsProvider>
+              </FavouriteIngredientsProvider>
+            </AllIngredientImagesProvider>
           </AllIngredientsProvider>
         </CurrentUserProvider>
       </SnackbarVisibleProvider>

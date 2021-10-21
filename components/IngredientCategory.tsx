@@ -6,8 +6,7 @@ import { Avatar, List } from 'react-native-paper';
 import IngredientButtonGrid from "../components/IngredientButtonGrid"
 // States
 import { SelectedIngredients } from '../states/SelectedIngredientsList';
-// Firebase
-import { getImageUrlFromStorage } from "../firebase-access/Firebase_Client"
+import { GetUrlOfIngredientImage } from '../states/All_IngredientImages';
 // Styling
 import { PrimaryThemeColour, TertiaryThemeColour } from "../styling/Styling";
 
@@ -16,17 +15,15 @@ interface Props {
   ingredientNames : string[]
 }
 
-function ingredientNameTransform(ingredientName : string) : string {
-  return ingredientName.toLowerCase().replace(" ", "-").concat(".png");
-}
-
 const IngredientCategory = (props : Props) => {
+  // Image URL state
+  const getUrlOfIngredientImage = useContext(GetUrlOfIngredientImage);
   const [ingredientImageUrl, setIngredientImageUrl] = useState<string>("DefaultVal");
-
   useEffect(() => {
     if (props.ingredientNames.length > 0) {
-        getImageUrlFromStorage(ingredientNameTransform(props.ingredientNames[0]))
-        .then(value => setIngredientImageUrl(value));
+        const urlOfIngredientImage : string|undefined = getUrlOfIngredientImage(props.ingredientNames[0]);
+        if (urlOfIngredientImage == undefined) { setIngredientImageUrl("<no url>"); }
+        else { setIngredientImageUrl(urlOfIngredientImage); }
     }
   }, [ingredientImageUrl]);
 

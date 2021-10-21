@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Avatar, Chip } from 'react-native-paper';
 // Components
 import IngredientModalPopup from './IngredientModalPopup';
-// Firebase
-import { getImageUrlFromStorage } from "../firebase-access/Firebase_Client"
+// States
+import { GetUrlOfIngredientImage } from '../states/All_IngredientImages';
 // Styling
 import { TertiaryThemeColour } from "../styling/Styling";
 
@@ -14,19 +14,16 @@ interface Props {
     toggleHandler(ingredientName:string) : void
 }
 
-function ingredientNameTransform(ingredientName : string) : string {
-    return ingredientName.toLowerCase().replace(" ", "-").concat(".png");
-}
-
 const IngredientButton = (props:Props) => {
-    // Modal State and functions
+    // Modal component state and functions
     const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
-
-    const [ingredientImageUrl, setIngredientImageUrl] = useState<string>("DefaultVal");
-
+    // Image URL state
+    const getUrlOfIngredientImage = useContext(GetUrlOfIngredientImage);
+    const [ingredientImageUrl, setIngredientImageUrl] = useState<string>("Default");
     useEffect(() => {
-        getImageUrlFromStorage(ingredientNameTransform(props.ingredientName))
-            .then(value => setIngredientImageUrl(value));
+        const urlOfIngredientImage : string|undefined = getUrlOfIngredientImage(props.ingredientName);
+        if (urlOfIngredientImage == undefined) { setIngredientImageUrl("<no url>"); }
+        else { setIngredientImageUrl(urlOfIngredientImage); }
     }, [ingredientImageUrl]);
 
     return (

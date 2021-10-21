@@ -9,7 +9,7 @@ const SnackbarMessagePopup = () => {
     const snackbarMessage : string = useContext(SnackbarMessage);
 
     return (
-        <Snackbar
+      <Snackbar
         style={{ alignSelf:"center", width:"91%", marginBottom:65 }}
         visible={snackbarVisible}
         onDismiss={() => {setSnackbarVisible(false)}}

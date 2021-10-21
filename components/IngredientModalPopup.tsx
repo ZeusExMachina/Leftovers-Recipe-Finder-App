@@ -2,11 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Modal, Portal, Text, Avatar, ToggleButton } from 'react-native-paper';
 // States
-import { CurrentUser } from "../states/CurrentUser"
 import { AllIngredients } from "../states/All_Ingredients";
-import { FavouriteIngredients, RefreshFavouriteIngredients } from '../states/All_FavouriteIngredients';
-// Firebase
-import { toggleFavouriteIngredient } from "../firebase-access/Firebase_Client"
+import { FavouriteIngredients, ToggleFavouriteIngredient } from '../states/All_FavouriteIngredients';
 // Styling
 import { SecondaryThemeColour, TertiaryThemeColour } from "../styling/Styling";
 
@@ -18,10 +15,9 @@ interface Props {
 }
 
 const IngredientModalPopup = (props : Props) => {
-    const currentUser = useContext(CurrentUser);
     const allIngredients = useContext(AllIngredients);
     const favouriteIngredients = useContext(FavouriteIngredients);
-    const refreshFavouriteIngredients = useContext(RefreshFavouriteIngredients);
+    const toggleFavouriteIngredientInFirebase = useContext(ToggleFavouriteIngredient);
 
     const [isFavourite, setIsFavourite] = useState<'checked'|'unchecked'>(checkIfIngredientIsFavourite());
 
@@ -30,8 +26,7 @@ const IngredientModalPopup = (props : Props) => {
     }, [favouriteIngredients]);
 
     async function onButtonToggle() {
-        await toggleFavouriteIngredient(props.ingredientName, currentUser);
-        refreshFavouriteIngredients(currentUser);
+        toggleFavouriteIngredientInFirebase(props.ingredientName);
     };
 
     function checkIfIngredientIsFavourite() : 'checked'|'unchecked' {

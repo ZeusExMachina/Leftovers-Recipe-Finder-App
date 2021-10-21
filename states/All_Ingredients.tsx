@@ -1,11 +1,12 @@
 // 3rd-party Imports
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react';
 // Firebase
 import getAllIngredients from '../firebase-access/Firebase_Client';
 
 export const AllIngredients = React.createContext(new Map<string,string>()); 
 
 export default function AllIngredientsProvider({ children }) {
+    // Local states
     const [allIngredients, setAllIngredients] = useState<Map<string,string>>(new Map<string,string>());
 
     useEffect(() => {
