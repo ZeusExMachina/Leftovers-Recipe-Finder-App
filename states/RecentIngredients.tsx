@@ -1,5 +1,5 @@
 // 3rd-party Imports
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 // Firebase
 import { getUserRecent } from '../firebase-access/Firebase_Client';
 
@@ -8,10 +8,6 @@ export const RefreshRecentIngredients = React.createContext(async (username:stri
 
 export default function RecentIngredientsProvider({ children }) {
     const [recentIngredients, setRecentIngredients] = useState(new Map<string,number>())
-
-    useEffect(() => {
-        //console.log("RecentIngredients useEffect", recentIngredients);
-    }, [recentIngredients]);
 
     function getRecentIngredientsAsArray() : string[] {
         return Array.from(recentIngredients.keys());

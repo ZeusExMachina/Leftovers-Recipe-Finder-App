@@ -28,8 +28,6 @@ function convertAllIngredientsIntoMap(allIngredients : Map<string,string>) : Map
         else { categoryList.push(ingredient); }
     });
 
-    // console.log("mapOfCategoriesAndIngredients", mapOfCategoriesAndIngredients);
-
     return mapOfCategoriesAndIngredients;
 }
 

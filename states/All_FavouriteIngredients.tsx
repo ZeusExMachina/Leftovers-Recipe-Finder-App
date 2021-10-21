@@ -1,5 +1,5 @@
 // 3rd-party Imports
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 // Firebase
 import { getUserFavourites } from '../firebase-access/Firebase_Client';
 
@@ -8,10 +8,6 @@ export const RefreshFavouriteIngredients = React.createContext(async (username:s
 
 export default function FavouriteIngredientsProvider({ children }) {
     const [favouriteIngredients, setFavouriteIngredients] = useState<string[]>([]);
-
-    useEffect(() => {
-        //console.log("FavouriteIngredients useEffect", favouriteIngredients);
-    }, [favouriteIngredients])
 
     async function refreshFavouriteIngredients(username:string) {
         const favouritesFromFirebase = await getUserFavourites(username);

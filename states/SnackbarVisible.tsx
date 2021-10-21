@@ -1,5 +1,5 @@
 // 3rd-party Imports
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 
 const snackbarVisibleStateDefaultValue = {
     snackbarVisible: false,
@@ -14,11 +14,6 @@ export default function SnackbarVisibleProvider({ children }) {
     const [snackbarVisible, setSnackbarVisible] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const snackbarVisibleProviderValue = useMemo(() => ({snackbarVisible, setSnackbarVisible}), [snackbarVisible, setSnackbarVisible]);
-
-    useEffect(() => {
-        // console.log("snackbarVisible", snackbarVisible);
-        // console.log("snackbarMessage", snackbarMessage);
-    }, [snackbarVisible]);
 
     function showSnackbarMessage(message : string) {
         setSnackbarMessage(message);

@@ -28,7 +28,6 @@ const IngredientCategory = (props : Props) => {
         getImageUrlFromStorage(ingredientNameTransform(props.ingredientNames[0]))
         .then(value => setIngredientImageUrl(value));
     }
-    // console.log(ingredientImageUrl);
   }, [ingredientImageUrl]);
 
   // Imported states

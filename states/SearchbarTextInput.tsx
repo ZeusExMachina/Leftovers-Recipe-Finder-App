@@ -18,7 +18,6 @@ export default function SearchbarTextInputProvider({ children }) {
     const updateSearchedIngredients = useContext(UpdateSearchedIngredients);
 
     useEffect(() => {
-        //console.log("SearchbarTextInput useEffect", searchInput);
         updateSearchedIngredients(searchInput);
     }, [searchInput]);
 

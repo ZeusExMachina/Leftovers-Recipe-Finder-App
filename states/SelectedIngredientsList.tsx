@@ -1,5 +1,5 @@
 // 3rd-party Imports
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 export const SelectedIngredients = React.createContext([] as string[]);
 export const ClearAllSelectedIngredients = React.createContext(() => {})
@@ -27,10 +27,6 @@ export default function IngredientsListProvider({ children }) {
           setSelectedIngredients(newSelectedIngredients);
         }
     }
-
-    useEffect(() => {
-        //console.log("SelectedIngredientsList useEffect", ingredientsList);
-    }, [selectedIngredients])
 
     return (
         <SelectedIngredients.Provider value={selectedIngredients}>

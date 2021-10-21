@@ -1,5 +1,5 @@
 // 3rd-party Imports
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 // States
 import { AllIngredients } from './All_Ingredients';
 
@@ -28,10 +28,6 @@ export default function SearchedIngredientsResultsProvider({ children }) {
             setSearchedIngredients(searchResults);
         }
     }
-
-    useEffect(() => {
-        //console.log("SearchedIngredientsResults useEffect", searchedIngredients);
-    }, [searchedIngredients]);
 
     return (
         <SearchedIngredientsResults.Provider value={searchedIngredients}>

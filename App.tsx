@@ -2,8 +2,6 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { Portal, Provider as PaperProvider } from 'react-native-paper';
-// Components
-import SnackbarMessagePopup from './components/SnackbarMessagePopup';
 // Screens
 import CreateAccountLandingPage from './pages/CreateAccountLandingPage';
 import IngredientSelection from "./pages/MainIngredientSelect";

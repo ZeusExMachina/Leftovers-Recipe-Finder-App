@@ -27,7 +27,6 @@ const IngredientButton = (props:Props) => {
     useEffect(() => {
         getImageUrlFromStorage(ingredientNameTransform(props.ingredientName))
             .then(value => setIngredientImageUrl(value));
-        // console.log(ingredientImageUrl);
     }, [ingredientImageUrl]);
 
     return (
