@@ -12,6 +12,16 @@ import { ShowSnackbarMessage } from "../states/SnackbarVisible";
 // Styling
 import { PrimaryThemeColour } from "../styling/Styling";
 
+/**
+ * This is the in-app browser that shows the Google search for recipes. It is opened by pressing the "Find Recipes" button in the footer of the 
+ * Ingredient Selection page.
+ */
+
+/**
+ * Creates a Google Search link to find recipes using the given list of ingredients
+ * @param ingredientsList 
+ * @returns the Google search link to open in an in-app browser
+ */
 function createSearchUrl(ingredientsList:string[]) : string {
   let url = "https://google.com/search?q=Recipes+with";
 

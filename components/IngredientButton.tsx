@@ -8,6 +8,10 @@ import { GetUrlOfIngredientImage } from '../states/All_IngredientImages';
 // Styling
 import { TertiaryThemeColour } from "../styling/Styling";
 
+/**
+ * The button representing a single ingredient that can be used to find recipes with. Has a corresponding IngredientModalPopup as a child.
+ */
+
 interface Props {
     ingredientName : string
     isSelected(ingredientName:string) : boolean

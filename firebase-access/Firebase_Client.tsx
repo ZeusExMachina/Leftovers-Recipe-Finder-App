@@ -18,6 +18,12 @@ async function userExists(username:string) : Promise<boolean> {
     return Promise.resolve(userExists);
 }
 
+/**
+ * Checks whether a given username exists, and if so, whether the given password matches that found in Firebase.
+ * @param username 
+ * @param password 
+ * @returns true if the username-password pair exists, false if not
+ */
 export async function validateLogin(username:string, password:string) : Promise<boolean> {
     if (await userExists(username) == false) { return Promise.resolve(false); }
 
@@ -29,6 +35,13 @@ export async function validateLogin(username:string, password:string) : Promise<
     return Promise.resolve(passwordMatches);
 }
 
+/**
+ * Adds a new user to Firebase with the given username and password. Initialises them with empty Favourites and Recently Searched lists.
+ * Also checks if the given username already exists or not. If it does, do not add a new user.
+ * @param username
+ * @param password 
+ * @returns false if a user with the given username already exists, or true if a new user was successfully registered
+ */
 export async function addNewUser(username:string, password:string) : Promise<boolean> {
     if (await userExists(username) == true) { return Promise.resolve(false); }
 
@@ -56,6 +69,12 @@ export async function getUserFavourites(username:string) : Promise<string[]> {
     return Promise.resolve(favourites);
 }
 
+/**
+ * Sets a non-favourite ingredient to be a favourite, or sets a favourite ingredient to be a non-favourite. This depends on whether the given ingredient 
+ * is one of the user's favourite ingredients.
+ * @param ingredient 
+ * @param username 
+ */
 export async function toggleFavouriteIngredient(ingredient:string, username:string) {
     if (await userExists(username) == false) { return }
 
@@ -94,16 +113,19 @@ function setDifferenceOfTwoArrays<T>(arr1:T[], arr2:T[]) {
     return arr1.filter(x => !arr2.includes(x));
 }
 
+/**
+ * Updates a user's list of recently searched ingredients. The updates are as follows:
+ * 1. Remove any ingredients that were searched for at the earliest 4+ searches ago
+ * 2. Reset any ingredients that were just searched for to the lowest setting (i.e. 1)
+ * 3. Finally, add in any ingredients that weren't in currentRecent
+ * 4. Then update the user's document in Firebase
+ * @param mostRecentSearch is the list of ingredient names that were used in the most recent recipe search
+ * @param username 
+ */
 export async function updateRecentList(mostRecentSearch:string[], username:string) {
     if (await userExists(username) == false) { return }
 
     let currentRecent = await getUserRecent(username);
-
-    // Now, iterate through the currentRecent
-    // 1. Remove any ingredients that were searched for at the earliest 4+ searches ago
-    // 2. Reset any ingredients that were just searched for to the lowest setting (i.e. 1)
-    // 3. Finally, add in any ingredients that weren't in currentRecent
-    // 4. Then update the user's document in Firebase
 
     let ingredientsThatWereAlreadyInRecent : string[] = [];
     currentRecent.forEach((numberOfSearchesAgo:number, ingredient:string) => {

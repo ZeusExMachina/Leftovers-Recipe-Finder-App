@@ -7,6 +7,10 @@ import mapsAreEqual from '../utility/MapsAreEqual';
 // Firebase
 import { getUserRecent, updateRecentList } from '../firebase-access/Firebase_Client';
 
+/**
+ * This state stores all ingredients recently used in recipe searches. It stays in sync with the current user's "recent" collection in Firebase.
+ */
+
 export const GetRecentIngredientsAsArray = React.createContext(() => { return [] as string[]; });
 export const UpdateRecentList = React.createContext(async (mostRecentSearch:string[]) => {});
 export const RefreshRecentIngredients = React.createContext(async (username:string) => {});

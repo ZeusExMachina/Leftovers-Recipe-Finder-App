@@ -13,6 +13,10 @@ import { ShowSnackbarMessage } from "../states/SnackbarVisible";
 // Styling
 import { PrimaryThemeColour, AccentsThemeColour } from "../styling/Styling";
 
+/**
+ * This page asks the user to log into an existing account. This page is accessed from the "Log in" link from the Create Account page.
+ */
+
 const LoginPage = ({ navigation }) => {
     // Local states
     const [usernameText, setUsernameText] = useState<string>("");

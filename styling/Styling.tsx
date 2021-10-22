@@ -1,4 +1,6 @@
-// Colour theme to be used throughout the app
+/**
+ * Below are colours to be used throughout the app as part of the app's colour theme.
+ */
 
 export const PrimaryThemeColour : string = "#FE724C";
 

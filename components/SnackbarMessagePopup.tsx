@@ -4,6 +4,10 @@ import { Snackbar } from "react-native-paper";
 // States
 import { SnackbarVisible, SnackbarMessage } from "../states/SnackbarVisible";
 
+/**
+ * A temporary message popup that informs the user of some error.
+ */
+
 const SnackbarMessagePopup = () => {
     const {snackbarVisible, setSnackbarVisible} = useContext(SnackbarVisible);
     const snackbarMessage : string = useContext(SnackbarMessage);

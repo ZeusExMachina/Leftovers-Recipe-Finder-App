@@ -1,20 +1,18 @@
 // 3rd-party Imports
 import React, { useContext } from "react";
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { Appbar, Button, Text } from 'react-native-paper';
+import { Appbar, Button } from 'react-native-paper';
 // States
 import { SelectedIngredients } from '../states/SelectedIngredientsList';
 // Components
+import ContentTitle from "../components/ContentTitle";
 import IngredientButtonGrid from "../components/IngredientButtonGrid";
 // Styling
 import { PrimaryThemeColour } from "../styling/Styling";
 
-const ContentTitle = ({ title, style }) => (
-    <Appbar.Content
-        title={<Text style={style}> {title} </Text>}
-        style={{ alignItems: 'center' }}
-    />
-);
+/**
+ * This screen shows all selected ingredients. It is accessed through the "Selected" button in the footer of the Ingredients Selection page.
+ */
 
 const SelectedIngredientsDisplayScreen = ({ navigation }) => {
     const switchToIngredientSelectionScreen = () => {

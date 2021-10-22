@@ -15,6 +15,11 @@ import { GetRecentIngredientsAsArray, RefreshRecentIngredients } from "../states
 // Styling
 import { SecondaryThemeColour, AccentsThemeColour } from "../styling/Styling";
 
+/**
+ * The main content of the Ingredient Selection screen. Includes sections for Favourite Ingredients, Recently Searched/Used Ingredients, and all 
+ * Food Categories.
+ */
+
 interface Props {
     navigationObj:any
 }

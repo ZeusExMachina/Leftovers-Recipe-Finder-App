@@ -3,6 +3,10 @@ import React, { useState, useContext } from 'react'
 // States
 import { AllIngredients } from './All_Ingredients';
 
+/**
+ * This state stores the ingredients that are search results for the text stored in SearchbarText.
+ */
+
 export const SearchedIngredientsResults = React.createContext([] as string[]);
 export const UpdateSearchedIngredients = React.createContext((searchQuery:string) => {});
 

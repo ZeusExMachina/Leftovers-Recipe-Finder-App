@@ -9,6 +9,11 @@ import { SelectedIngredients, UpdateSelectedIngredients } from '../states/Select
 // Styling
 import { PrimaryThemeColour } from "../styling/Styling";
 
+/**
+ * A 2-column grid of ingredient buttons. Can be optionally passed navigation objects, and if so will show a link to the given extra screen that 
+ * contains all ingredient buttons of this grid when the number of ingredient buttons in this grid is > 4.
+ */
+
 interface Props {
     ingredientNames : string[]
     extrasScreenObjs? : {navigationObj:any, screenName:string, extraScreenLinkMessage:string}
@@ -26,9 +31,14 @@ const IngredientButtonGrid = (props : Props) => {
         useToggleIngredientSelect(ingredientName);
     }
 
-    function getListOfIngredientsInRow(left:boolean) : string[] {
+    /**
+     * Obtains the ingredients to be shown on either the left or right column of the grid
+     * @param column will obtain the ingredients of the left column if "left"", and will obtain the right column if "right""
+     * @returns the ingredients of a single column, depending on what the selected column is
+     */
+    function getListOfIngredientsInRow(column:"left"|"right") : string[] {
         let ingredientsInColumn : string[] = [];
-        const modulusDenominator : number = left ? 0 : 1;
+        const modulusDenominator : number = column == 'left' ? 0 : 1;
         for (var i = 0; i < props.ingredientNames.length; i++) {
             if(i % 2 == modulusDenominator) {
                 ingredientsInColumn.push(props.ingredientNames[i]);
@@ -47,12 +57,12 @@ const IngredientButtonGrid = (props : Props) => {
             ?   
                 <View style={styles.columnsContainer}>
                     <View style={styles.singleColumnContainer}>
-                        {getListOfIngredientsInRow(true).map((ingredientName,i) => 
+                        {getListOfIngredientsInRow("left").map((ingredientName,i) => 
                             React.createElement(IngredientButton,
                                                 {key:i, ingredientName:ingredientName, isSelected:isSelected, toggleHandler:toggleIngredientSelectHandler}))}
                     </View>
                     <View style={styles.singleColumnContainer}>
-                        {getListOfIngredientsInRow(false).map((ingredientName,i) => 
+                        {getListOfIngredientsInRow("right").map((ingredientName,i) => 
                             React.createElement(IngredientButton,
                                                 {key:i, ingredientName:ingredientName, isSelected:isSelected, toggleHandler:toggleIngredientSelectHandler}))}
                     </View>

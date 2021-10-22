@@ -3,6 +3,10 @@ import React, { useEffect, useMemo, useState, useContext } from 'react'
 // States
 import { UpdateSearchedIngredients } from './SearchedIngredientsResults'
 
+/**
+ * This state holds the text to show in the search bar located in the header of the Ingredient Selection screen.
+ */
+
 const searchbarTextInputStateDefaultValue = {
     searchInput: "",
     setSearchInput: (state:string) => {}

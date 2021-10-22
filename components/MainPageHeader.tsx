@@ -1,18 +1,17 @@
 // 3rd-party Imports
 import React, { useContext } from "react";
 import { StyleSheet, View } from 'react-native';
-import { Appbar, Text, Searchbar } from 'react-native-paper';
+import { Appbar, Searchbar } from 'react-native-paper';
+// Components
+import ContentTitle from "./ContentTitle";
 // State - Selected Ingredients
 import { SearchbarTextInput } from "../states/SearchbarTextInput";
 // Styling
 import { PrimaryThemeColour, AccentsThemeColour } from "../styling/Styling";
 
-const ContentTitle = ({ title, style }) => (
-    <Appbar.Content
-        title={<Text style={style}> {title} </Text>}
-        style={{ alignItems: 'center' }}
-    />
-);
+/**
+ * The header of the Ingredient Selection screen. Contains the search bar that can be used to search for ingredients by name.
+ */
 
 const MainPageHeader = () => {
     const {searchInput,setSearchInput} = useContext(SearchbarTextInput);

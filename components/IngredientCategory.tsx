@@ -10,6 +10,10 @@ import { GetUrlOfIngredientImage } from '../states/All_IngredientImages';
 // Styling
 import { PrimaryThemeColour, TertiaryThemeColour } from "../styling/Styling";
 
+/**
+ * A drop-down box that holds an IngredientButtonGrid. Used to represent a single category of food (e.g., Fruit, Meat, Vegetables, etc.).
+ */
+
 interface Props {
   categoryName : string
   ingredientNames : string[]

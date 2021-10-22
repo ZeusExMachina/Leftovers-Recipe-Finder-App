@@ -9,6 +9,10 @@ import MainPageFooter from "../components/MainPageFooter";
 import SearchbarTextInputProvider from "../states/SearchbarTextInput";
 import SearchedIngredientsResultsProvider from '../states/SearchedIngredientsResults';
 
+/**
+ * The Ingredient Selection screen, where ingredients can be selected to find a recipe with these selected ingredients.
+ */
+
 const IngredientSelection = ({ navigation }) => {
   return (
     <SearchedIngredientsResultsProvider>

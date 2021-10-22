@@ -7,6 +7,11 @@ import { FavouriteIngredients, ToggleFavouriteIngredient } from '../states/All_F
 // Styling
 import { SecondaryThemeColour, TertiaryThemeColour } from "../styling/Styling";
 
+/**
+ * A modal popup that appears when an IngredientButton is pressed and held. Includes food category information and a toggle button to select/deselect 
+ * the associated ingredient as the user's favourite ingredient.
+ */
+
 interface Props {
     ingredientName : string
     imageUrl : string | undefined

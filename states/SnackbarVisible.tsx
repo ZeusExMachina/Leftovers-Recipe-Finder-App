@@ -1,6 +1,10 @@
 // 3rd-party Imports
 import React, { useState, useMemo } from 'react'
 
+/**
+ * This state keeps track of whether the Snackbar popup error message is visible or not. It also holds the message to display.
+ */
+
 const snackbarVisibleStateDefaultValue = {
     snackbarVisible: false,
     setSnackbarVisible: (state:boolean) => {}

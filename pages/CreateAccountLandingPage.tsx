@@ -13,6 +13,10 @@ import { ShowSnackbarMessage } from "../states/SnackbarVisible";
 // Styling
 import { PrimaryThemeColour, AccentsThemeColour  } from "../styling/Styling";
 
+/**
+ * The page the user is shown when the app is launched. This page offers the user to create a new account.
+ */
+
 const CreateAccountLandingPage = ({ navigation }) => {
     // Local states
     const [usernameText, setUsernameText] = useState<string>("");

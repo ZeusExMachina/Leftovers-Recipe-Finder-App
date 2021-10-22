@@ -7,6 +7,10 @@ import arraysAreEqual from '../utility/ArraysAreEqual';
 // Firebase
 import { getUserFavourites, toggleFavouriteIngredient } from '../firebase-access/Firebase_Client';
 
+/**
+ * This state keeps track of all of a user's favourite ingredients. It keeps in sync with the user's favourite ingredients list in Firebase.
+ */
+
 export const FavouriteIngredients = React.createContext([] as string[]);
 export const ToggleFavouriteIngredient = React.createContext(async (ingredientName:string) => {});
 export const RefreshFavouriteIngredients = React.createContext(async (username:string) => {});

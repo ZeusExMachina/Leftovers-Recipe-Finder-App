@@ -1,20 +1,19 @@
 // 3rd-party Imports
 import React, { useContext } from "react";
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { Appbar, Avatar, Button, Text } from 'react-native-paper';
+import { Appbar, Avatar, Button } from 'react-native-paper';
 // Components
+import ContentTitle from "../components/ContentTitle";
 import IngredientButtonGrid from "../components/IngredientButtonGrid";
 // States
 import { GetRecentIngredientsAsArray } from "../states/RecentIngredients";
 // Styling
 import { PrimaryThemeColour } from "../styling/Styling";
 
-const ContentTitle = ({ title, style }) => (
-    <Appbar.Content
-        title={<Text style={style}> {title} </Text>}
-        style={{ alignItems: 'center' }}
-    />
-);
+/**
+ * This screen shows all of the ingredients the user has recently used in recipe searches. It can be accessed when the user has > 4 recently 
+ * searched ingredients.
+ */
 
 const AllRecentIngredientsScreen = ({ navigation }) => {
     const getRecentIngredientsAsArray = useContext(GetRecentIngredientsAsArray);

@@ -1,6 +1,10 @@
 // 3rd-party Imports
 import React, { useState } from 'react'
 
+/**
+ * This state stores all selected ingredients.
+ */
+
 export const SelectedIngredients = React.createContext([] as string[]);
 export const ClearAllSelectedIngredients = React.createContext(() => {})
 export const UpdateSelectedIngredients = React.createContext((ingredient:string) => {});
@@ -12,6 +16,10 @@ export default function IngredientsListProvider({ children }) {
         setSelectedIngredients([]);
     }
 
+    /**
+     * Toggle whether an ingredient is selected or not. If the ingredient was initally selected, it will be deselected, and vice versa.
+     * @param ingredient 
+     */
     function toggleIngredientSelect(ingredient:string) {
         let newSelectedIngredients : string[] = [];
         newSelectedIngredients = newSelectedIngredients.concat(selectedIngredients);

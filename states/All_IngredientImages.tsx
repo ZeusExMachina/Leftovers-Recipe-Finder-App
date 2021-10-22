@@ -5,7 +5,11 @@ import mapsAreEqual from '../utility/MapsAreEqual';
 // Firebase
 import getAllIngredients, { getImageUrlFromStorage } from "../firebase-access/Firebase_Client"
 
-// export const AllIngredientImageUrls = React.createContext(new Map<string,string>());
+/**
+ * This state stores all image URLs that correspond to each ingredient in Firebase. Loaded on app launch, and only ever updated when the app is 
+ * relaunched.
+ */
+
 export const GetUrlOfIngredientImage = React.createContext((ingredientName:string) => { return "" as string|undefined; })
 
 export default function AllIngredientImagesProvider({ children }) {

@@ -9,6 +9,10 @@ import { SelectedIngredients } from "../states/SelectedIngredientsList";
 // Styling
 import { PrimaryThemeColour } from "../styling/Styling";
 
+/**
+ * The footer of the Ingredient Selection screen. Includes the button to show the Selected Ingredients Display and the button to Find Recipes.
+ */
+
 interface Props {
   navigationObj
 }
