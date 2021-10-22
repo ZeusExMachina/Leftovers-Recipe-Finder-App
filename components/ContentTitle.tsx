@@ -1,3 +1,4 @@
+import React from 'react';
 import { Appbar, Text } from 'react-native-paper';
 
 const ContentTitle = ({ title, style }) => (
