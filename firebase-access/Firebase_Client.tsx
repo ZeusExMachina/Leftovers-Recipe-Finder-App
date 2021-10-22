@@ -4,20 +4,6 @@ import { FirestoreDB, FirebaseStorage } from "../firebase";
 // ------------------------------------
 // Creating new accounts and logging in
 // ------------------------------------
-export async function validateLogin(username:string, password:string) : Promise<boolean> {
-    let userExists = false;
-
-    const usersRef = FirestoreDB.collection("users");
-    const usersSnapshot = await usersRef.get();
-    usersSnapshot.forEach(async (doc) => {
-        if (doc.id == username && doc.get("password") == password && userExists == false) {
-            userExists = true;
-        }
-    });
-
-    return Promise.resolve(userExists);
-}
-
 async function userExists(username:string) : Promise<boolean> {
     let userExists = false;
 
@@ -32,6 +18,17 @@ async function userExists(username:string) : Promise<boolean> {
     return Promise.resolve(userExists);
 }
 
+export async function validateLogin(username:string, password:string) : Promise<boolean> {
+    if (await userExists(username) == false) { return Promise.resolve(false); }
+
+    let passwordMatches = false;
+    const userRef = FirestoreDB.collection("users").doc(username);
+    const userSnapshot = await userRef.get();
+    if (userSnapshot.get("password") == password) { passwordMatches = true; }
+
+    return Promise.resolve(passwordMatches);
+}
+
 export async function addNewUser(username:string, password:string) : Promise<boolean> {
     if (await userExists(username) == true) { return Promise.resolve(false); }
 
@@ -39,7 +36,7 @@ export async function addNewUser(username:string, password:string) : Promise<boo
     const setWithMerge = newUserRef.set({
         password: password,
         favourites: [],
-        recent: {}, // Map with key->ingredient, value->ingredient was searched for "value" number of times ago
+        recent: {}, // Map that is intended to have key->ingredient, value->ingredient was searched for "value" number of times ago
     }, { merge: true })
 
     return Promise.resolve(true);
